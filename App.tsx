@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import PoiViewer from './components/PoiViewer.tsx';
 
 export default function App() {
   return (
