@@ -6,7 +6,6 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Stuff</Text>
-      {/* <PoiViewer/> */}
       <StatusBar style="auto" />
     </View>
   );
