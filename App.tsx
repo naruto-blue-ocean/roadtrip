@@ -39,9 +39,10 @@ export default function App() {
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './components/HomeScreen/HomeScreen';
+import FakeHomeScreen from './components/FakeHomeScreen/FakeHomeScreen';
 import PoiViewer from './components/PoiViewer';
 import DestinationViewer from './components/DestinationViewer/DestinationViewer';
+import AddCity from './components/AddCity/AddCityIndex';
 
 
 const Stack = createNativeStackNavigator();
@@ -51,14 +52,19 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{ title: 'Home' }}
+          name="FakeHomeScreen"
+          component={FakeHomeScreen}
+          options={{ title: 'Fake Home' }}
         />
         <Stack.Screen
           name="DestinationViewer"
           component={DestinationViewer}
           options={{ title: 'Destinations' }}
+        />
+        <Stack.Screen
+          name="AddCity"
+          component={AddCity}
+          options={{ title: 'Add a Destination' }}
         />
         <Stack.Screen
           name="POIViewer"

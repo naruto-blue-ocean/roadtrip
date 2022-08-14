@@ -1,13 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-export default function HomeScreen({ navigation }) {
+export default function FakeHomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text>Stuff</Text>
       <Button
         title="Destinations"
         onPress={() => { navigation.navigate('DestinationViewer')}}
+      />
+      <Button
+        title="Add a City"
+        onPress={() => { navigation.navigate('AddCity')}}
       />
       <Button
         title="Points of Interest"
