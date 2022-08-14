@@ -13,8 +13,6 @@ import { ScreenStackHeaderBackButtonImage } from "react-native-screens";
 const Bottom = createBottomTabNavigator();
 
 
-
-
 export default function DrawerNavigatorRoutes() {
 
   return (
