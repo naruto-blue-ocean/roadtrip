@@ -5,7 +5,6 @@ import axios from 'axios';
 import config from '../config.js';
 
 
-
 class PoiViewer extends React.Component {
  constructor(props) {
   super(props);

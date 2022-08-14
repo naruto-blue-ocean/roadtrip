@@ -1,5 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
+
+const destinations = ['San Diego', 'Los Angeles', 'San Francisco', 'Portland', 'Seattle']
 
 export default function DestinationViewer() {
   return (
@@ -7,9 +10,10 @@ export default function DestinationViewer() {
       <View style={styles.header}>
         <Text>Hello</Text>
       </View>
-      <View style={styles.body}>
-        <Text>Binh</Text>
-      </View>
+      <ScrollView style={styles.body}>
+        {destinations.map((destination) => (<Text key={destination}>{destination}</Text>))}
+      </ScrollView>
+      <StatusBar style="auto" />
     </View>
   );
 }
@@ -20,15 +24,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   header: {
-    flex: 1,
+    flex: 0.2,
     backgroundColor: '#219EBC',
     justifyContent: 'center',
     alignItems: 'center',
   },
   body: {
-    flex: 2,
+    flex: 0.8,
     backgroundColor: '#FB8500',
-    justifyContent: 'center',
-    alignItems: 'center',
   }
 });
