@@ -11,7 +11,7 @@ export default function Login() {
   //main navigation will have the login (authentication porttion) as well as the bottom containers attached
 
   //MAIN
-
+ /*change navigate to replace when compelete */
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
