@@ -1,3 +1,4 @@
+/* Louisa's section -- uncomment to work on Navigation & Flow
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 // import PoiViewer from './components/PoiViewer.tsx';
@@ -7,7 +8,9 @@ import Login from './drawerScreens/Login'; //Testing
 import DrawerNavigatorRoutes from './drawerScreens/DrawerNavigatorRoutes'; //Testing
 import { createStackNavigator } from "@react-navigation/stack"; //Testing
 
-const Stack = createStackNavigator(); //Testing
+Louisa's section -- uncomment to work on Navigation & Flow */
+
+// const Stack = createStackNavigator(); //Testing
 // <View style={styles.container}>
     //   <Text>Stuff</Text>
     //   {/* <MainNavigation /> */}
@@ -17,6 +20,7 @@ const Stack = createStackNavigator(); //Testing
 
     //ss
 
+/* Louisa's section -- uncomment to work on Navigation and flow
 export default function App() {
   return (
     <NavigationContainer>
@@ -25,5 +29,43 @@ export default function App() {
         <Stack.Screen name="DrawerNavigatorRoutes" children={() => (<DrawerNavigatorRoutes /> )}  options={{headerShown: false}}/>
       </Stack.Navigator>
   </NavigationContainer>
+  );
+}
+*/
+
+
+/* Binh's section to temporarily render everyone's components - work on flow later */
+
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './components/HomeScreen/HomeScreen';
+import PoiViewer from './components/PoiViewer';
+import DestinationViewer from './components/DestinationViewer/DestinationViewer';
+
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{ title: 'Home' }}
+        />
+        <Stack.Screen
+          name="DestinationViewer"
+          component={DestinationViewer}
+          options={{ title: 'Destinations' }}
+        />
+        <Stack.Screen
+          name="POIViewer"
+          component={PoiViewer}
+          options={{ title: 'Points Of Interest' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
