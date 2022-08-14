@@ -40,10 +40,13 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FakeHomeScreen from './components/FakeHomeScreen/FakeHomeScreen';
-import PoiViewer from './components/PoiViewer';
+import PoiViewer from './components/POIViewer/PoiViewer';
 import DestinationViewer from './components/DestinationViewer/DestinationViewer';
 import AddCity from './components/AddCity/AddCityIndex';
-
+import HomeScreen from './components/HomeScreen/HomeScreen';
+import AddPOI from './components/AddPOI/AddPOI';
+import Initialization from './components/Initialization/Initialization';
+import Login from './components/Login/Login';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,9 +60,29 @@ export default function App() {
           options={{ title: 'Fake Home' }}
         />
         <Stack.Screen
+          name="Initialization"
+          component={Initialization}
+          options={{ title: 'Initialization' }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ title: 'Log In' }}
+        />
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{ title: 'Home' }}
+        />
+        <Stack.Screen
           name="DestinationViewer"
           component={DestinationViewer}
           options={{ title: 'Destinations' }}
+        />
+        <Stack.Screen
+          name="POIViewer"
+          component={PoiViewer}
+          options={{ title: 'Points Of Interest' }}
         />
         <Stack.Screen
           name="AddCity"
@@ -67,9 +90,9 @@ export default function App() {
           options={{ title: 'Add a Destination' }}
         />
         <Stack.Screen
-          name="POIViewer"
-          component={PoiViewer}
-          options={{ title: 'Points Of Interest' }}
+          name="AddPOI"
+          component={AddPOI}
+          options={{ title: 'Add a Point of Interest' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

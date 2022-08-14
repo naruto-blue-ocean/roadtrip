@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {Text, View, Image } from 'react-native';
 import axios from 'axios';
-import config from '../config.js';
+import config from '../../config.js';
 
 
 class PoiViewer extends React.Component {

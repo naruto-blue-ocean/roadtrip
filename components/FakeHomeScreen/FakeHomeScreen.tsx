@@ -4,18 +4,33 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 export default function FakeHomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Stuff</Text>
+      <Button
+        title="Initialization"
+        onPress={() => { navigation.navigate('Initialization')}}
+      />
+      <Button
+        title="Log In"
+        onPress={() => { navigation.navigate('Login')}}
+      />
+      <Button
+        title="Home"
+        onPress={() => { navigation.navigate('HomeScreen')}}
+      />
       <Button
         title="Destinations"
         onPress={() => { navigation.navigate('DestinationViewer')}}
+      />
+      <Button
+        title="Points of Interest"
+        onPress={() => { navigation.navigate('POIViewer')}}
       />
       <Button
         title="Add a City"
         onPress={() => { navigation.navigate('AddCity')}}
       />
       <Button
-        title="Points of Interest"
-        onPress={() => { navigation.navigate('POIViewer')}}
+        title="Add a Point of Interest"
+        onPress={() => { navigation.navigate('AddPOI')}}
       />
       <StatusBar style="auto" />
     </View>
