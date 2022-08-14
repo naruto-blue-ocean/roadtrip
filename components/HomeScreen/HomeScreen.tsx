@@ -1,0 +1,28 @@
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, Button } from 'react-native';
+
+export default function HomeScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <Text>Stuff</Text>
+      <Button
+        title="Destinations"
+        onPress={() => { navigation.navigate('DestinationViewer')}}
+      />
+      <Button
+        title="Points of Interest"
+        onPress={() => { navigation.navigate('POIViewer')}}
+      />
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
