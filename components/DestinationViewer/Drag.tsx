@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { StyleSheet, Text, Animated, PanResponder } from 'react-native';
+import { StyleSheet, Text, Animated, PanResponder, Pressable } from 'react-native';
 
 export default function Drag({ destination }) {
   const offset = useRef(new Animated.Value(0)).current;
@@ -19,12 +19,13 @@ export default function Drag({ destination }) {
   }, [offset]);
   // Event listener for Animated Value will provide y-offset values during animation
 
+
   return (
       <Animated.View
       onLayout={event => {
         const layout = event.nativeEvent.layout;
-        if (destination === 'Los Angeles') {
-          console.log('height:', layout.height);
+        if (destination === 'San Diego') {
+        console.log('height:', layout.height);
         console.log('width:', layout.width);
         console.log('x:', layout.x);
         console.log('y:', layout.y);
@@ -32,7 +33,11 @@ export default function Drag({ destination }) {
       }}
       // onLayout approach will provide initial position after elements are painted on the screen
       style={{...styles.item, transform: [{ translateY: offset }]}} {...panResponder.panHandlers}>
-        <Text>{destination}</Text>
+        <Pressable
+        style={styles.pressable}
+        onLongPress={() => {console.log(destination)}}>
+          <Text>{destination}</Text>
+        </Pressable>
       </Animated.View>
   );
 }
@@ -44,5 +49,8 @@ const styles = StyleSheet.create({
     width: '30%',
     borderColor: 'black',
     borderWidth: 1,
-  }
+  },
+  pressable : {
+    height: '100%',
+  },
 });
