@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, FlatList, Animated} from 'react-native';
 import Drag from './Drag';
@@ -7,13 +7,29 @@ const destinations = ['San Diego', 'Los Angeles', 'San Francisco', 'Portland', '
 
 export default function DestinationViewer() {
 
+  const [cities, setCities] = useState(destinations);
+  const [currDrag, setCurrDrag] = useState(null);
+  const [neighbor, setNeighbor] = useState(null);
+
+  useEffect(() => {
+    console.log(`currDrag: ${currDrag}, neighbor: ${neighbor}`);
+  }, [currDrag, neighbor]);
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.header}>
         <Text>Hello</Text>
       </View>
       <View style={styles.body}>
-        {destinations.map((destination) => (<Drag key={destination} destination={destination} />))}
+        {destinations.map((destination) => (
+          <Drag
+            key={destination}
+            destination={destination}
+            cities={cities}
+            setCities={setCities}
+            setCurrDrag={setCurrDrag}
+            setNeighbor={setNeighbor}
+          />))}
       </View>
       <StatusBar style="auto" />
     </View>
