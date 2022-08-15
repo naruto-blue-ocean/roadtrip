@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import TripCard from './TripCard';
 
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text>Stuff</Text>
+      <TripCard />
+      <TripCard />
       <StatusBar style="auto" />
     </View>
   );
@@ -12,9 +14,6 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
