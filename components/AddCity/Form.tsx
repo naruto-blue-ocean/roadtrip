@@ -5,12 +5,16 @@ import config from '../../config';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import City from './City';
 
-export default function Form () {
+export default function Form ( {list, setList, post}: {list:any, setList: any, post: any}) {
 
-  var [list, setList] = useState<{name: string, id: string}[]>([]);
+  const handlePost = (e: any) => {
+    e.preventDefault();
+    post(list)
+  };
 
   return (
     <View style = {styles.container}>
+
      <GooglePlacesAutocomplete
       placeholder='Search'
       onPress={(data, details = null) => {
@@ -26,14 +30,13 @@ export default function Form () {
       }}
       />
 
-      {list.map((city) => {
+      {list.map((city: any) => {
           console.log('what is list', list, 'and what is city', city)
         return (
           <City key={city.id} cityInfo= {city} />
         )
       })}
 
-      <Button title='Submit'/>
     </View>
   )
 };

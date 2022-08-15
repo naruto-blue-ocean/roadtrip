@@ -13,6 +13,9 @@ export default function City ( {cityInfo}: {cityInfo: any}) {
 
 var styles = StyleSheet.create({
   container: {
-    borderWidth: 1
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
   }
 })
