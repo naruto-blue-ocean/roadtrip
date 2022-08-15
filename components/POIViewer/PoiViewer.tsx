@@ -3,12 +3,14 @@ import { StatusBar } from 'expo-status-bar';
 import {Keyboard, Dimensions, StyleSheet, Text, View, Image, TextInput, Pressable, TouchableHighlight, ScrollView } from 'react-native';
 import axios from 'axios';
 import config from '../../config.js';
+import Edit from './Edit.tsx';
 
 class PoiViewer extends React.Component {
  constructor(props) {
   super(props);
   this.state = {
     data: '',
+    showModal: false
   }
  }
 
@@ -22,29 +24,28 @@ class PoiViewer extends React.Component {
   })
  }
 
+
+ displayModal() {
+  // console.log("WE WENT IN THIS FUNCTIon")
+  this.setState({showModal: !this.state.showModal})
+
+ }
+
  render() {
   // console.log("DIMESIONS HEIGHT: ",  Dimensions.get('window').height)
   // console.log("DIMESIONS WIDTH: ",  Dimensions.get('window').width)
-  console.log("WHAT IS THE ADDRESS: ", this.state.data.location?.display_address)
+  // console.log("WHAT IS THE ADDRESS: ", this.state.data.location?.display_address)
   return (
     <ScrollView>
+      <Image source={{uri: `${this.state.data.image_url}`}}
+       style={styles.image} />
     <View style={styles.wrapper}>
-      {/* Picture */}
       {/* <Pressable onPress={()=>{Keyboard.dismiss()}}
       > */}
       {/* <View style={styles.menuBox}> */}
-      <Image source={{uri: `${this.state.data.image_url}`}}
-       style={styles.image} />
+
       {/* </View> */}
-      <TextInput style={styles.note}
-         placeholder="note"
-         multiline={true}
-         numberOfLines={5} />
-
-      {/* </Pressable> */}
-
-      <Pressable onPress={()=>{Keyboard.dismiss()}}
-      >
+      {/* <Pressable onPress={()=>{Keyboard.dismiss()}}> */}
 
       <Text style={styles.title}>{this.state.data.name}</Text>
       <View style={styles.starRating}>
@@ -60,8 +61,20 @@ class PoiViewer extends React.Component {
       {/* Restaurant Info */}
       <Text>Stars: {this.state.data.rating}</Text>
       <Text>Phone: {this.state.data.display_phone}</Text>
+
+      <View style={styles.note} >
+      <Text>the users note will go here</Text>
+         <Pressable
+         onPress={this.displayModal.bind(this)}
+         >
+          <Text style={styles.editButton}>Edit</Text>
+         </Pressable>
+         <Edit showModal={this.state.showModal} displayModal={this.displayModal.bind(this)} title={this.state.data.name}/>
+
+      </View>
+
     <StatusBar style="auto" />
-    </Pressable>
+    {/* </Pressable> */}
 
   </View>
   </ScrollView>
@@ -75,16 +88,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   note: {
-    flex: .75,
+    // flex: .75,
     textAlign: 'center',
     borderWidth: 1,
+    height: "30%",
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 10,
   },
   wrapper: {
     flex: 1,
+    padding: 10,
+    margin: 10,
   },
   title: {
     textAlign: 'center',
-    padding: 20,
+    margin: 5,
+    marginBottom: 25,
+    fontSize: 20,
   },
   body: {
 
@@ -112,6 +133,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     // shadowColor: "black",
 
+  },
+  editButton: {
+    alignSelf: "flex-end"
   }
 
 });
