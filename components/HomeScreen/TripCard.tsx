@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgrey',
     alignItems: 'center',
     justifyContent:'space-between',
-    borderRadius: 30,
+    borderRadius: 10,
     margin: 20,
   },
   tripName: {
