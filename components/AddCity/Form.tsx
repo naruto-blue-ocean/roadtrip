@@ -28,6 +28,8 @@ export default function Form () {
   //   )
   // }
 
+  var [list, setList] = useState([]);
+
   // creates an OpenSearchModal
   var OpenSearchModal = async () => {
     var places = await RNGooglePlaces.openAutocompleteModal();
@@ -36,28 +38,34 @@ export default function Form () {
   }
 
   return (
-    <View >
+    <View style = {styles.container}
+    >
      <GooglePlacesAutocomplete
       placeholder='Search'
       onPress={(data, details = null) => {
         // 'details' is provided when fetchDetails = true
         console.log('what is data',data, details);
       }}
+      styles = {{ textInput: styles.textInput }}
       query={{
         key: config.GOOGLE_MAPS_API,
         language: 'en',
       }}
       />
-      <Button onPress = {() => OpenSearchModal} title='Submit'/>
+      <Button title='Submit'/>
     </View>
   )
 };
 
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 10,
+    height: '100%'
   },
-});
+
+  textInput: {
+    height: 50,
+    backgroundColor: '#eee',
+    marginVertical: 5
+  }
+})
