@@ -3,12 +3,11 @@ import {Text, StyleSheet, View, Image, TextInput, Button } from 'react-native';
 import axios from 'axios';
 import config from '../../config';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import RNGooglePlaces from 'react-native-google-places-api';
-
+import City from './City';
 
 export default function Form () {
 
-  var [list, setList] = useState<string[]>([]);
+  var [list, setList] = useState<{name: string, id: string}[]>([]);
 
   return (
     <View style = {styles.container}>
@@ -17,7 +16,8 @@ export default function Form () {
       onPress={(data, details = null) => {
         // main_text is the city name, place_id is the city id
         console.log('-----flagged', data.structured_formatting.main_text, data.place_id)
-        setList([...list, data.structured_formatting.main_text]);
+        var cityInfo = {name: data.structured_formatting.main_text, id: data.place_id}
+        setList([...list, cityInfo])
       }}
       styles = {{ textInput: styles.textInput }}
       query={{
@@ -25,7 +25,14 @@ export default function Form () {
         language: 'en',
       }}
       />
-      <Text> {list} </Text>
+
+      {list.map((city) => {
+          console.log('what is list', list, 'and what is city', city)
+        return (
+          <City key={city.id} cityInfo= {city} />
+        )
+      })}
+
       <Button title='Submit'/>
     </View>
   )
@@ -34,7 +41,7 @@ export default function Form () {
 var styles = StyleSheet.create({
   container: {
     padding: 10,
-    height: '100%'
+    height: '80%'
   },
 
   textInput: {
