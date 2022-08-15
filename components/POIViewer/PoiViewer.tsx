@@ -52,7 +52,7 @@ class PoiViewer extends React.Component {
         <Text>Stars go here</Text>
         <View style={styles.categories}>
           {this.state.data?.categories?.map((category, index) => {
-          return(<Text key={index}>{category.title}{index === this.state.data.categories.length - 1 ? '' : ', ' }</Text>)
+          return(<Text key={index}>{category.title}{index === this.state.data.categories.length - 1 ? '' : ',' }</Text>)
         })}
         </View>
       </View>
