@@ -10,7 +10,6 @@ class PoiViewer extends React.Component {
   this.state = {
     data: '',
   }
-
  }
 
  componentDidMount() {
