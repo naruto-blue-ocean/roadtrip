@@ -5,27 +5,22 @@ import DraggableFlatList, {
 } from 'react-native-draggable-flatlist';
 
 const FlatList = (props) => {
-  const [data, setData] = useState([
-    {
-      id: 'c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: 'c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-  ]);
+  const [data, setData] = useState(props.POIs);
+  console.log('here are the props', props)
+
+  const reorderPOIs = (data: Array<Object>) => {
+    console.log('reorderPOIs invoked, setting data and attempting a PATCH request')
+    console.log('new data ->>>>> ', data)
+    setData(data);
+  }
+
   const renderItem = ({item, drag, isActive}) => (
     <ScaleDecorator>
       <TouchableOpacity
         onLongPress={drag}
         disabled={isActive}
         style={styles.item}>
-        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.title}>{item.name}</Text>
       </TouchableOpacity>
     </ScaleDecorator>
   );
@@ -34,7 +29,7 @@ const FlatList = (props) => {
     <View>
       <DraggableFlatList
         data={data}
-        onDragEnd={({data}) => setData(data)}
+        onDragEnd={({data}) => reorderPOIs(data)}
         keyExtractor={item => item.id}
         renderItem={renderItem}
       />

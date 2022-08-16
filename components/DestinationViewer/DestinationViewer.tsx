@@ -3,10 +3,10 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import FlatList from './FlatList'
 
-const destinations = ['San Diego', 'Los Angeles', 'San Francisco', 'Portland', 'Seattle']
+// const destinations = ['San Diego', 'Los Angeles', 'San Francisco', 'Portland', 'Seattle']
 
 export default function DestinationViewer() {
-  const sampleTrip: Object = {
+  const sampleTrip = {
     id: 100,
     destinations: [
       {
@@ -75,9 +75,15 @@ export default function DestinationViewer() {
   return (
     <View>
       <Text>Hi</Text>
-      <FlatList POIs = {sampleTrip.destinations}/>
+      <View>
+        {sampleTrip.destinations.map((destination: Object, index: number) => {
+          return <FlatList POIs = {destination.POIs} key = {destination.id}/>
+        })}
+      </View>
     </View>
   );
+
+
 }
 
 const styles = StyleSheet.create({
