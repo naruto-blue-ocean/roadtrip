@@ -17,7 +17,15 @@ export default function Drag({
       setIndexDragged(cities.indexOf(destination));
      },
     onPanResponderMove: Animated.event([null, { dy: yCoord }], {useNativeDriver: false}),
-    onPanResponderRelease: () => { yCoord.stopAnimation((lastOffset) => { yCoord.setOffset(lastOffset); }); },
+    onPanResponderRelease: () => {
+      yCoord.stopAnimation((lastOffset) => {
+        yCoord.setOffset(lastOffset);
+        yCoord.setValue(0);
+        setIndexDragged(null);
+        setCurrDragItem(null);
+        setYDragged(null);
+        setInitialDragIndex(null);
+      }); },
   })).current;
 
   useEffect(() => {
