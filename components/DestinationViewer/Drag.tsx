@@ -2,12 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, Animated, PanResponder, Pressable } from 'react-native';
 
 export default function Drag({
-  destination, cities, setCities, setCurrDrag, setNeighbor, currDrag,
-  // neighbor,
-  setYDistributions, yDistributions,
-  yDistributionsArr, indexDragged, setIndexDragged, setYDragged, yDragged
+  destination, cities, setCities, setCurrDragItem, currDragItem, setYDistributions, yDistributions,
+  yDistributionsArr, indexDragged, setIndexDragged, setYDragged, yDragged, setInitialDragIndex, initialDragIndex
 }) {
-  const [initialY, setInitialY] = useState(0);
 
   const yCoord = useRef(new Animated.Value(0)).current;
 
@@ -15,7 +12,8 @@ export default function Drag({
     onMoveShouldSetPanResponder: () => true,
     onPanResponderGrant: () => {
       yCoord.setValue(0);
-      setCurrDrag(destination);
+      setCurrDragItem(destination);
+      setInitialDragIndex(cities.indexOf(destination));
       setIndexDragged(cities.indexOf(destination));
      },
     onPanResponderMove: Animated.event([null, { dy: yCoord }], {useNativeDriver: false}),
@@ -24,7 +22,6 @@ export default function Drag({
 
   useEffect(() => {
     console.log(cities);
-    console.log(currDrag);
     yCoord.addListener(({ value }) => {
       setYDragged(value);
     });
@@ -33,16 +30,18 @@ export default function Drag({
 
   useEffect(() => {
     if (yDistributionsArr.length > 0) {
+      // console.log(currDragItem);
+      // console.log(initialDragIndex);
+      // console.log(yDragged, indexDragged, yDistributionsArr[initialDragIndex], yDistributionsArr[indexDragged + 1]);
       let copyOfCities = cities.slice();
       let neighbor;
       switch (true) {
         case (indexDragged === 0 && yDragged < 0 || indexDragged === cities.length - 1 && yDragged > 0):
           break;
-        case (yDragged > 0 && currDrag && (yDragged - yDistributionsArr[indexDragged]) >
-          (yDistributionsArr[indexDragged + 1] - yDistributionsArr[indexDragged])):
+        case (yDragged > 0 && currDragItem && (yDragged + yDistributionsArr[initialDragIndex]) > yDistributionsArr[indexDragged + 1]):
           neighbor = cities[indexDragged + 1];
           copyOfCities[indexDragged] = neighbor;
-          copyOfCities[indexDragged + 1] = currDrag;
+          copyOfCities[indexDragged + 1] = currDragItem;
           setCities(copyOfCities);
           setIndexDragged(indexDragged + 1);
           break;
@@ -71,10 +70,10 @@ export default function Drag({
       style={{...styles.item, transform: [{ translateY: yCoord }]}} {...panResponder.panHandlers}>
         <Pressable
         style={styles.pressable}
-        onPressIn={() => {
-          setCurrDrag(destination);
-          setIndexDragged(cities.indexOf(destination));
-        }}
+        // onPressIn={() => {
+        //   setCurrDragItem(destination);
+        //   setIndexDragged(cities.indexOf(destination));
+        // }}
         // onLongPress={() => {console.log(destination)}}
         >
           <Text>{destination}</Text>

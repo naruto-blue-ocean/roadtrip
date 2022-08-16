@@ -8,25 +8,20 @@ const destinations = ['San Diego', 'Los Angeles', 'San Francisco', 'Portland', '
 export default function DestinationViewer() {
 
   const [cities, setCities] = useState(destinations);
-  const [currDrag, setCurrDrag] = useState(null);
-  const [neighbor, setNeighbor] = useState(null);
+  const [currDragItem, setCurrDragItem] = useState(null);
   const [yDistributions, setYDistributions] = useState({});
   const [yDistributionsArr, setYDistributionsArr] = useState([]);
   const [indexDragged, setIndexDragged] = useState(null);
   const [yDragged, setYDragged] = useState(null);
+  const [initialDragIndex, setInitialDragIndex] = useState(null);
 
-  useEffect(() => {
-    // console.log(`currDrag: ${currDrag}, neighbor: ${neighbor}`);
-    // console.log(`cities: ${cities}`);
-    // console.log(yDistributions);
-  }, [currDrag, neighbor, cities]);
 
   useEffect(() => {
     const coordinates = Object.values(yDistributions).sort();
     setYDistributionsArr(coordinates);
-    // console.log(currDrag);
+    // console.log(currDragItem);
     // console.log(yDistributionsArr);
-  }, [currDrag, neighbor, cities, yDistributions]);
+  }, [currDragItem, cities, yDistributions]);
 
   return (
     <View style={styles.wrapper}>
@@ -39,10 +34,8 @@ export default function DestinationViewer() {
             key={destination}
             destination={destination}
             cities={cities}
-            neighbor={neighbor}
             setCities={setCities}
-            setCurrDrag={setCurrDrag}
-            setNeighbor={setNeighbor}
+            setCurrDragItem={setCurrDragItem}
             yDistributions={yDistributions}
             setYDistributions={setYDistributions}
             yDistributionsArr={yDistributionsArr}
@@ -50,7 +43,9 @@ export default function DestinationViewer() {
             setIndexDragged={setIndexDragged}
             setYDragged={setYDragged}
             yDragged={yDragged}
-            currDrag={currDrag}
+            currDragItem={currDragItem}
+            initialDragIndex={initialDragIndex}
+            setInitialDragIndex={setInitialDragIndex}
           />))}
       </View>
       <StatusBar style="auto" />
