@@ -17,16 +17,17 @@ class PoiViewer extends React.Component {
 
  componentDidMount() {
   axios.defaults.headers.common['Authorization'] = `Bearer ${config.YELPTOKEN}`;
-  let poiname = 'north-india-restaurant-san-francisco';
+  let poiname = 'jIxS5Td2o0gBWx0G0qx59Q';
+  let userid = 'johnny@email.com';
   //can use ID instead
   axios.get(`https://api.yelp.com/v3/businesses/${poiname}`).then((data) => {
  // DO A GET REQUEST TO THE DATABASE TO RETRIEVE THE NOTES
     // console.log(data.data);
     this.setState({data:data.data});
   })
-  //USING LOCAL TUNNEL TO TET THE CONNECTION TO THE DB
-  axios.get(`https://two-pumas-walk-47-157-45-118.loca.lt/notes`).then((data) => {
-    console.log(data.data);
+  //USING LOCAL TUNNEL TO GET THE CONNECTION TO THE DB
+  axios.get(`${config.LOCALTUNNEL}/notes/${userid}/${poiname}`).then((data) => {
+    // console.log(data.data);
     this.setState({note:data.data?.content})
   }).catch((err) => {
     console.log('err at getting notes in poi viewer', err.response)

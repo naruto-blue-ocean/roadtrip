@@ -47,6 +47,7 @@ import HomeScreen from './components/HomeScreen/HomeScreen';
 import AddPOI from './components/AddPOI/AddPOI';
 import Initialization from './components/Initialization/Initialization';
 import Login from './components/Login/Login';
+import Archive from './components/Archive/Archive';
 
 const Stack = createNativeStackNavigator();
 
@@ -73,6 +74,11 @@ export default function App() {
           name="HomeScreen"
           component={HomeScreen}
           options={{ title: 'Home' }}
+        />
+        <Stack.Screen
+          name="Archive"
+          component={Archive}
+          options={{ title: 'View Archived Trips' }}
         />
         <Stack.Screen
           name="DestinationViewer"
