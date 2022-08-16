@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {Keyboard, Dimensions, StyleSheet, Text, View, Image, TextInput, Pressable, TouchableHighlight, ScrollView } from 'react-native';
+import {Keyboard, Dimensions, StyleSheet, Text, View, Image, TextInput, Pressable, TouchableHighlight, ScrollView, NativeModules } from 'react-native';
 import axios from 'axios';
 import config from '../../config.js';
 import Edit from './Edit.tsx';
@@ -10,7 +10,7 @@ class PoiViewer extends React.Component {
   super(props);
   this.state = {
     data: '',
-    note: '',
+    note: 'the users note will go here',
     showModal: false
   }
  }
@@ -23,6 +23,13 @@ class PoiViewer extends React.Component {
  // DO A GET REQUEST TO THE DATABASE TO RETRIEVE THE NOTES
     // console.log(data.data);
     this.setState({data:data.data});
+  })
+  //USING LOCAL TUNNEL TO TET THE CONNECTION TO THE DB
+  axios.get(`https://two-pumas-walk-47-157-45-118.loca.lt/notes`).then((data) => {
+    console.log(data.data);
+    this.setState({note:data.data?.content})
+  }).catch((err) => {
+    console.log('err at getting notes in poi viewer', err.response)
   })
  }
 
@@ -38,8 +45,8 @@ class PoiViewer extends React.Component {
   // console.log("DIMESIONS WIDTH: ",  Dimensions.get('window').width)
   // console.log("WHAT IS THE ADDRESS: ", this.state.data.location?.display_address)
   var name = this.state.data.price
-  console.log("DOLLAR DOLLAR BILLS: ", name.length)
-  console.log("DOLLAR DOLLAR BILLSasjkasd: ", )
+  // console.log("DOLLAR DOLLAR BILLS: ", name.length)
+  // console.log("DOLLAR DOLLAR BILLSasjkasd: ", )
   return (
     <ScrollView>
       <Image source={{uri: `${this.state.data.image_url}`}}
@@ -78,7 +85,7 @@ class PoiViewer extends React.Component {
       <Text>Phone: {this.state.data.display_phone}</Text>
 
       <View style={styles.note} >
-      <Text>the users note will go here</Text>
+      <Text>{this.state.note}</Text>
          <Pressable
          onPress={this.displayModal.bind(this)}
          >
