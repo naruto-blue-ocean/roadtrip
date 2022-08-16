@@ -35,6 +35,7 @@ export default function DestinationViewer() {
             destination={destination}
             cities={cities}
             setCities={setCities}
+            currDragItem={currDragItem}
             setCurrDragItem={setCurrDragItem}
             yDistributions={yDistributions}
             setYDistributions={setYDistributions}
@@ -43,7 +44,6 @@ export default function DestinationViewer() {
             setIndexDragged={setIndexDragged}
             setYDragged={setYDragged}
             yDragged={yDragged}
-            currDragItem={currDragItem}
             initialDragIndex={initialDragIndex}
             setInitialDragIndex={setInitialDragIndex}
           />))}

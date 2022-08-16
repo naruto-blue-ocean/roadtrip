@@ -45,6 +45,13 @@ export default function Drag({
           setCities(copyOfCities);
           setIndexDragged(indexDragged + 1);
           break;
+        case (yDragged < 0 && currDragItem && (yDragged + yDistributionsArr[initialDragIndex]) < yDistributionsArr[indexDragged - 1]):
+          neighbor = cities[indexDragged - 1];
+          copyOfCities[indexDragged] = neighbor;
+          copyOfCities[indexDragged - 1] = currDragItem;
+          setCities(copyOfCities);
+          setIndexDragged(indexDragged - 1);
+          break;
       }
     }
   }, [yDragged]);
