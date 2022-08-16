@@ -10,6 +10,7 @@ class PoiViewer extends React.Component {
   super(props);
   this.state = {
     data: '',
+    note: '',
     showModal: false
   }
  }
@@ -19,6 +20,7 @@ class PoiViewer extends React.Component {
   let poiname = 'north-india-restaurant-san-francisco';
   //can use ID instead
   axios.get(`https://api.yelp.com/v3/businesses/${poiname}`).then((data) => {
+ // DO A GET REQUEST TO THE DATABASE TO RETRIEVE THE NOTES
     // console.log(data.data);
     this.setState({data:data.data});
   })
@@ -35,6 +37,9 @@ class PoiViewer extends React.Component {
   // console.log("DIMESIONS HEIGHT: ",  Dimensions.get('window').height)
   // console.log("DIMESIONS WIDTH: ",  Dimensions.get('window').width)
   // console.log("WHAT IS THE ADDRESS: ", this.state.data.location?.display_address)
+  var name = this.state.data.price
+  console.log("DOLLAR DOLLAR BILLS: ", name.length)
+  console.log("DOLLAR DOLLAR BILLSasjkasd: ", )
   return (
     <ScrollView>
       <Image source={{uri: `${this.state.data.image_url}`}}
@@ -49,14 +54,24 @@ class PoiViewer extends React.Component {
 
       <Text style={styles.title}>{this.state.data.name}</Text>
       <View style={styles.starRating}>
-        <Text>Stars go here</Text>
+        <View style={styles.outerStar}>
+          {[1,2,3,4,5].map((star, index) => {
+            return <Text key={index} style={{color: index < this.state.data.rating ? "#f9a920" : "#D3D3D3" }}>&#9733;</Text>
+          })}
+        </View>
+
         <View style={styles.categories}>
-          {this.state.data?.categories?.map((category, index) => {
-          return(<Text key={index}>{category.title}{index === this.state.data.categories.length - 1 ? '' : ',' }</Text>)
+        {/* <View style={styles.outerStar}>
+          {[1,2,3,4].map((star, index) => {
+            return <Text key={index} style={{color: index < this.state.data.price.length ? "black" : "#D3D3D3" }}>&#9733;</Text>
+          })}
+        </View> */}
+        {this.state.data?.categories?.map((category, index) => {
+          return(<Text key={index}>{category.title}{index === this.state.data.categories.length - 1 ? '' : ', ' }</Text>)
         })}
         </View>
       </View>
-      <Text>{this.state.data.price}</Text>
+      {/* <Text>{this.state.data.price}</Text> */}
       <Text>{this.state.data.location?.display_address[0]} {this.state.data.location?.display_address[1]}</Text>
       {/* Restaurant Info */}
       <Text>Stars: {this.state.data.rating}</Text>
@@ -69,7 +84,7 @@ class PoiViewer extends React.Component {
          >
           <Text style={styles.editButton}>Edit</Text>
          </Pressable>
-         <Edit showModal={this.state.showModal} displayModal={this.displayModal.bind(this)} title={this.state.data.name}/>
+         <Edit showModal={this.state.showModal} displayModal={this.displayModal.bind(this)} title={this.state.data.name} note={this.state.note}/>
 
       </View>
 
@@ -95,6 +110,10 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10,
     borderRadius: 10,
+  },
+  outerStar:{
+    flex: 1,
+    flexDirection: 'row',
   },
   wrapper: {
     flex: 1,

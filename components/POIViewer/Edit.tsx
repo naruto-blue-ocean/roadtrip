@@ -4,7 +4,7 @@ import {Keyboard, Dimensions, StyleSheet, Text, View, Image, TextInput, Pressabl
 import axios from 'axios';
 import config from '../../config.js';
 
-export default function Edit({showModal, displayModal, title}) {
+export default function Edit({showModal, displayModal, title, note}) {
 
   const [showPost, setShowPost] = useState(false)
 
