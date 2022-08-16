@@ -8,12 +8,11 @@ export default function AddCity () {
 
   var [list, setList] = useState<{name: string, id: string}[]>([]);
 
-  var post = async (body: any) => {
-    console.log('whati s body', list)
+  var post = async () => {
     // sends an array of objects to back end, must deconstruct and store each
     // individual city server side
-    var results = await axios.post('/url', body);
-    try {console.log('Success in posting data from client side')}
+    var results = await axios.post('https://big-days-doubt-99-33-66-218.loca.lt/postCities', list)
+    try {console.log('Success in posting data from client side', results)}
     catch(err) {console.log('Error in posting cities from client side', err)}
   };
 
