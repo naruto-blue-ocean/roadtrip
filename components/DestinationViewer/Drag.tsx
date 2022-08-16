@@ -29,7 +29,7 @@ export default function Drag({
   })).current;
 
   useEffect(() => {
-    if (currDragItem && currDragItem == destination) {
+    if (currDragItem && currDragItem === destination) {
       yCoord.addListener(({ value }) => {
         setYDragged(value);
         // console.log(currDragItem);
