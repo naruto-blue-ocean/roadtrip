@@ -32,6 +32,10 @@ export default function FakeHomeScreen({ navigation }) {
         title="Add a Point of Interest"
         onPress={() => { navigation.navigate('AddPOI')}}
       />
+      <Button
+        title="Archive"
+        onPress={() => { navigation.navigate('Archive')}}
+      />
       <StatusBar style="auto" />
     </View>
   );
