@@ -2,12 +2,13 @@ import React from 'react';
 import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import config from '../../config';
 export default function Suggestion({ city }) {
   const handlePress = (term: string) => {
     console.log('Pressed term = ', term);
     axios.get('https://api.yelp.com/v3/businesses/search', {
       headers: {
-        Authorization: 'Bearer 2l6U3jqChCpjhk5HvnSz4KTfH5JTh-BLj01CaM3VoXg2HUrgYHtHelrULT5NOGvfwUax1oENh0cmmnjY8GesSgrnf2lFBxZbs94dZBGTI4KgKDjnOUIruBytYvD5YnYx'
+        Authorization: config.YELPTOKEN,
       },
       params: {
         term,
