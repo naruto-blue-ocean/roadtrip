@@ -2,11 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, Animated, PanResponder, Pressable } from 'react-native';
 
 export default function Drag({
-  destination, cities, setCities, setCurrDrag, setNeighbor,
+  destination, cities, setCities, setCurrDrag, setNeighbor, currDrag,
   // neighbor,
   setYDistributions, yDistributions,
-  yDistributionsArr
-  // neighborY, setNeighborY
+  yDistributionsArr, indexDragged, setIndexDragged, setYDragged, yDragged
 }) {
   const [initialY, setInitialY] = useState(0);
 
@@ -16,68 +15,41 @@ export default function Drag({
     onMoveShouldSetPanResponder: () => true,
     onPanResponderGrant: () => {
       yCoord.setValue(0);
+      setCurrDrag(destination);
+      setIndexDragged(cities.indexOf(destination));
      },
     onPanResponderMove: Animated.event([null, { dy: yCoord }], {useNativeDriver: false}),
     onPanResponderRelease: () => { yCoord.stopAnimation((lastOffset) => { yCoord.setOffset(lastOffset); }); },
   })).current;
 
   useEffect(() => {
-    if (yDistributionsArr.length > 0) {
-      // console.log(yDistributionsArr);
-
-      yCoord.addListener(({ value }) => {
-        let indexDragged = cities.indexOf(destination);
-        let copyOfCities = cities.slice();
-        let neighbor;
-        // console.log(value, yDistributionsArr[indexDragged + 1], yDistributionsArr[indexDragged]);
-        switch (true) {
-          case (indexDragged === cities.length - 1 && value > 0 || indexDragged === 0 && value < 0):
-            // setNeighbor(destination);
-            neighbor = destination;
-            break;
-          case (value > 0 && value > (yDistributionsArr[indexDragged + 1] - yDistributionsArr[indexDragged])):
-            // setNeighbor(cities[indexDragged + 1]);
-            neighbor = copyOfCities[indexDragged + 1];
-            copyOfCities[indexDragged] = neighbor;
-            copyOfCities[indexDragged + 1] = destination;
-            indexDragged += 1;
-            // console.log(neighbor);
-            // setCities(copyOfCities);
-          case (value > 0):
-            // setNeighbor(cities[indexDragged + 1]);
-            neighbor = copyOfCities[indexDragged + 1];
-            // console.log(neighbor);
-            break;
-          case (value < 0 && Math.abs(value) > (yDistributionsArr[indexDragged] - yDistributionsArr[indexDragged - 1])):
-            // setNeighbor(cities[indexDragged - 1]);
-            neighbor = copyOfCities[indexDragged - 1]
-            copyOfCities[indexDragged] = neighbor;
-            copyOfCities[indexDragged - 1] = destination;
-            indexDragged -= 1;
-            // setCities(copyOfCities);
-            break;
-          case (value < 0):
-            // setNeighbor(cities[indexDragged - 1]);
-            neighbor = copyOfCities[indexDragged = 1];
-            break;
-        }
+    console.log(cities);
+    console.log(currDrag);
+    yCoord.addListener(({ value }) => {
+      setYDragged(value);
     });
-
-      // console.log(copyOfCities);
-      // console.log(cities.indexOf(destination));
-    };
-  }, [yCoord, yDistributionsArr, cities]);
+  }, [yCoord, yDistributionsArr]);
   // Event listener for Animated Value will provide y-offset values during animation
 
-  // useEffect(() => {
-  //   if (neighbor === destination) {
-  //     setNeighborY(initialY);
-  //   }
-  // }), [neighbor];
+  useEffect(() => {
+    if (yDistributionsArr.length > 0) {
+      let copyOfCities = cities.slice();
+      let neighbor;
+      switch (true) {
+        case (indexDragged === 0 && yDragged < 0 || indexDragged === cities.length - 1 && yDragged > 0):
+          break;
+        case (yDragged > 0 && currDrag && (yDragged - yDistributionsArr[indexDragged]) >
+          (yDistributionsArr[indexDragged + 1] - yDistributionsArr[indexDragged])):
+          neighbor = cities[indexDragged + 1];
+          copyOfCities[indexDragged] = neighbor;
+          copyOfCities[indexDragged + 1] = currDrag;
+          setCities(copyOfCities);
+          setIndexDragged(indexDragged + 1);
+          break;
+      }
+    }
+  }, [yDragged]);
 
-  // useEffect(() => {
-
-  // });
 
   return (
       <Animated.View
@@ -99,7 +71,10 @@ export default function Drag({
       style={{...styles.item, transform: [{ translateY: yCoord }]}} {...panResponder.panHandlers}>
         <Pressable
         style={styles.pressable}
-        onPressIn={() => { setCurrDrag(destination) }}
+        onPressIn={() => {
+          setCurrDrag(destination);
+          setIndexDragged(cities.indexOf(destination));
+        }}
         // onLongPress={() => {console.log(destination)}}
         >
           <Text>{destination}</Text>

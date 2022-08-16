@@ -10,10 +10,10 @@ export default function DestinationViewer() {
   const [cities, setCities] = useState(destinations);
   const [currDrag, setCurrDrag] = useState(null);
   const [neighbor, setNeighbor] = useState(null);
-  const [currDragY, setCurrDragY] = useState(0);
-  // const [neighborY, setNeighborY] = useState(0);
   const [yDistributions, setYDistributions] = useState({});
   const [yDistributionsArr, setYDistributionsArr] = useState([]);
+  const [indexDragged, setIndexDragged] = useState(null);
+  const [yDragged, setYDragged] = useState(null);
 
   useEffect(() => {
     // console.log(`currDrag: ${currDrag}, neighbor: ${neighbor}`);
@@ -24,6 +24,7 @@ export default function DestinationViewer() {
   useEffect(() => {
     const coordinates = Object.values(yDistributions).sort();
     setYDistributionsArr(coordinates);
+    // console.log(currDrag);
     // console.log(yDistributionsArr);
   }, [currDrag, neighbor, cities, yDistributions]);
 
@@ -39,14 +40,17 @@ export default function DestinationViewer() {
             destination={destination}
             cities={cities}
             neighbor={neighbor}
-            // neighborY={neighborY}
             setCities={setCities}
             setCurrDrag={setCurrDrag}
             setNeighbor={setNeighbor}
-            // setNeighborY={setNeighborY}
             yDistributions={yDistributions}
             setYDistributions={setYDistributions}
             yDistributionsArr={yDistributionsArr}
+            indexDragged={indexDragged}
+            setIndexDragged={setIndexDragged}
+            setYDragged={setYDragged}
+            yDragged={yDragged}
+            currDrag={currDrag}
           />))}
       </View>
       <StatusBar style="auto" />
