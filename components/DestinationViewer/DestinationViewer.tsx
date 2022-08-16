@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, FlatList, Animated} from 'react-native';
 import Drag from './Drag';
@@ -19,8 +19,6 @@ export default function DestinationViewer() {
   useEffect(() => {
     const coordinates = Object.values(yDistributions).sort();
     setYDistributionsArr(coordinates);
-    // console.log(currDragItem);
-    // console.log(yDistributionsArr);
   }, [currDragItem, cities, yDistributions]);
 
   return (

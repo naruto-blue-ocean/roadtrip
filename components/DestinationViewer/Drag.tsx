@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StyleSheet, Text, Animated, PanResponder, Pressable } from 'react-native';
 
 export default function Drag({
@@ -30,9 +30,6 @@ export default function Drag({
 
   useEffect(() => {
     if (yDistributionsArr.length > 0) {
-      // console.log(currDragItem);
-      // console.log(initialDragIndex);
-      // console.log(yDragged, indexDragged, yDistributionsArr[initialDragIndex], yDistributionsArr[indexDragged + 1]);
       let copyOfCities = cities.slice();
       let neighbor;
       switch (true) {
@@ -64,7 +61,6 @@ export default function Drag({
         let allYs = yDistributions;
         allYs[destination] = layout.y;
         setYDistributions(allYs);
-        // setInitialY(layout.height);
         // if (destination === 'San Diego') {
         // console.log(destination);
         // console.log('height:', layout.height);
