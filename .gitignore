@@ -12,5 +12,6 @@ web-build/
 config.js
 .expo-shared/
 NODE_ENV
+package-lock.json
 # macOS
 .DS_Store
