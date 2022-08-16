@@ -40,11 +40,35 @@ class PoiViewer extends React.Component {
 
  }
 
+ updateNote(value: String) {
+
+  //data we will send over to the server
+  var data = {
+    note: value,
+    user_email: '',
+    poi_id: ''
+  }
+
+  console.log("WHAT IS THE NEW VALUE: ", value)
+  axios.put(`https://seven-bottles-act-76-171-108-153.loca.lt/updateNote`, data)
+  .then(() => {
+    console.log("POST WAS SUCCESS")
+    this.setState({
+      //where were will update the new note
+      note: value
+    })
+  })
+  .catch((err) => {
+    console.log("err when updating the new note")
+  })
+
+ }
+
  render() {
   // console.log("DIMESIONS HEIGHT: ",  Dimensions.get('window').height)
   // console.log("DIMESIONS WIDTH: ",  Dimensions.get('window').width)
   // console.log("WHAT IS THE ADDRESS: ", this.state.data.location?.display_address)
-  var name = this.state.data.price
+  // var name = this.state.data.price
   // console.log("DOLLAR DOLLAR BILLS: ", name.length)
   // console.log("DOLLAR DOLLAR BILLSasjkasd: ", )
   return (
@@ -91,7 +115,7 @@ class PoiViewer extends React.Component {
          >
           <Text style={styles.editButton}>Edit</Text>
          </Pressable>
-         <Edit showModal={this.state.showModal} displayModal={this.displayModal.bind(this)} title={this.state.data.name} note={this.state.note}/>
+         <Edit updateNote={this.updateNote.bind(this)} showModal={this.state.showModal} displayModal={this.displayModal.bind(this)} title={this.state.data.name} note={this.state.note}/>
 
       </View>
 
