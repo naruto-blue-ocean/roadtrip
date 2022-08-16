@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import {Text, StyleSheet, View, Image, TextInput, Button } from 'react-native';
 import axios from 'axios';
-import Form from './Form'
+import Form from './Form';
+import City from './City';
 
 export default function AddCity () {
+
   var [list, setList] = useState<{name: string, id: string}[]>([]);
 
   var post = async (body: any) => {
@@ -16,14 +18,41 @@ export default function AddCity () {
   };
 
   return (
-    <View>
+    <View style= {styles.container}>
       <Form
         list = {list}
         setList = {setList}
         />
+    <View style={styles.cityContainer}>
+      {list.map((city: any) => {
+          console.log('what is list', list, 'and what is city', city)
+        return (
+          <City key={city.id} cityInfo= {city} />
+        )
+      })}
+    </View>
       <Button
       onPress={post}
       title='Submit'/>
     </View>
   );
 };
+
+var styles = StyleSheet.create({
+  container: {
+    padding: 10,
+    height: '100%',
+    alignContent: 'center',
+  },
+
+  cityContainer : {
+    position: 'relative',
+    zIndex: 0,
+    bottom: 490,
+    width: 200,
+    left: 80
+  }
+})
+
+
+// given an object, for each
