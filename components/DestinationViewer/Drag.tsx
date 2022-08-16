@@ -8,6 +8,14 @@ export default function Drag({
 
   const yCoord = useRef(new Animated.Value(0)).current;
 
+  // const springTranslation = (dy) => {
+  //   switch(true) {
+  //     case (dy > 0):
+
+  //     case (dy < 0):
+  //   }
+  // }
+
   const panResponder = useRef(PanResponder.create({
     onMoveShouldSetPanResponder: () => true,
     onPanResponderGrant: () => {
@@ -18,17 +26,20 @@ export default function Drag({
      },
     onPanResponderMove: (_, { dy }) => {
       yCoord.setValue(dy);
-      console.log(dy);
+      // console.log(dy);
+      // console.log(currDragItem);
+      console.log(yCoord);
     },
     onPanResponderRelease: () => {
-      yCoord.stopAnimation((lastOffset) => {
-        yCoord.setOffset(lastOffset);
-        yCoord.setValue(0);
-      });
-      // Animated.spring(yCoord, {
-      //   toValue: yDistributionsArr[indexDragged] - yDistributionsArr[initialDragIndex],
-      //   useNativeDriver: false,
-      // }).start();
+      // yCoord.stopAnimation((lastOffset) => {
+      //   yCoord.setOffset(lastOffset);
+      //   yCoord.setValue(0);
+      // });
+      Animated.spring(yCoord, {
+        // toValue: yDistributionsArr[indexDragged] - yDistributionsArr[initialDragIndex],
+        toValue: 0,
+        useNativeDriver: false,
+      }).start();
       setIndexDragged(null);
       setCurrDragItem(null);
       setYDragged(null);
@@ -47,8 +58,8 @@ export default function Drag({
 
   useEffect(() => {
     if (currDragItem && destination === currDragItem) {
-      console.log(currDragItem, indexDragged);
-      console.log(cities);
+      // console.log(currDragItem, indexDragged);
+      // console.log(cities);
     }
   }, [yDragged]);
 
@@ -117,8 +128,8 @@ export default function Drag({
 const styles = StyleSheet.create({
   item : {
     backgroundColor: 'white',
-    height: 100,
-    width: 100,
+    height: 80,
+    width: 300,
     borderColor: 'black',
     borderWidth: 1,
   },

@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 4,
     backgroundColor: '#FB8500',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
 });
 
