@@ -29,12 +29,19 @@ export default function Drag({
   })).current;
 
   useEffect(() => {
-    console.log(cities);
-    yCoord.addListener(({ value }) => {
-      setYDragged(value);
-    });
-  }, [yCoord, yDistributionsArr]);
+    if (currDragItem && currDragItem == destination) {
+      yCoord.addListener(({ value }) => {
+        setYDragged(value);
+        // console.log(currDragItem);
+      });
+    }
+  }, [currDragItem, yDistributionsArr]);
   // Event listener for Animated Value will provide y-offset values during animation
+
+  useEffect(() => {
+    console.log(cities);
+  }, [yDragged]);
+
 
   useEffect(() => {
     if (yDistributionsArr.length > 0) {
