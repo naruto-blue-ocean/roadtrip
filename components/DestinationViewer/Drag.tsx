@@ -85,7 +85,11 @@ export default function Drag({
         // }
       }}
       // onLayout approach will provide initial position after elements are painted on the screen
-      style={{...styles.item, transform: [{ translateY: yCoord }]}} {...panResponder.panHandlers}>
+      style={{...styles.item,
+        transform: [{ translateY: yCoord }],
+        zIndex: currDragItem === destination ? 1000 : 0,
+      }}
+      {...panResponder.panHandlers}>
         <Pressable
         style={styles.pressable}
         // onPressIn={() => {
