@@ -24,9 +24,9 @@ class PoiViewer extends React.Component {
     // console.log(data.data);
     this.setState({data:data.data});
   })
-  //USING LOCAL TUNNEL TO TET THE CONNECTION TO THE DB
-  axios.get(`https://two-pumas-walk-47-157-45-118.loca.lt/notes`).then((data) => {
-    console.log(data.data);
+  //USING LOCAL TUNNEL TO GET THE CONNECTION TO THE DB
+  axios.get(`${config.LOCALTUNNEL}/notes`).then((data) => {
+    // console.log(data.data);
     this.setState({note:data.data?.content})
   }).catch((err) => {
     console.log('err at getting notes in poi viewer', err.response)
