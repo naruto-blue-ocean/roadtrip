@@ -1,10 +1,14 @@
+import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function TripCard() {
+
+  const [active, setActive] = useState(false);
+
   return (
     <View style={styles.container}>
       <Text style={styles.tripName}>Trip name</Text>
-      <View style={styles.indicator}></View>
+      <View style={ active ? styles.greenIndicator : styles.redIndicator}></View>
     </View>
   )
 }
@@ -23,13 +27,24 @@ const styles = StyleSheet.create({
   tripName: {
     marginLeft: 30
   },
-  indicator: {
+  greenIndicator: {
     width: 10,
     height: 10,
-    backgroundColor: '#0fff00',
+    backgroundColor: 'green',
     borderStyle: 'solid',
     borderRadius: 5,
-    borderColor: '#0fff00',
-    marginRight: 40,
+    marginRight: 30,
+    borderWidth: 1,
+    borderColor: 'grey'
+  },
+  redIndicator: {
+    width: 10,
+    height: 10,
+    backgroundColor: '#f14c56',
+    borderStyle: 'solid',
+    borderRadius: 5,
+    marginRight: 30,
+    borderWidth: 1,
+    borderColor: 'grey'
   }
 })
