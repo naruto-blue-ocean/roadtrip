@@ -16,48 +16,58 @@ export default function Drag({
       setInitialDragIndex(cities.indexOf(destination));
       setIndexDragged(cities.indexOf(destination));
      },
-    onPanResponderMove: Animated.event([null, { dy: yCoord }], {useNativeDriver: false}),
+    onPanResponderMove: (_, { dy }) => {
+      yCoord.setValue(dy);
+      console.log(dy);
+    },
     onPanResponderRelease: () => {
       yCoord.stopAnimation((lastOffset) => {
         yCoord.setOffset(lastOffset);
         yCoord.setValue(0);
-        setIndexDragged(null);
-        setCurrDragItem(null);
-        setYDragged(null);
-        setInitialDragIndex(null);
-      }); },
+      });
+      // Animated.spring(yCoord, {
+      //   toValue: yDistributionsArr[indexDragged] - yDistributionsArr[initialDragIndex],
+      //   useNativeDriver: false,
+      // }).start();
+      setIndexDragged(null);
+      setCurrDragItem(null);
+      setYDragged(null);
+      setInitialDragIndex(null);
+    },
   })).current;
 
   useEffect(() => {
     if (currDragItem && currDragItem === destination) {
       yCoord.addListener(({ value }) => {
         setYDragged(value);
-        // console.log(currDragItem);
       });
     }
   }, [currDragItem, yDistributionsArr]);
   // Event listener for Animated Value will provide y-offset values during animation
 
   useEffect(() => {
-    console.log(cities);
+    if (currDragItem && destination === currDragItem) {
+      console.log(currDragItem, indexDragged);
+      console.log(cities);
+    }
   }, [yDragged]);
 
 
   useEffect(() => {
-    if (yDistributionsArr.length > 0) {
+    if (yDistributionsArr.length > 0 && currDragItem && currDragItem === destination) {
       let copyOfCities = cities.slice();
       let neighbor;
       switch (true) {
         case (indexDragged === 0 && yDragged < 0 || indexDragged === cities.length - 1 && yDragged > 0):
           break;
-        case (yDragged > 0 && currDragItem && (yDragged + yDistributionsArr[initialDragIndex]) > yDistributionsArr[indexDragged + 1]):
+        case (yDragged > 0 && (yDragged + yDistributionsArr[initialDragIndex]) > yDistributionsArr[indexDragged + 1]):
           neighbor = cities[indexDragged + 1];
           copyOfCities[indexDragged] = neighbor;
           copyOfCities[indexDragged + 1] = currDragItem;
           setCities(copyOfCities);
           setIndexDragged(indexDragged + 1);
           break;
-        case (yDragged < 0 && currDragItem && (yDragged + yDistributionsArr[initialDragIndex]) < yDistributionsArr[indexDragged - 1]):
+        case (yDragged < 0 && (yDragged + yDistributionsArr[initialDragIndex]) < yDistributionsArr[indexDragged - 1]):
           neighbor = cities[indexDragged - 1];
           copyOfCities[indexDragged] = neighbor;
           copyOfCities[indexDragged - 1] = currDragItem;
