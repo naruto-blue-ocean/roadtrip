@@ -8,12 +8,12 @@ export default function AddCity () {
 
   var [list, setList] = useState<{name: string, id: string}[]>([]);
 
-  var post = async () => {
+  var post = () => {
     // sends an array of objects to back end, must deconstruct and store each
     // individual city server side
-    var results = await axios.post('https://three-drinks-dream-99-33-66-218.loca.lt/postCities', list)
-    try {console.log('Success in posting data from client side', results)}
-    catch(err) {console.log('Error in posting cities from client side', err)}
+    axios.post('https://three-drinks-dream-99-33-66-218.loca.lt/postCities', list)
+    .then(() => {console.log('success posting from front end')})
+    .catch((err) => {console.log('Err in posting from front end', err)})
   };
 
   return (
