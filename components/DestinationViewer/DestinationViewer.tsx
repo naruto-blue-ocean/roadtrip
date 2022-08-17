@@ -119,38 +119,40 @@ export default function DestinationViewer() {
           ], {useNativeDriver: false})}
           scrollEventThrottle={1}
         >
-          <View style={styles.tilewrapper}>
-            <Pressable
-              onPressIn={ () => {
-                LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-                setExpanded(prevState => !prevState);
-              }}
-              style={styles.plusicon}
-            >
-              <FontAwesome name="plus-circle" size={36} color="white" />
+          <View style={styles.cityandpoiwrapper}>
+            <View style={styles.tilewrapper}>
+              <Pressable
+                onPressIn={ () => {
+                  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                  setExpanded(prevState => !prevState);
+                }}
+                style={styles.plusicon}
+              >
+                <FontAwesome name="plus-circle" size={36} color="white" />
+              </Pressable>
+              <Pressable
+                onLongPress={drag}
+                disabled={isActive}
+                style={styles.item}
+              >
+              <Text style={styles.title}>{item.cityName}</Text>
             </Pressable>
-            <Pressable
-              onLongPress={drag}
-              disabled={isActive}
-              style={styles.item}
-            >
-            <Text style={styles.title}>{item.cityName}</Text>
-          </Pressable>
-          </View>
-          <View style={styles.deleteicon}>
-            <Pressable
-              style={styles.deletearea}
-              onPressIn={handleDelete}
-            >
-              <AntDesign name="delete" size={36} color="white" />
-            </Pressable>
+            </View>
+            <View style={styles.deleteicon}>
+              <Pressable
+                style={styles.deletearea}
+                onPressIn={handleDelete}
+              >
+                <AntDesign name="delete" size={36} color="white" />
+              </Pressable>
+            </View>
+            {expanded && (
+              <View style={styles.poiwrapper}>
+                <POI_List POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
+              </View>
+            )}
           </View>
         </ScrollView>
-        {expanded && (
-          <View style={styles.poiwrapper}>
-            <POI_List POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
-          </View>
-        )}
       </ScaleDecorator>
     )
   }
