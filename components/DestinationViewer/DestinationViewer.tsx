@@ -12,7 +12,7 @@ export default function DestinationViewer() {
     destinations: [
       {
         id: 200,
-        city: 'San Francisco',
+        cityName: 'San Francisco',
         POIs: [
           {
             id: 1,
@@ -33,7 +33,7 @@ export default function DestinationViewer() {
       },
       {
         id: 300,
-        city: 'San Diego',
+        cityName: 'San Diego',
         POIs: [
           {
             id: 4,
@@ -54,7 +54,7 @@ export default function DestinationViewer() {
       },
       {
         id: 400,
-        city: 'Los Angeles',
+        cityName: 'Los Angeles',
         POIs: [
           {
             id: 7,
@@ -86,10 +86,10 @@ export default function DestinationViewer() {
           onLongPress={drag}
           disabled={isActive}
           style={styles.item}>
-          <Text style={styles.title}>{item.city}</Text>
+          <Text style={styles.title}>{item.cityName}</Text>
         </TouchableOpacity>
         <View>
-          <FlatList POIs={item.POIs} />
+          <FlatList POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
         </View>
     </ScaleDecorator>
     )
@@ -97,10 +97,11 @@ export default function DestinationViewer() {
 
   return (
     <View>
+      {console.log(cities)}
       <DraggableFlatList
         data={cities}
         onDragEnd={({data}) => {setCities(data)}}
-        keyExtractor={item => item.city}
+        keyExtractor={item => item.cityName}
         renderItem={renderCities}
       />
     </View>
