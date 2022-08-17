@@ -27,8 +27,10 @@ class PoiViewer extends React.Component {
   })
   //USING LOCAL TUNNEL TO GET THE CONNECTION TO THE DB
   axios.get(`${config.LOCALTUNNEL}/notes/${userid}/${poiname}`).then((data) => {
-    // console.log(data.data);
-    this.setState({note:data.data?.content})
+    // console.log('data from db in poi viewer', data.data);
+    if (data.data) {
+      this.setState({note:data.data?.content})
+    }
   }).catch((err) => {
     console.log('err at getting notes in poi viewer', err.response)
   })
