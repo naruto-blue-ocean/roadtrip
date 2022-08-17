@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {View, StyleSheet, TouchableOpacity, Text, LayoutAnimation } from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable } from 'react-native';
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
-import FlatList from './FlatList'
+import FlatList from './FlatList';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
+
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
+
 
 export default function DestinationViewer() {
   const sampleTrip = {
@@ -75,22 +79,50 @@ export default function DestinationViewer() {
   }
 
   const [cities, setCities] = useState(sampleTrip.destinations);
-
   const renderCities = ({item, drag, isActive}) => {
     const [expanded, setExpanded] = useState(false);
+    const scrollX = useRef(new Animated.Value(0)).current;
 
     return (
       <ScaleDecorator>
-        <TouchableOpacity
-          onPressIn={ () => {
-            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-            setExpanded(prevState => !prevState);
-          }}
-          onLongPress={drag}
-          disabled={isActive}
-          style={styles.item}>
-          <Text style={styles.title}>{item.cityName}</Text>
-        </TouchableOpacity>
+        <ScrollView
+          contentContainerStyle={styles.scrollviewwrapper}
+          horizontal={true}
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={Animated.event([
+            {
+              nativeEvent: {
+                contentOffset: {
+                  x: scrollX
+                }
+              }
+            }
+          ], {useNativeDriver: false})}
+          scrollEventThrottle={1}
+        >
+          <View style={styles.tilewrapper}>
+            <Pressable
+              onPressIn={ () => {
+                LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                setExpanded(prevState => !prevState);
+              }}
+              style={styles.plusicon}
+            >
+              <FontAwesome name="plus-circle" size={36} color="white" />
+            </Pressable>
+            <TouchableOpacity
+            onLongPress={drag}
+            disabled={isActive}
+            style={styles.item}
+          >
+            <Text style={styles.title}>{item.cityName}</Text>
+          </TouchableOpacity>
+          </View>
+          <View style={styles.deleteicon}>
+            <AntDesign name="delete" size={36} color="white" />
+          </View>
+        </ScrollView>
         {expanded && (
           <View>
             <FlatList POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
@@ -102,7 +134,6 @@ export default function DestinationViewer() {
 
   return (
     <View>
-      {console.log(cities)}
       <DraggableFlatList
         data={cities}
         onDragEnd={({data}) => {setCities(data)}}
@@ -120,6 +151,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'red',
   },
+  scrollviewwrapper: {
+    justifyContent: 'center',
+  },
   header: {
     flex: 0.2,
     backgroundColor: '#219EBC',
@@ -133,12 +167,31 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   item: {
-    backgroundColor: '#2A9D8F',
     padding: 20,
     marginVertical: 8,
-    marginHorizontal: 16,
+    width: '80%',
+    alignItems: 'flex-start',
+  },
+  deleteicon: {
+    backgroundColor: '#E76F51',
+    padding: 20,
+    width: SCREEN_WIDTH,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 32,
   },
+  tilewrapper: {
+    backgroundColor: '#2A9D8F',
+    width: SCREEN_WIDTH,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  plusicon: {
+    width: '20%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
