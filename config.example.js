@@ -1,5 +1,5 @@
 module.exports = {
-  YELPTOKEN: 'Your Yelp API token here',
+  YELPTOKEN: 'Bearer <YOUR YELP API TOKEN HERE>',
   LOCALTUNNEL: 'Your Local Tunnel URL here',
   GOOGLE_MAPS_API: 'Your Google Maps API key here'
 }
