@@ -147,7 +147,7 @@ export default function DestinationViewer() {
           </View>
         </ScrollView>
         {expanded && (
-          <View>
+          <View style={styles.poiwrapper}>
             <POI_List POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
           </View>
         )}
@@ -221,5 +221,10 @@ const styles = StyleSheet.create({
   },
   deletearea: {
     alignItems: 'center',
-  }
+  },
+  poiwrapper: {
+    alignItems: 'flex-start',
+    width: '100%',
+    backgroundColor: 'red'
+  },
 });
