@@ -3,6 +3,7 @@ import {Text, StyleSheet, View, Image, TextInput, Button } from 'react-native';
 import axios from 'axios';
 import Form from './Form';
 import City from './City';
+import ShareButton from './ShareButton';
 
 export default function AddCity () {
 
@@ -18,6 +19,9 @@ export default function AddCity () {
 
   return (
     <View style= {styles.container}>
+      <View>
+        <ShareButton />
+      </View>
       <Form
         list = {list}
         setList = {setList}

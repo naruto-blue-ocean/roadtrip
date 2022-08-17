@@ -10,7 +10,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { setIsLoggedIn } = React.useContext(AuthContext);
+  const { setUsername } = React.useContext(AuthContext);
   // const { setItem } = AsyncStorage('@token');
 
   const logInUser = async () => {
@@ -18,8 +18,8 @@ export default function Login() {
     axios.post(`http://127.0.0.1:3000/auth/login`, { email: email, password: password })
       .then((response) => {
         console.log(response.data);
-        setIsLoggedIn(true);
-        asyncStorage.setItem("token", response.data.user.email);
+        setUsername(response.data.user.email);
+        // asyncStorage.setItem("token", response.data.user.email);
       })
       .catch((err) => console.log('signup error', err));
     // setIsLoggedIn(true);
@@ -31,8 +31,8 @@ export default function Login() {
     axios.post(`http://127.0.0.1:3000/auth/signup`, { email: email, password: password })
       .then((response) => {
         console.log(response.data);
-        setIsLoggedIn(true);
-        asyncStorage.setItem("token", response.data.user.email);
+        setUsername(response.data.user.email);
+        // asyncStorage.setItem("token", response.data.user.email);
         createAlert();
       })
       .catch((err) => console.log('signup error', err));
