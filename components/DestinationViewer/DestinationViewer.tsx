@@ -79,9 +79,27 @@ export default function DestinationViewer() {
   }
 
   const [cities, setCities] = useState(sampleTrip.destinations);
+
   const renderCities = ({item, drag, isActive}) => {
     const [expanded, setExpanded] = useState(false);
     const scrollX = useRef(new Animated.Value(0)).current;
+
+    const handleDelete = () => {
+      let copyOfCities;
+      cities.forEach((city, index) => {
+        if (city.cityName === item.cityName) {
+          copyOfCities = cities.slice(0, index).concat(cities.slice(index + 1));
+        }
+      });
+      LayoutAnimation.configureNext(
+        LayoutAnimation.create(
+          150,
+          LayoutAnimation.Types.linear,
+          LayoutAnimation.Properties.scaleY
+        )
+      );
+      setCities(copyOfCities);
+    };
 
     return (
       <ScaleDecorator>
@@ -112,7 +130,6 @@ export default function DestinationViewer() {
               <FontAwesome name="plus-circle" size={36} color="white" />
             </Pressable>
             <Pressable
-            // onPress={() => {if (expanded) { setExpanded(false); }}}
               onLongPress={drag}
               disabled={isActive}
               style={styles.item}
@@ -121,7 +138,12 @@ export default function DestinationViewer() {
           </Pressable>
           </View>
           <View style={styles.deleteicon}>
-            <AntDesign name="delete" size={36} color="white" />
+            <Pressable
+              style={styles.deletearea}
+              onPressIn={handleDelete}
+            >
+              <AntDesign name="delete" size={36} color="white" />
+            </Pressable>
           </View>
         </ScrollView>
         {expanded && (
@@ -135,6 +157,7 @@ export default function DestinationViewer() {
 
   return (
     <View>
+      {console.log(cities)}
       <DraggableFlatList
         data={cities}
         onDragEnd={({data}) => {setCities(data)}}
@@ -196,5 +219,8 @@ const styles = StyleSheet.create({
     width: '20%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  deletearea: {
+    alignItems: 'center',
   }
 });
