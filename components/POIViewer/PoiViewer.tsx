@@ -10,7 +10,7 @@ class PoiViewer extends React.Component {
   super(props);
   this.state = {
     data: '',
-    note: 'the users note will go here',
+    note: '',
     showModal: false
   }
  }
@@ -51,7 +51,7 @@ class PoiViewer extends React.Component {
   }
 
   console.log("WHAT IS THE NEW VALUE: ", value)
-  axios.put(`https://seven-bottles-act-76-171-108-153.loca.lt/updateNote`, data)
+  axios.put(`${config.LOCALTUNNEL}/updateNote/${userid}/${poiname}`, data)
   .then(() => {
     console.log("POST WAS SUCCESS")
     this.setState({
@@ -60,12 +60,13 @@ class PoiViewer extends React.Component {
     })
   })
   .catch((err) => {
-    console.log("err when updating the new note")
+    console.log("err when updating the new note", err)
   })
 
  }
 
  render() {
+  console.log("this should render again")
   // console.log("DIMESIONS HEIGHT: ",  Dimensions.get('window').height)
   // console.log("DIMESIONS WIDTH: ",  Dimensions.get('window').width)
   // console.log("WHAT IS THE ADDRESS: ", this.state.data.location?.display_address)
