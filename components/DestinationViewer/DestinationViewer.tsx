@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {ScrollView, View, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import DraggableFlatList, {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
-// import CityTiles from './CityTiles';
 import FlatList from './FlatList'
-
-// const destinations = ['San Diego', 'Los Angeles', 'San Francisco', 'Portland', 'Seattle']
 
 export default function DestinationViewer() {
   const sampleTrip = {
@@ -98,7 +95,6 @@ export default function DestinationViewer() {
     )
   }
 
-  console.log(cities);
   return (
     <View>
       <DraggableFlatList
