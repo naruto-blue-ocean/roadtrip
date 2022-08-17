@@ -27,12 +27,6 @@ export default function Login() {
     // await asyncStorage.setItem("token",);
   }
 
-  // const navigation : any = useNavigation()
-  // useEffect( () => {
-  //   if (isLoggedIn) {
-  //     navigation.replace("HomeScreen")
-  //   }
-  // })
   const handleSignup = () => {
     axios.post(`http://127.0.0.1:3000/auth/signup`, { email: email, password: password })
       .then((response) => {
@@ -43,15 +37,6 @@ export default function Login() {
       })
       .catch((err) => console.log('signup error', err));
   }
-
-  // const handleLogin = () => {
-  //   axios.post(`http://127.0.0.1:3000/auth/login`, {email: email, password: password})
-  //     .then( (response) => {
-  //       console.log(response.data)
-  //       setIsLoggedIn(true);
-  //     })
-  //     .catch( (err) => console.log('signup error', err));
-  // }
 
   const createAlert = () => {
     Alert.alert(
@@ -89,21 +74,25 @@ export default function Login() {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={() => { }}
+          onPress={logInUser}
           style={styles.button}
         >
           <Text
             style={styles.buttonText}
-            onPress={logInUser}>Login</Text>
+            >
+              Login
+              </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => { }}
+          onPress={handleSignup}
           style={styles.button}
         >
           <Text
             style={styles.buttonText}
-            onPress={handleSignup}>Sign up</Text>
+            >
+              Sign up
+              </Text>
         </TouchableOpacity>
       </View>
 
