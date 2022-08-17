@@ -4,7 +4,7 @@ import DraggableFlatList, {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
 
-const FlatList = (props) => {
+const POI_List = (props) => {
   const [data, setData] = useState(props.POIs);
   // console.log('here are the props', props)
 
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FlatList;
+export default POI_List;

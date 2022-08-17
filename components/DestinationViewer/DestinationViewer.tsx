@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable } from 'react-native';
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
-import FlatList from './FlatList';
+import POI_List from './POI_List';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
@@ -148,7 +148,7 @@ export default function DestinationViewer() {
         </ScrollView>
         {expanded && (
           <View>
-            <FlatList POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
+            <POI_List POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
           </View>
         )}
       </ScaleDecorator>
