@@ -10,25 +10,31 @@ class PoiViewer extends React.Component {
   super(props);
   this.state = {
     data: '',
-    note: 'the users note will go here',
-    showModal: false
+    note: '',
+    showModal: false,
+    noteRendered: false
   }
  }
 
  componentDidMount() {
-  axios.defaults.headers.common['Authorization'] = `Bearer ${config.YELPTOKEN}`;
+  axios.defaults.headers.common['Authorization'] = config.YELPTOKEN;
   let poiname = 'jIxS5Td2o0gBWx0G0qx59Q';
   let userid = 'johnny@email.com';
   //can use ID instead
   axios.get(`https://api.yelp.com/v3/businesses/${poiname}`).then((data) => {
  // DO A GET REQUEST TO THE DATABASE TO RETRIEVE THE NOTES
     // console.log(data.data);
-    this.setState({data:data.data});
+    this.setState({
+      data:data.data,
+    });
   })
   //USING LOCAL TUNNEL TO GET THE CONNECTION TO THE DB
   axios.get(`${config.LOCALTUNNEL}/notes/${userid}/${poiname}`).then((data) => {
     // console.log(data.data);
-    this.setState({note:data.data?.content})
+    this.setState({
+      note:data.data?.content,
+      noteRendered: true
+    })
   }).catch((err) => {
     console.log('err at getting notes in poi viewer', err.response)
   })
@@ -41,13 +47,40 @@ class PoiViewer extends React.Component {
 
  }
 
+ updateNote(value: String) {
+
+  //data we will send over to the server
+  var data = {
+    note: value,
+    user_email: '',
+    poi_id: ''
+  }
+
+  console.log("WHAT IS THE NEW VALUE: ", value)
+  axios.put(`${config.LOCALTUNNEL}/updateNote/${userid}/${poiname}`, data)
+  .then(() => {
+    console.log("POST WAS SUCCESS")
+    this.setState({
+      //where were will update the new note
+      note: value
+    })
+  })
+  .catch((err) => {
+    console.log("err when updating the new note", err)
+  })
+
+ }
+
  render() {
   // console.log("DIMESIONS HEIGHT: ",  Dimensions.get('window').height)
   // console.log("DIMESIONS WIDTH: ",  Dimensions.get('window').width)
   // console.log("WHAT IS THE ADDRESS: ", this.state.data.location?.display_address)
-  var name = this.state.data.price
+  // var name = this.state.data.price
   // console.log("DOLLAR DOLLAR BILLS: ", name.length)
   // console.log("DOLLAR DOLLAR BILLSasjkasd: ", )
+  // if (this.state.noteRendered) {
+  //  var modal = <Edit updateNote={this.updateNote.bind(this)} showModal={this.state.showModal} displayModal={this.displayModal.bind(this)} title={this.state.data.name} note={this.state.note}/>
+  // }
   return (
     <ScrollView>
       <Image source={{uri: `${this.state.data.image_url}`}}
@@ -92,7 +125,7 @@ class PoiViewer extends React.Component {
          >
           <Text style={styles.editButton}>Edit</Text>
          </Pressable>
-         <Edit showModal={this.state.showModal} displayModal={this.displayModal.bind(this)} title={this.state.data.name} note={this.state.note}/>
+ {this.state.noteRendered && <Edit updateNote={this.updateNote.bind(this)} showModal={this.state.showModal} displayModal={this.displayModal.bind(this)} title={this.state.data.name} note={this.state.note}/>}
 
       </View>
 
