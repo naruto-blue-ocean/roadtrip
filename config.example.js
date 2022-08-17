@@ -1,5 +1,6 @@
 module.exports = {
   YELPTOKEN: 'Bearer <YOUR YELP API TOKEN HERE>',
+  //BE SURE TO INCLUDE 'Bearer ' BEFORE YOUR TOKEN IN YOUR OWN CONFIG
   LOCALTUNNEL: 'Your Local Tunnel URL here',
   GOOGLE_MAPS_API: 'Your Google Maps API key here'
 }
