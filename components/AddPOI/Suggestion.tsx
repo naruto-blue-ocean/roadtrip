@@ -1,27 +1,17 @@
 import React from 'react';
-import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import config from '../../config';
-export default function Suggestion({ city }) {
+export default function Suggestion({ city, navigation }) {
+
   const handlePress = (term: string) => {
-    console.log('Pressed term = ', term);
-    axios.get('https://api.yelp.com/v3/businesses/search', {
-      headers: {
-        Authorization: config.YELPTOKEN,
-      },
-      params: {
-        term,
-        location: city,
-      },
+    console.log('In Suggestion, Pressed term = ', term);
+    console.log('In Suggestion, city = ', city);
+    navigation.navigate('POIList', {
+      city: city,
+      term,
     })
-      .then((result) => {
-        console.log('Yelp GET success!');
-      })
-      .catch((err) => {
-        console.log('Yelp GET failed, err = ', err);
-      })
   }
+
   return (
     <View style={styles.container}>
       <Button title="Attractions" onPress={() => handlePress('attraction')} ></Button>

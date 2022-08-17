@@ -2,17 +2,18 @@ import React from 'react';
 import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import Navigator from './AddPOINav';
 import Suggestion from './Suggestion';
 import Search from './Search';
 
-export default function AddPOIHome() {
-  //update the city to props after connected with "Trip Viewer"
+export default function AddPOIHome({ navigation }) {
+  //update the city to props received from "AddPOI"
   const city = 'sunnyvale';
+
   return (
     <View style={styles.container}>
-      <Search />
-      <Suggestion city={city} />
+      {console.log('In AddPOIHome, city = ', city)}
+      <Search style={styles.textInput} city={city} navigation={navigation} />
+      <Suggestion city={city} navigation={navigation}/>
       <StatusBar style="auto" />
     </View>
   );
