@@ -30,11 +30,24 @@ class PoiViewer extends React.Component {
   })
   //USING LOCAL TUNNEL TO GET THE CONNECTION TO THE DB
   axios.get(`${config.LOCALTUNNEL}/notes/${userid}/${poiname}`).then((data) => {
+
     // console.log(data.data);
-    this.setState({
-      note:data.data?.content,
-      noteRendered: true
-    })
+    // this.setState({
+    //   note:data.data?.content,
+    //   noteRendered: true
+    // })
+
+    // console.log('data from db in poi viewer', data.data);
+    if (data.data) {
+      this.setState({note:data.data?.content,
+        noteRendered: true
+      })
+    } else {
+      this.setState({
+        noteRendered: true
+      })
+    }
+
   }).catch((err) => {
     console.log('err at getting notes in poi viewer', err.response)
   })
@@ -48,18 +61,19 @@ class PoiViewer extends React.Component {
  }
 
  updateNote(value: String) {
-
+  let poiname = 'jIxS5Td2o0gBWx0G0qx59Q';
+  let userid = 'johnny@email.com';
   //data we will send over to the server
   var data = {
     note: value,
-    user_email: '',
-    poi_id: ''
+    user_email: 'johnny@email.com',
+    poi_id: 'jIxS5Td2o0gBWx0G0qx59Q'
   }
 
   console.log("WHAT IS THE NEW VALUE: ", value)
-  axios.put(`${config.LOCALTUNNEL}/updateNote/${userid}/${poiname}`, data)
-  .then(() => {
-    console.log("POST WAS SUCCESS")
+  axios.put(`${config.LOCALTUNNEL}/updateNote`, data)
+  .then((data) => {
+    console.log("POST WAS SUCCESS", data.data)
     this.setState({
       //where were will update the new note
       note: value
