@@ -16,8 +16,15 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
       placeholder='Search'
       onPress={(data, details = null) => {
         // main_text is the city name, place_id is the city id
-        console.log('-----flagged', data.structured_formatting.main_text, data.place_id)
-        var cityInfo = {name: data.structured_formatting.main_text, id: data.place_id}
+        // console.log('yeees this is data', details)
+        // console.log('-----flagged', data.structured_formatting.main_text, data.place_id)
+        var cityInfo = {
+          name: data.structured_formatting.main_text,
+          id: data.place_id,
+          lat: details?.geometry.location.lat,
+          lng: details?.geometry.location.lng
+        }
+        console.log('what is cityiNof', cityInfo)
         setList([...list, cityInfo])
       }}
       styles = {{ textInput: styles.textInput, zIndex: 20 }}
@@ -25,6 +32,7 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
         key: config.GOOGLE_MAPS_API,
         language: 'en',
       }}
+      fetchDetails = {true}
       />
 
       {/* List of Cities */}

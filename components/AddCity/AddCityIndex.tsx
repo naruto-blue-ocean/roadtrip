@@ -11,7 +11,7 @@ export default function AddCity () {
   var post = () => {
     // sends an array of objects to back end, must deconstruct and store each
     // individual city server side
-    axios.post('https://three-drinks-dream-99-33-66-218.loca.lt/postCities', list)
+    axios.post('https://crazy-signs-fry-99-33-66-218.loca.lt/postCities', list)
     .then(() => {console.log('success posting from front end')})
     .catch((err) => {console.log('Err in posting from front end', err)})
   };
@@ -53,5 +53,3 @@ var styles = StyleSheet.create({
   }
 })
 
-
-// given an object, for each
