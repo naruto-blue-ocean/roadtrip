@@ -12,13 +12,13 @@ Louisa's section -- uncomment to work on Navigation & Flow */
 
 // const Stack = createStackNavigator(); //Testing
 // <View style={styles.container}>
-    //   <Text>Stuff</Text>
-    //   {/* <MainNavigation /> */}
+//   <Text>Stuff</Text>
+//   {/* <MainNavigation /> */}
 
-    //   <StatusBar style="auto" />
-    // </View>
+//   <StatusBar style="auto" />
+// </View>
 
-    //ss
+//ss
 
 /* Louisa's section -- uncomment to work on Navigation and flow
 export default function App() {
@@ -48,60 +48,76 @@ import AddPOI from './components/AddPOI/AddPOI';
 import Initialization from './components/Initialization/Initialization';
 import Login from './components/Login/Login';
 import Archive from './components/Archive/Archive';
+import { AuthContext } from './AuthProvider';
+import AuthProvider from './AuthProvider';
+import Root from './root.js';
 
-const Stack = createNativeStackNavigator();
+// const Stack = createNativeStackNavigator();
 
 export default function App() {
-
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="FakeHomeScreen"
-          component={FakeHomeScreen}
-          options={{ title: 'Fake Home' }}
-        />
-        <Stack.Screen
-          name="Initialization"
-          component={Initialization}
-          options={{ title: 'Initialization' }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ title: 'Log In' }}
-        />
-        <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{ title: 'Home' }}
-        />
-        <Stack.Screen
-          name="Archive"
-          component={Archive}
-          options={{ title: 'View Archived Trips' }}
-        />
-        <Stack.Screen
-          name="DestinationViewer"
-          component={DestinationViewer}
-          options={{ title: 'Destinations' }}
-        />
-        <Stack.Screen
-          name="POIViewer"
-          component={PoiViewer}
-          options={{ title: 'Points Of Interest' }}
-        />
-        <Stack.Screen
-          name="AddCity"
-          component={AddCity}
-          options={{ title: 'Add a Destination' }}
-        />
-        <Stack.Screen
-          name="AddPOI"
-          component={AddPOI}
-          options={{ title: 'Add a Point of Interest' }}
-        />
+    <AuthProvider>
+      <Root />
+      {/* <NavigationContainer>
+        <Stack.Navigator>
+          {
+            isLoggedIn ? (
+              <>
+                <Stack.Screen
+                  name="HomeScreen"
+                  component={HomeScreen}
+                  options={{ title: 'Home' }}
+                />
+                <Stack.Screen
+                  name="Archive"
+                  component={Archive}
+                  options={{ title: 'View Archived Trips' }}
+                />
+                <Stack.Screen
+                  name="DestinationViewer"
+                  component={DestinationViewer}
+                  options={{ title: 'Destinations' }}
+                />
+                <Stack.Screen
+                  name="POIViewer"
+                  component={PoiViewer}
+                  options={{ title: 'Points Of Interest' }}
+                />
+                <Stack.Screen
+                  name="AddCity"
+                  component={AddCity}
+                  options={{ title: 'Add a Destination' }}
+                />
+                <Stack.Screen
+                  name="AddPOI"
+                  component={AddPOI}
+                  options={{ title: 'Add a Point of Interest' }}
+                />
+              </>
+            ) : (
+              <>
+                <Stack.Screen
+                  name="Initialization"
+                  component={Initialization}
+                  options={{ title: 'Initialization' }}
+                />
+                <Stack.Screen
+                  name="Login"
+                  component={Login}
+                  options={{ title: 'Log In' }}
+                />
+              </>
+            )
+          }
+          {/* <Stack.Screen
+            name="FakeHomeScreen"
+            component={FakeHomeScreen}
+            options={{ title: 'Fake Home' }}
+          /> */}
+
+{/*
       </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
+      </NavigationContainer > */}
+    </AuthProvider >
+      )
+  }

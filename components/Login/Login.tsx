@@ -1,35 +1,70 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/core';
 // import { StatusBar } from 'expo-status-bar';
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import axios from 'axios';
+import { AuthContext } from '../../AuthProvider.js'
+import asyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { setIsLoggedIn } = React.useContext(AuthContext);
+  // const { setItem } = AsyncStorage('@token');
 
-  const navigation : any = useNavigation()
-  useEffect( () => {
-    if (isLoggedIn) {
-      navigation.replace("HomeScreen")
-    }
-  })
-  const handleSignup = () => {
-    axios.post(`http://127.0.0.1:3000/auth/signup`, {email: email, password: password})
-      .then( (response) => console.log(response.data))
-      .catch( (err) => console.log('signup error', err));
-  }
+  const logInUser = async () => {
 
-  const handleLogin = () => {
-    axios.post(`http://127.0.0.1:3000/auth/login`, {email: email, password: password})
-      .then( (response) => {
-        console.log(response.data)
+    axios.post(`http://127.0.0.1:3000/auth/login`, { email: email, password: password })
+      .then((response) => {
+        console.log(response.data);
         setIsLoggedIn(true);
+        asyncStorage.setItem("token", response.data.user.email);
       })
-      .catch( (err) => console.log('signup error', err));
+      .catch((err) => console.log('signup error', err));
+    // setIsLoggedIn(true);
+
+    // await asyncStorage.setItem("token",);
   }
 
+  // const navigation : any = useNavigation()
+  // useEffect( () => {
+  //   if (isLoggedIn) {
+  //     navigation.replace("HomeScreen")
+  //   }
+  // })
+  const handleSignup = () => {
+    axios.post(`http://127.0.0.1:3000/auth/signup`, { email: email, password: password })
+      .then((response) => {
+        console.log(response.data);
+        setIsLoggedIn(true);
+        asyncStorage.setItem("token", response.data.user.email);
+        createAlert();
+      })
+      .catch((err) => console.log('signup error', err));
+  }
+
+  // const handleLogin = () => {
+  //   axios.post(`http://127.0.0.1:3000/auth/login`, {email: email, password: password})
+  //     .then( (response) => {
+  //       console.log(response.data)
+  //       setIsLoggedIn(true);
+  //     })
+  //     .catch( (err) => console.log('signup error', err));
+  // }
+
+  const createAlert = () => {
+    Alert.alert(
+      'Registration successful',
+      'Welcome to Road Trip!',
+      [
+        {
+          text: "Okay",
+          onPress: () => console.log('OK Pressed')
+        }
+      ]
+    )
+  }
 
   return (
     <KeyboardAvoidingView
@@ -49,7 +84,7 @@ export default function Login() {
           style={styles.input}
           secureTextEntry
         />
-      {/* <StatusBar style="auto" /> */}
+        {/* <StatusBar style="auto" /> */}
       </View>
 
       <View style={styles.buttonContainer}>
@@ -59,7 +94,7 @@ export default function Login() {
         >
           <Text
             style={styles.buttonText}
-            onPress={handleLogin}>Login</Text>
+            onPress={logInUser}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -68,7 +103,7 @@ export default function Login() {
         >
           <Text
             style={styles.buttonText}
-            onPress={handleSignup}>Register</Text>
+            onPress={handleSignup}>Sign up</Text>
         </TouchableOpacity>
       </View>
 
@@ -94,7 +129,7 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   buttonContainer: {
-    width: '60%',
+    width: '70%',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 40,
@@ -112,7 +147,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: '700',
-    fonrSize: 16,
+    fontSize: 13,
+    textAlign: 'center',
   },
   buttonOutlineText: {
     color: '#0782F9',
