@@ -157,7 +157,6 @@ export default function DestinationViewer() {
 
   return (
     <View>
-      {console.log(cities)}
       <DraggableFlatList
         data={cities}
         onDragEnd={({data}) => {setCities(data)}}
