@@ -1,16 +1,20 @@
-import React, {useState} from 'react';
+import React, { useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
-import FlatList from './FlatList'
+import {View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable } from 'react-native';
+import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
+import FlatList from './FlatList';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
-// const destinations = ['San Diego', 'Los Angeles', 'San Francisco', 'Portland', 'Seattle']
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
+
 
 export default function DestinationViewer() {
   const sampleTrip = {
     id: 100,
     destinations: [
       {
-        city: 'San Francisco',
+        id: 200,
+        cityName: 'San Francisco',
         POIs: [
           {
             id: 1,
@@ -30,7 +34,8 @@ export default function DestinationViewer() {
         ]
       },
       {
-        city: 'San Diego',
+        id: 300,
+        cityName: 'San Diego',
         POIs: [
           {
             id: 4,
@@ -50,7 +55,8 @@ export default function DestinationViewer() {
         ]
       },
       {
-        city: 'Los Angeles',
+        id: 400,
+        cityName: 'Los Angeles',
         POIs: [
           {
             id: 7,
@@ -70,16 +76,93 @@ export default function DestinationViewer() {
         ]
       }
     ]
-
   }
+
+  const [cities, setCities] = useState(sampleTrip.destinations);
+
+  const renderCities = ({item, drag, isActive}) => {
+    const [expanded, setExpanded] = useState(false);
+    const scrollX = useRef(new Animated.Value(0)).current;
+
+    const handleDelete = () => {
+      let copyOfCities;
+      cities.forEach((city, index) => {
+        if (city.cityName === item.cityName) {
+          copyOfCities = cities.slice(0, index).concat(cities.slice(index + 1));
+        }
+      });
+      LayoutAnimation.configureNext(
+        LayoutAnimation.create(
+          150,
+          LayoutAnimation.Types.linear,
+          LayoutAnimation.Properties.scaleY
+        )
+      );
+      setCities(copyOfCities);
+    };
+
+    return (
+      <ScaleDecorator>
+        <ScrollView
+          contentContainerStyle={styles.scrollviewwrapper}
+          horizontal={true}
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={Animated.event([
+            {
+              nativeEvent: {
+                contentOffset: {
+                  x: scrollX
+                }
+              }
+            }
+          ], {useNativeDriver: false})}
+          scrollEventThrottle={1}
+        >
+          <View style={styles.tilewrapper}>
+            <Pressable
+              onPressIn={ () => {
+                LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                setExpanded(prevState => !prevState);
+              }}
+              style={styles.plusicon}
+            >
+              <FontAwesome name="plus-circle" size={36} color="white" />
+            </Pressable>
+            <Pressable
+              onLongPress={drag}
+              disabled={isActive}
+              style={styles.item}
+            >
+            <Text style={styles.title}>{item.cityName}</Text>
+          </Pressable>
+          </View>
+          <View style={styles.deleteicon}>
+            <Pressable
+              style={styles.deletearea}
+              onPressIn={handleDelete}
+            >
+              <AntDesign name="delete" size={36} color="white" />
+            </Pressable>
+          </View>
+        </ScrollView>
+        {expanded && (
+          <View>
+            <FlatList POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
+          </View>
+        )}
+      </ScaleDecorator>
+    )
+  }
+
   return (
     <View>
-      <Text>Hi</Text>
-      <View>
-        {sampleTrip.destinations.map((destination: Object, index: number) => {
-          return <FlatList POIs = {destination.POIs} key = {destination.id}/>
-        })}
-      </View>
+      <DraggableFlatList
+        data={cities}
+        onDragEnd={({data}) => {setCities(data)}}
+        keyExtractor={item => item.cityName}
+        renderItem={renderCities}
+      />
     </View>
   );
 
@@ -91,6 +174,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'red',
   },
+  scrollviewwrapper: {
+    justifyContent: 'center',
+  },
   header: {
     flex: 0.2,
     backgroundColor: '#219EBC',
@@ -99,5 +185,41 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: '#FB8500',
+  },
+  container: {
+    flex: 1,
+  },
+  item: {
+    paddingVertical: 20,
+    marginVertical: 8,
+    width: '80%',
+    alignItems: 'flex-start',
+  },
+  deleteicon: {
+    backgroundColor: '#E76F51',
+    padding: 20,
+    width: SCREEN_WIDTH,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 32,
+    fontFamily: 'Georgia',
+    color: 'white',
+  },
+  tilewrapper: {
+    backgroundColor: '#2A9D8F',
+    width: SCREEN_WIDTH,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  plusicon: {
+    width: '20%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  deletearea: {
+    alignItems: 'center',
   }
 });

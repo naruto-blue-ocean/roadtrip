@@ -39,6 +39,7 @@ export default function App() {
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Platform, UIManager } from "react-native";
 import FakeHomeScreen from './components/FakeHomeScreen/FakeHomeScreen';
 import PoiViewer from './components/POIViewer/PoiViewer';
 import DestinationViewer from './components/DestinationViewer/DestinationViewer';
@@ -52,7 +53,14 @@ import { AuthContext } from './AuthProvider';
 import AuthProvider from './AuthProvider';
 import Root from './root.js';
 
-// const Stack = createNativeStackNavigator();
+if (
+  Platform.OS === "android" &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
