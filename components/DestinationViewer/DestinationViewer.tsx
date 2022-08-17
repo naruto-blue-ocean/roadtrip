@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
-import DraggableFlatList, {
-  ScaleDecorator,
-} from 'react-native-draggable-flatlist';
+import {View, StyleSheet, TouchableOpacity, Text, LayoutAnimation } from 'react-native';
+import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 import FlatList from './FlatList'
 
 export default function DestinationViewer() {
@@ -76,22 +74,29 @@ export default function DestinationViewer() {
     ]
   }
 
-
   const [cities, setCities] = useState(sampleTrip.destinations);
 
   const renderCities = ({item, drag, isActive}) => {
+    const [expanded, setExpanded] = useState(false);
+
     return (
       <ScaleDecorator>
         <TouchableOpacity
+          onPressIn={ () => {
+            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+            setExpanded(prevState => !prevState);
+          }}
           onLongPress={drag}
           disabled={isActive}
           style={styles.item}>
           <Text style={styles.title}>{item.cityName}</Text>
         </TouchableOpacity>
-        <View>
-          <FlatList POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
-        </View>
-    </ScaleDecorator>
+        {expanded && (
+          <View>
+            <FlatList POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
+          </View>
+        )}
+      </ScaleDecorator>
     )
   }
 
