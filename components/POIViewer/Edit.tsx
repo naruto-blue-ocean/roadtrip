@@ -14,7 +14,7 @@ export default function Edit({updateNote, showModal, displayModal, title, note})
     displayModal()
   }
 
-  console.log("What is the note? :", note)
+  // console.log("What is the note? :", changeNote)
 
 
   return (

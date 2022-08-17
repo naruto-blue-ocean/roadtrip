@@ -11,7 +11,8 @@ class PoiViewer extends React.Component {
   this.state = {
     data: '',
     note: '',
-    showModal: false
+    showModal: false,
+    noteRendered: false
   }
  }
 
@@ -23,12 +24,17 @@ class PoiViewer extends React.Component {
   axios.get(`https://api.yelp.com/v3/businesses/${poiname}`).then((data) => {
  // DO A GET REQUEST TO THE DATABASE TO RETRIEVE THE NOTES
     // console.log(data.data);
-    this.setState({data:data.data});
+    this.setState({
+      data:data.data,
+    });
   })
   //USING LOCAL TUNNEL TO GET THE CONNECTION TO THE DB
   axios.get(`${config.LOCALTUNNEL}/notes/${userid}/${poiname}`).then((data) => {
     // console.log(data.data);
-    this.setState({note:data.data?.content})
+    this.setState({
+      note:data.data?.content,
+      noteRendered: true
+    })
   }).catch((err) => {
     console.log('err at getting notes in poi viewer', err.response)
   })
@@ -66,13 +72,15 @@ class PoiViewer extends React.Component {
  }
 
  render() {
-  console.log("this should render again")
   // console.log("DIMESIONS HEIGHT: ",  Dimensions.get('window').height)
   // console.log("DIMESIONS WIDTH: ",  Dimensions.get('window').width)
   // console.log("WHAT IS THE ADDRESS: ", this.state.data.location?.display_address)
   // var name = this.state.data.price
   // console.log("DOLLAR DOLLAR BILLS: ", name.length)
   // console.log("DOLLAR DOLLAR BILLSasjkasd: ", )
+  // if (this.state.noteRendered) {
+  //  var modal = <Edit updateNote={this.updateNote.bind(this)} showModal={this.state.showModal} displayModal={this.displayModal.bind(this)} title={this.state.data.name} note={this.state.note}/>
+  // }
   return (
     <ScrollView>
       <Image source={{uri: `${this.state.data.image_url}`}}
@@ -117,7 +125,7 @@ class PoiViewer extends React.Component {
          >
           <Text style={styles.editButton}>Edit</Text>
          </Pressable>
-         <Edit updateNote={this.updateNote.bind(this)} showModal={this.state.showModal} displayModal={this.displayModal.bind(this)} title={this.state.data.name} note={this.state.note}/>
+ {this.state.noteRendered && <Edit updateNote={this.updateNote.bind(this)} showModal={this.state.showModal} displayModal={this.displayModal.bind(this)} title={this.state.data.name} note={this.state.note}/>}
 
       </View>
 
