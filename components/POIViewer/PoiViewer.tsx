@@ -17,7 +17,7 @@ class PoiViewer extends React.Component {
  }
 
  componentDidMount() {
-  axios.defaults.headers.common['Authorization'] = `Bearer ${config.YELPTOKEN}`;
+  axios.defaults.headers.common['Authorization'] = config.YELPTOKEN;
   let poiname = 'jIxS5Td2o0gBWx0G0qx59Q';
   let userid = 'johnny@email.com';
   //can use ID instead
