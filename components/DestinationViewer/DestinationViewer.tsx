@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {View, StyleSheet, TouchableOpacity, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable } from 'react-native';
+import {View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable } from 'react-native';
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 import FlatList from './FlatList';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
@@ -111,13 +111,14 @@ export default function DestinationViewer() {
             >
               <FontAwesome name="plus-circle" size={36} color="white" />
             </Pressable>
-            <TouchableOpacity
-            onLongPress={drag}
-            disabled={isActive}
-            style={styles.item}
-          >
+            <Pressable
+            // onPress={() => {if (expanded) { setExpanded(false); }}}
+              onLongPress={drag}
+              disabled={isActive}
+              style={styles.item}
+            >
             <Text style={styles.title}>{item.cityName}</Text>
-          </TouchableOpacity>
+          </Pressable>
           </View>
           <View style={styles.deleteicon}>
             <AntDesign name="delete" size={36} color="white" />
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   item: {
-    padding: 20,
+    paddingVertical: 20,
     marginVertical: 8,
     width: '80%',
     alignItems: 'flex-start',
@@ -181,6 +182,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
+    fontFamily: 'Georgia',
+    color: 'white',
   },
   tilewrapper: {
     backgroundColor: '#2A9D8F',
