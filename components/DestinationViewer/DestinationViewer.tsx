@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import DraggableFlatList, {
+  ScaleDecorator,
+} from 'react-native-draggable-flatlist';
 import FlatList from './FlatList'
-
-// const destinations = ['San Diego', 'Los Angeles', 'San Francisco', 'Portland', 'Seattle']
 
 export default function DestinationViewer() {
   const sampleTrip = {
     id: 100,
     destinations: [
       {
+        id: 200,
         city: 'San Francisco',
         POIs: [
           {
@@ -30,6 +32,7 @@ export default function DestinationViewer() {
         ]
       },
       {
+        id: 300,
         city: 'San Diego',
         POIs: [
           {
@@ -50,6 +53,7 @@ export default function DestinationViewer() {
         ]
       },
       {
+        id: 400,
         city: 'Los Angeles',
         POIs: [
           {
@@ -70,16 +74,35 @@ export default function DestinationViewer() {
         ]
       }
     ]
-
   }
+
+
+  const [cities, setCities] = useState(sampleTrip.destinations);
+
+  const renderCities = ({item, drag, isActive}) => {
+    return (
+      <ScaleDecorator>
+        <TouchableOpacity
+          onLongPress={drag}
+          disabled={isActive}
+          style={styles.item}>
+          <Text style={styles.title}>{item.city}</Text>
+        </TouchableOpacity>
+        <View>
+          <FlatList POIs={item.POIs} />
+        </View>
+    </ScaleDecorator>
+    )
+  }
+
   return (
     <View>
-      <Text>Hi</Text>
-      <View>
-        {sampleTrip.destinations.map((destination: Object, index: number) => {
-          return <FlatList POIs = {destination.POIs} key = {destination.id}/>
-        })}
-      </View>
+      <DraggableFlatList
+        data={cities}
+        onDragEnd={({data}) => {setCities(data)}}
+        keyExtractor={item => item.city}
+        renderItem={renderCities}
+      />
     </View>
   );
 
@@ -99,5 +122,17 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: '#FB8500',
-  }
+  },
+  container: {
+    flex: 1,
+  },
+  item: {
+    backgroundColor: '#2A9D8F',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
 });
