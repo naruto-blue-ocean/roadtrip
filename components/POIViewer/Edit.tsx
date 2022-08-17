@@ -4,9 +4,17 @@ import {Keyboard, Dimensions, StyleSheet, Text, View, Image, TextInput, Pressabl
 import axios from 'axios';
 import config from '../../config.js';
 
-export default function Edit({showModal, displayModal, title, note}) {
+export default function Edit({updateNote, showModal, displayModal, title, note}) {
 
   const [showPost, setShowPost] = useState(false)
+  const [changeNote, setChangeNote] = useState(note)
+
+  const updatingNote = () => {
+    updateNote(changeNote)
+    displayModal()
+  }
+
+  // console.log("What is the note? :", changeNote)
 
 
   return (
@@ -33,13 +41,18 @@ export default function Edit({showModal, displayModal, title, note}) {
          placeholder="This is where you will display your notes. This is a really good place where you can jot down your notes and have it saved forever"
          multiline={true}
          numberOfLines={5}
+         value={changeNote}
+         onChangeText={setChangeNote}
         />
         </ScrollView>
 
         </View>
-
         <View style={styles.postBox}>
+          <Pressable
+          onPress={updatingNote}>
           <Text style={styles.post}>POST</Text>
+          </Pressable>
+
         </View>
 
 
