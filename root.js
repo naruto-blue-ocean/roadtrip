@@ -12,8 +12,12 @@ import Login from './components/Login/Login';
 import Archive from './components/Archive/Archive';
 import AuthProvider, { AuthContext } from './AuthProvider';
 // import AuthProvider from './AuthProvider';
+import { QueryClient, QueryClientProvider, useQuery, useInfiniteQuery } from 'react-query';
+
 
 const Stack = createNativeStackNavigator();
+const queryClient = new QueryClient();
+
 
 export default function Root() {
 
@@ -84,6 +88,7 @@ export default function Root() {
   //   </NavigationContainer>
   // )
   return (
+    <QueryClientProvider client={queryClient}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="FakeHomeScreen">
             <>
@@ -107,11 +112,11 @@ export default function Root() {
                 component={DestinationViewer}
                 options={{ title: 'Destinations' }}
               />
-              <Stack.Screen
+              {/* <Stack.Screen
                 name="POIViewer"
                 component={PoiViewer}
                 options={{ title: 'Points Of Interest' }}
-              />
+              /> */}
               <Stack.Screen
                 name="AddCity"
                 component={AddCity}
@@ -125,5 +130,6 @@ export default function Root() {
             </>
       </Stack.Navigator>
     </NavigationContainer>
+    </QueryClientProvider>
   )
 }

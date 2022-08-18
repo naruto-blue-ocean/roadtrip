@@ -46,7 +46,7 @@ export default function POIList({ navigation, route }) {
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
+    // <QueryClientProvider client={queryClient}>
       <View style={styles.container} >
         <Button title="Go back" onPress={() => navigation.goBack()} />
         {POIs && <FlatList
@@ -59,7 +59,7 @@ export default function POIList({ navigation, route }) {
         {/* <List city={city} term={term} /> */}
         <StatusBar style="auto" />
       </View>
-    </QueryClientProvider>
+    // </QueryClientProvider>
   );
 }
 
