@@ -9,10 +9,10 @@ export default function ShareButton () {
   const { username } = React.useContext(AuthContext);
 
   const handleShare = () => {
-    console.log('test')
+    // console.log('test')
     axios.post('http://127.0.0.1:3000/share', {email: username})
       .then( (response) => {
-        console.log(response.data.email)
+        console.log(response.data)
       })
       .catch( (err) => {
         console.log(err)
