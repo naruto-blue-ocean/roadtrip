@@ -27,7 +27,6 @@ export default function Root() {
   // NOTICE: There are two versions of the return block, the first commented out block includes the login page and the second doesn't. If you want to switch, just comment/uncomment out one of the return blocks.
 
   return (
-    <QueryClientProvider client={queryClient}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="FakeHomeScreen">
         {
@@ -53,11 +52,11 @@ export default function Root() {
                 component={DestinationViewer}
                 options={{ title: 'Destinations' }}
               />
-              {/* <Stack.Screen
+              <Stack.Screen
                 name="POIViewer"
                 component={PoiViewer}
                 options={{ title: 'Points Of Interest' }}
-              /> */}
+              />
               <Stack.Screen
                 name="AddCity"
                 component={AddCity}
@@ -87,9 +86,12 @@ export default function Root() {
 
       </Stack.Navigator>
     </NavigationContainer>
-    </QueryClientProvider>
   )
   // return (
+<<<<<<< HEAD
+=======
+  //   <QueryClientProvider client={queryClient}>
+>>>>>>> 9e8dd6cc5a957069551d9de8d7ab4012fb61f958
   //   <NavigationContainer>
   //     <Stack.Navigator initialRouteName="FakeHomeScreen">
   //           <>
@@ -113,11 +115,19 @@ export default function Root() {
   //               component={DestinationViewer}
   //               options={{ title: 'Destinations' }}
   //             />
+<<<<<<< HEAD
   //             <Stack.Screen
   //               name="POIViewer"
   //               component={PoiViewer}
   //               options={{ title: 'Points Of Interest' }}
   //             />
+=======
+  //             {/* <Stack.Screen
+  //               name="POIViewer"
+  //               component={PoiViewer}
+  //               options={{ title: 'Points Of Interest' }}
+  //             /> */}
+>>>>>>> 9e8dd6cc5a957069551d9de8d7ab4012fb61f958
   //             <Stack.Screen
   //               name="AddCity"
   //               component={AddCity}
@@ -131,5 +141,9 @@ export default function Root() {
   //           </>
   //     </Stack.Navigator>
   //   </NavigationContainer>
+<<<<<<< HEAD
+=======
+  //   </QueryClientProvider>
+>>>>>>> 9e8dd6cc5a957069551d9de8d7ab4012fb61f958
   // )
 }

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable } from 'react-native';
+import { View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable, Modal } from 'react-native';
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 import POI_List from './POI_List';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
@@ -81,10 +81,16 @@ export default function DestinationViewer() {
   }
 
   const [cities, setCities] = useState(sampleTrip.destinations);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const renderCities = ({item, drag, isActive}) => {
+  const handleModal = () => {
+    setIsModalVisible(() => !isModalVisible);
+  };
+
+  const renderCities = ({ item, drag, isActive }) => {
     const [expanded, setExpanded] = useState(false);
     const scrollX = useRef(new Animated.Value(0)).current;
+
 
     const handleDelete = () => {
       let copyOfCities;
@@ -103,6 +109,7 @@ export default function DestinationViewer() {
       setCities(copyOfCities);
     };
 
+
     return (
       <ScaleDecorator>
         <ScrollView
@@ -118,13 +125,13 @@ export default function DestinationViewer() {
                 }
               }
             }
-          ], {useNativeDriver: false})}
+          ], { useNativeDriver: false })}
           scrollEventThrottle={1}
         >
           <View style={styles.cityandpoiwrapper}>
             <View style={styles.tilewrapper}>
               <Pressable
-                onPressIn={ () => {
+                onPressIn={() => {
                   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
                   setExpanded(prevState => !prevState);
                 }}
@@ -138,8 +145,8 @@ export default function DestinationViewer() {
                 disabled={isActive}
                 style={styles.item}
               >
-              <Text style={styles.title}>{item.cityName}</Text>
-            </Pressable>
+                <Text style={styles.title}>{item.cityName}</Text>
+              </Pressable>
             </View>
             <View style={styles.deleteicon}>
               <Pressable
@@ -160,30 +167,42 @@ export default function DestinationViewer() {
     )
   }
 
+
   return (
     <View>
-      <View style = {styles.addAndShareContainer}>
-      <Pressable style={styles.addCity}
-        onPress = {() =>
-          navigation.navigate('AddCity', {city: 'San Francisco'})
-        }
+      <View style={styles.addAndShareContainer}>
+        <Pressable style={styles.addCity}
+          onPress={() =>
+            navigation.navigate('AddCity', { city: 'San Francisco' })
+          }
         >
-        <Text>Add Destinations &nbsp;</Text>
-        <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
-      </Pressable>
-      <Pressable style={styles.share}
-        onPress = {() => {}
-        }
+          <Text>Add Destinations &nbsp;</Text>
+          <FontAwesome name="plus-circle" size={18} color="white" style={styles.addPOIButton} />
+        </Pressable>
+        <Pressable style={styles.share}
+          onPress={handleModal}
         >
-        <Text>Share &nbsp;</Text>
-        <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
-      </Pressable>
+          <Modal
+            animationType="slide"
+            visible={isModalVisible}
+            style={styles.modal}
+          >
+            <Pressable onPress={() => { setIsModalVisible(false) }}>
+                <Text></Text>
+                <Text>
+                  Close
+                </Text>
+            </Pressable>
+          </Modal>
+          <Text>Share &nbsp;</Text>
+          <FontAwesome name="plus-circle" size={18} color="white" style={styles.addPOIButton} />
+        </Pressable>
       </View>
 
 
       <DraggableFlatList
         data={cities}
-        onDragEnd={({data}) => {setCities(data)}}
+        onDragEnd={({ data }) => { setCities(data) }}
         keyExtractor={item => item.cityName}
         renderItem={renderCities}
       />
@@ -276,5 +295,14 @@ const styles = StyleSheet.create({
   addAndShareContainer: {
     flexDirection: 'row',
     justifyContent: 'center'
+  },
+  modal: {
+    height: 20,
+    width: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 35,
+    margin: 20
   }
 });

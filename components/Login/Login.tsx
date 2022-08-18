@@ -21,34 +21,82 @@ export default function Login() {
         setUsername(response.data.user.email);
         // asyncStorage.setItem("token", response.data.user.email);
       })
-      .catch((err) => console.log('signup error', err));
+      .catch((err) => {
+        Alert.alert(
+          'Account not found',
+          'Would you like to create an account?',
+          [
+            {
+              text: "No"
+            },
+            {
+              text: "Yes",
+              onPress: () => handleSignup()
+            }
+          ]
+        )
+      });
     // setIsLoggedIn(true);
 
     // await asyncStorage.setItem("token",);
   }
 
   const handleSignup = () => {
+
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (!re.test(email)) {
+      Alert.alert('Invalid email address', 'Please enter a valid email address.')
+      return;
+    }
+
+    if (password.length <= 7) {
+      Alert.alert('Password length too short', 'Passwords must be at least 8 characters long.')
+      return;
+    }
+
     axios.post(`http://127.0.0.1:4000/auth/signup/`, { email: email, password: password })
       .then((response) => {
         console.log(response.data);
-        setUsername(response.data.user.email);
         // asyncStorage.setItem("token", response.data.user.email);
-        createAlert();
-      })
-      .catch((err) => console.log('signup error', err));
-  }
+        Alert.alert('Account confirmation', 'Please confirm you would like to make an account.',
+          [
+            {
+              text: "Cancel"
+            },
+            {
+              text: "Confirm",
+              onPress: () => {
+                Alert.alert(
+                  'Registration successful',
+                  'Welcome to Road Trip!',
+                  [
+                    {
+                      text: "OK",
+                      onPress: () => {
+                        console.log('OK Pressed')
+                        setUsername(response.data.user.email);
+                      }
+                    }
+                  ]
+                )
+              }
+            },
+          ]
+        )
 
-  const createAlert = () => {
-    Alert.alert(
-      'Registration successful',
-      'Welcome to Road Trip!',
-      [
-        {
-          text: "Okay",
-          onPress: () => console.log('OK Pressed')
-        }
-      ]
-    )
+      })
+      .catch((err) => {
+        Alert.alert(
+          'Sign up failed',
+          'Account already exists or credentials are invalid',
+          [
+            {
+              text: "Okay"
+            }
+          ]
+        )
+      });
   }
 
   return (
@@ -79,9 +127,9 @@ export default function Login() {
         >
           <Text
             style={styles.buttonText}
-            >
-              Login
-              </Text>
+          >
+            Login
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -90,9 +138,9 @@ export default function Login() {
         >
           <Text
             style={styles.buttonText}
-            >
-              Sign up
-              </Text>
+          >
+            Sign up
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -136,7 +184,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: '700',
-    fontSize: 13,
+    fontSize: 14,
     textAlign: 'center',
   },
   buttonOutlineText: {
