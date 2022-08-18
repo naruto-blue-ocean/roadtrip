@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import {Text, StyleSheet, View, Image, TextInput, Button } from 'react-native';
+import config from '../../config.js';
 import axios from 'axios';
 import Form from './Form';
 import City from './City';
+import configs from '../../config';
 
 export default function AddCity () {
 
@@ -11,7 +13,7 @@ export default function AddCity () {
   var post = () => {
     // sends an array of objects to back end, must deconstruct and store each
     // individual city server side
-    axios.post('https://cute-donkeys-divide-76-171-108-153.loca.lt/postCities', list)
+    axios.post(`${configs.LOCALTUNNEL}/postCities`, list)
     .then(() => {console.log('success posting from front end')})
     .catch((err) => {console.log('Err in posting from front end', err)})
   };

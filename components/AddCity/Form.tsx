@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {Text, StyleSheet, View, Image, TextInput, Button } from 'react-native';
 import axios from 'axios';
 import config from '../../config';
@@ -7,6 +7,8 @@ import City from './City';
 import { getZipCode } from 'use-places-autocomplete';
 
 export default function Form ( {list, setList}: {list: any, setList: any}) {
+
+  const ref = useRef(true);
 
   return (
     <View style = {styles.container}>
@@ -27,6 +29,7 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
         }
         console.log('what is cityiNof', cityInfo)
         setList([...list, cityInfo])
+
       }}
       styles = {{ textInput: styles.textInput, zIndex: 20 }}
       query={{
@@ -34,6 +37,7 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
         language: 'en',
       }}
       fetchDetails = {true}
+      numberOfLines = {10}
       />
 
       {/* List of Cities */}
