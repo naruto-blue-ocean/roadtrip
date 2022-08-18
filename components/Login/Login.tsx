@@ -5,6 +5,7 @@ import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpaci
 import axios from 'axios';
 import { AuthContext } from '../../AuthProvider.js'
 import asyncStorage from '@react-native-async-storage/async-storage'
+import config from '../../config.js'
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ export default function Login() {
 
   const logInUser = async () => {
 
-    axios.post(`http://127.0.0.1:3000/auth/login`, { email: email, password: password })
+    axios.post(`${config.LOCALTUNNEL}/auth/login`, { email: email, password: password })
       .then((response) => {
         console.log(response.data);
         setIsLoggedIn(true);
@@ -28,7 +29,7 @@ export default function Login() {
   }
 
   const handleSignup = () => {
-    axios.post(`http://127.0.0.1:3000/auth/signup`, { email: email, password: password })
+    axios.post(`${config.LOCALTUNNEL}/auth/signup`, { email: email, password: password })
       .then((response) => {
         console.log(response.data);
         setIsLoggedIn(true);
