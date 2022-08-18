@@ -16,47 +16,47 @@ export default function POIList({ navigation, route }) {
   const { city, term } = route.params;
   const [POIs, setPOIs] = useState([]);
 
-  const { isLoading: getPOIsIsLoading, data: getPOIsData } = useQuery('getPOIs', getPOIs(city, term));
+  // const { isLoading: getPOIsIsLoading, data: getPOIsData } = useQuery('getPOIs', getPOIs(city, term));
 
-  const { isLoading: getPOIsLoading, data: getPOIsData } = useInfiniteQuery('getPOIs', getPOIs(city, term));
+  // const { isLoading: getPOIsLoading, data: getPOIsData } = useInfiniteQuery('getPOIs', getPOIs(city, term));
 
-  // useEffect(() => {
-  //   console.log('In POIList, city = ', city);
-  //   console.log('In POIList, term = ', term);
-  //   axios.get('https://api.yelp.com/v3/businesses/search', {
-  //     headers: {
-  //       Authorization: config.YELPTOKEN,
-  //     },
-  //     params: {
-  //       term,
-  //       location: city,
-  //     },
-  //   })
-  //     .then((result) => {
-  //       console.log('Yelp GET success!');
-  //       setPOIs(result.data.businesses);
-  //     })
-  //     .catch((err) => {
-  //       console.log('Yelp GET failed, err = ', err);
-  //     })
-  // }, []);
+  useEffect(() => {
+    console.log('In POIList, city = ', city);
+    console.log('In POIList, term = ', term);
+    axios.get('https://api.yelp.com/v3/businesses/search', {
+      headers: {
+        Authorization: config.YELPTOKEN,
+      },
+      params: {
+        term,
+        location: city,
+      },
+    })
+      .then((result) => {
+        console.log('Yelp GET success!');
+        setPOIs(result.data.businesses);
+      })
+      .catch((err) => {
+        console.log('Yelp GET failed, err = ', err);
+      })
+  }, []);
 
-  // const loadMore = () => {
-  //   alert('load more');
-  // };
+  const loadMore = () => {
+    alert('load more');
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
       <View style={styles.container} >
         <Button title="Go back" onPress={() => navigation.goBack()} />
-        {/* {POIs && <FlatList
+        {POIs && <FlatList
           data={POIs}
           renderItem={({ item }) => (<POICard POI={item} />)}
           keyExtractor={(item) => item.id}
           onEndReached={loadMore}
           onEndReachedThreshold={0.4}
-        />} */}
-        <List city={city} term={term} />
+        />}
+        {/* <List city={city} term={term} /> */}
         <StatusBar style="auto" />
       </View>
     </QueryClientProvider>
