@@ -21,6 +21,7 @@ export default function DestinationViewer({route, navigation}) {
     axios.get(path)
     .then ((response) => {
       let trip = response.data;
+      console.log(trip);
       let cities = {};
       trip.forEach((row, index) => {
         if (cities[row.destination_name] && row.poi_id) {

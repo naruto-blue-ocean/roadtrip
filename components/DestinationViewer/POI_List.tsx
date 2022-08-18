@@ -3,11 +3,9 @@ import {View, StyleSheet, TouchableOpacity, Text, Pressable, LayoutAnimation} fr
 import DraggableFlatList, {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
-import POI_Delete from './POI_Delete';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { getItemAsync } from 'expo-secure-store';
-import City from '../AddCity/City';
 import axios from 'axios';
 
 const POI_List = (props) => {
