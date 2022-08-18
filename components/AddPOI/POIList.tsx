@@ -18,7 +18,7 @@ export default function POIList({ navigation, route }) {
 
   const { isLoading: getPOIsIsLoading, data: getPOIsData } = useQuery('getPOIs', getPOIs(city, term));
 
-  const { isLoading: getPOIsLoading, data: getPOIsData } = useInfiniteQuery('getPOIs', getPOIs(city, term));
+  // const { isLoading: getPOIsLoading, data: getPOIsData } = useInfiniteQuery('getPOIs', getPOIs(city, term));
 
   // useEffect(() => {
   //   console.log('In POIList, city = ', city);
