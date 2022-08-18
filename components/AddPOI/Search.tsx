@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import config from '../../config';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, TextInput, SafeAreaView, Button } from 'react-native';
+import { StyleSheet, View, FlatList, Pressable, Text, TextInput, SafeAreaView, Button } from 'react-native';
+import { getItemAsync } from 'expo-secure-store';
 
-export default function POICard({ city, navigation }) {
-  // replace later with lat, lng provided from props
-  const latitude = 37.3688;
-  const longitude = 121.0365;
+export default function POICard({ navigation, city, lat, lng }) {
 
   const [input, setInput] = useState<string>('');
+  const [suggestions, setSuggestions] = useState([]);
 
-  const [suggestion, setSuggestion] = useState([]);
   const handleInputChange = (e: string) => {
-    console.log(e);
+    // console.log(e);
     setInput(e);
     axios.get('https://api.yelp.com/v3/autocomplete', {
       headers: {
@@ -21,39 +19,48 @@ export default function POICard({ city, navigation }) {
       },
       params: {
         text: e,
-        latitude,
-        longitude,
+        latitude: lat,
+        longitude: lng,
       },
     })
       .then((result) => {
-        console.log('Yelp Autocomplete success!, result.data = ', result.data.categories);
-        if (result.data.categories.length === 0) {
-          setSuggestion(result.data.categories);
+        // console.log('Yelp Autocomplete success!, result.data = ', result.data.categories);
+        if (result.data.categories.length > 0) {
+          setSuggestions(result.data.categories);
         }
       })
       .catch((err) => {
-        console.log('Yelp GET failed, err = ', err);
+        // console.log('Yelp GET failed, err = ', err);
       })
   }
-  const handleSubmit = () => {
-    console.log('Submit!');
+  const handleSubmit = (selected: string) => {
+    const term = selected || input
+    // console.log('Submit!');
     navigation.navigate('POIList', {
-      city: city,
-      term: input,
+      city,
+      term,
     })
   }
   return (
     <View>
       <TextInput
-      style={styles.input}
-      placeholder={'Search here'}
-      keyboardType="web-search"
-      returnKeyType="send"
-      onChangeText={(e) => handleInputChange(e)}
-      onSubmitEditing={handleSubmit}
-      placeholderTextColor="black"
-      ></TextInput>
-      <FlatList />
+        style={styles.input}
+        placeholder={'Search here'}
+        keyboardType="web-search"
+        returnKeyType="send"
+        onChangeText={(e) => handleInputChange(e)}
+        onSubmitEditing={handleSubmit}
+        placeholderTextColor="black"
+      />
+      {input && <FlatList
+        data={suggestions}
+        renderItem={({ item }) => (
+          <Pressable onPress={() => handleSubmit(item.alias)}>
+            <Text>{item.alias}</Text>
+          </Pressable>
+        )}
+        keyExtractor={(item) => item.alias}
+      />}
     </View>
 
 );

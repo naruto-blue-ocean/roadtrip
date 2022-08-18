@@ -6,13 +6,15 @@ import Suggestion from './Suggestion';
 import Search from './Search';
 
 export default function AddPOIHome({ navigation }) {
-  //update the city to props received from "AddPOI"
+  //props: city, lat, lng, order
   const city = 'sunnyvale';
+  const lat = 37.3688;
+  const lng = 121.0365;
 
   return (
     <View style={styles.container}>
-      {console.log('In AddPOIHome, city = ', city)}
-      <Search style={styles.textInput} city={city} navigation={navigation} />
+      {/* {console.log('In AddPOIHome, city = ', city)} */}
+      <Search style={styles.textInput} city={city} lat={lat} lng={lng} navigation={navigation} />
       <Suggestion city={city} navigation={navigation}/>
       <StatusBar style="auto" />
     </View>
