@@ -7,7 +7,7 @@ export default function TripCard(props: any) {
   const [active, setActive] = useState(false);
 
   const navigation = useNavigation();
-  console.log(props.key);
+  // console.log(props.key);
 
   return (
     <Pressable
