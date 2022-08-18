@@ -21,7 +21,7 @@ const queryClient = new QueryClient();
 
 export default function Root() {
 
-  const { isLoggedIn, setIsLoggedIn } = React.useContext(AuthContext);
+  const { username, setUsername } = React.useContext(AuthContext);
   const [checking, setIsChecking] = React.useState(true);
 
   // NOTICE: There are two versions of the return block, the first commented out block includes the login page and the second doesn't. If you want to switch, just comment/uncomment out one of the return blocks.
@@ -30,7 +30,7 @@ export default function Root() {
   //   <NavigationContainer>
   //     <Stack.Navigator initialRouteName="FakeHomeScreen">
   //       {
-  //         isLoggedIn ? (
+  //         username !== null ? (
   //           <>
   //             <Stack.Screen
   //               name="FakeHomeScreen"
