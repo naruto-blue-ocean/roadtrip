@@ -4,11 +4,13 @@ import {View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimension
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 import POI_List from './POI_List';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 
 export default function DestinationViewer() {
+  const navigation = useNavigation();
   const sampleTrip = {
     id: 100,
     destinations: [
@@ -128,7 +130,8 @@ export default function DestinationViewer() {
                 }}
                 style={styles.plusicon}
               >
-                <FontAwesome name="plus-circle" size={36} color="white" />
+                {expanded ? <FontAwesome name="minus-circle" size={36} color="white" /> : <FontAwesome name="plus-circle" size={36} color="white" />}
+
               </Pressable>
               <Pressable
                 onLongPress={drag}
@@ -159,6 +162,25 @@ export default function DestinationViewer() {
 
   return (
     <View>
+      <View style = {styles.addAndShareContainer}>
+      <Pressable style={styles.addCity}
+        onPress = {() =>
+          navigation.navigate('AddCity', {city: 'San Francisco'})
+        }
+        >
+        <Text>Add Destinations &nbsp;</Text>
+        <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
+      </Pressable>
+      <Pressable style={styles.share}
+        onPress = {() => {}
+        }
+        >
+        <Text>Share &nbsp;</Text>
+        <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
+      </Pressable>
+      </View>
+
+
       <DraggableFlatList
         data={cities}
         onDragEnd={({data}) => {setCities(data)}}
@@ -225,8 +247,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   poiwrapper: {
-    alignItems: 'flex-start',
+    alignItems: 'center',
     width: '100%',
     backgroundColor: 'red'
   },
+  addCity: {
+    backgroundColor: 'grey',
+    justifyContent: 'center',
+    fontSize: 20,
+    borderColor: 'black',
+    borderWidth: 1,
+    flexDirection: 'row',
+    padding: 5,
+    borderRadius: 6,
+    width: '50%',
+  },
+  share: {
+    backgroundColor: 'grey',
+    justifyContent: 'center',
+    fontSize: 20,
+    borderColor: 'black',
+    borderWidth: 1,
+    flexDirection: 'row',
+    padding: 5,
+    borderRadius: 6,
+    width: '50%'
+  },
+  addAndShareContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  }
 });
