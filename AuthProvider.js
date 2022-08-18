@@ -8,7 +8,7 @@ export default AuthProvider = ( {children} ) => {
   const [currentTripId, setCurrentTripId] = useState(null);
 
   return (
-    <AuthContext.Provider value={{ username, setUsername }}>
+    <AuthContext.Provider value={{ username, setUsername, currentTripId, setCurrentTripId }}>
       {children}
     </AuthContext.Provider>
   )
