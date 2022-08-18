@@ -16,7 +16,9 @@ export default function POICard({ POI, desID, order }) {
       POIID: POI.id,
       order: (order + 1),
     })
-      .then((result) => console.log('POST addPOI success!'))
+      .then((result) => {
+        // console.log('POST addPOI success!')
+      })
       .catch((err) => console.log('POST addPOI err!, err = ', err))
     navigation.navigate('DestinationViewer');
   };
