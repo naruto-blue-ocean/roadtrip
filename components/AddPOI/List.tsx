@@ -24,14 +24,14 @@ export default function List({ city, term }) {
 
   return (
     <View>
-      {console.log('In List!')}
+      {/* {console.log('In List!')}
       {getPOIsData && <FlatList
         data={getPOIsData}
         renderItem={({ item }) => (<POICard POI={item} />)}
         keyExtractor={(item) => item.id}
         onEndReached={loadMore}
         onEndReachedThreshold={0.4}
-      />}
+      />} */}
     </View>
   );
 }
