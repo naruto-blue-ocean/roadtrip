@@ -22,7 +22,6 @@ export default function DestinationViewer({route, navigation}) {
     axios.get(path)
     .then ((response) => {
       let trip = response.data;
-      console.log('trip ------------>', trip);
       let cities = {};
       trip.forEach((row, index) => {
         if (cities[row.destination_name] && row.poi_id) {
@@ -170,7 +169,7 @@ export default function DestinationViewer({route, navigation}) {
       <View style = {styles.addAndShareContainer}>
         <Pressable style={styles.addCity}
           onPress = {() =>
-            navigation.navigate('AddCity', {trip_id: 1, current_num_destinations: 3 })
+            navigation.navigate('AddCity', {trip_id: tripId})
           }
           >
           <Text>Add Destinations &nbsp;</Text>
@@ -299,6 +298,11 @@ const styles = StyleSheet.create({
 
 
 /*const sampleTrip = {
+=======
+
+/*
+const sampleTrip = {
+>>>>>>> jason-branch
     id: 100,
     destinations: [
       {
