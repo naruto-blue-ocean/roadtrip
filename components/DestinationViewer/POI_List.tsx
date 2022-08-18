@@ -29,12 +29,18 @@ const POI_List = (props) => {
     //axios put request
     //.then -> getTrip request
     //
-    console.log('reordering data ----------> ', data)
+    // console.log('reordering data ----------> ', data)
     // axios.put(`${LOCALTUNNEL}/trips`)
 
     setData(data)
 
   }
+
+  const deletePOI = (item) => {
+    const path = (`${LOCALTUNNEL}/trips/:tripId/destinations/${props.currCity.destination_id}/pois/${item.id}`);
+    console.log('--------------->', item);
+    console.log('---------> currCity', props.currCity);
+  };
 
   const renderPOI = ({item, drag, isActive}) => (
     <View style={styles.tilewrapper}>
@@ -44,7 +50,7 @@ const POI_List = (props) => {
           disabled={isActive}
           style={styles.POI}
           onPress = {() => {
-            console.log(item.id)
+            // console.log(item.id)
             navigation.navigate('POIViewer',
             {
               poi_id: item.id

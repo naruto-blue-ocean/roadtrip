@@ -22,7 +22,7 @@ export default function DestinationViewer({route, navigation}) {
     axios.get(path)
     .then ((response) => {
       let trip = response.data;
-      console.log('trip ------------>', trip);
+      // console.log('trip ------------>', trip);
       let cities = {};
       trip.forEach((row, index) => {
         if (cities[row.destination_name] && row.poi_id) {
@@ -56,7 +56,7 @@ export default function DestinationViewer({route, navigation}) {
         };
         destinations.push(destObj);
       })
-      console.log('destinations --------->', destinations);
+      // console.log('destinations --------->', destinations);
       setCities(destinations);
 
     })
@@ -66,7 +66,7 @@ export default function DestinationViewer({route, navigation}) {
   }
 
   const updateDestinationOrder = () => {
-    console.log('updateDestinationOrder invoked, here is the new order', cities);
+    // console.log('updateDestinationOrder invoked, here is the new order', cities);
 
   }
 
@@ -98,6 +98,7 @@ export default function DestinationViewer({route, navigation}) {
           copyOfCities = cities.slice(0, index).concat(cities.slice(index + 1));
         }
       });
+
       LayoutAnimation.configureNext(
         LayoutAnimation.create(
           150,
