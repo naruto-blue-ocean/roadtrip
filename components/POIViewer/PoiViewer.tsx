@@ -16,7 +16,7 @@ class PoiViewer extends React.Component {
  }
 
  componentDidMount() {
-  axios.defaults.headers.common['Authorization'] = `Bearer ${config.YELPTOKEN}`;
+  axios.defaults.headers.common['Authorization'] = config.YELPTOKEN;
   let poiname = 'jIxS5Td2o0gBWx0G0qx59Q';
   let userid = 'johnny@email.com';
   //can use ID instead
@@ -27,8 +27,10 @@ class PoiViewer extends React.Component {
   })
   //USING LOCAL TUNNEL TO GET THE CONNECTION TO THE DB
   axios.get(`${config.LOCALTUNNEL}/notes/${userid}/${poiname}`).then((data) => {
-    // console.log(data.data);
-    this.setState({note:data.data?.content})
+    // console.log('data from db in poi viewer', data.data);
+    if (data.data) {
+      this.setState({note:data.data?.content})
+    }
   }).catch((err) => {
     console.log('err at getting notes in poi viewer', err.response)
   })

@@ -4,8 +4,6 @@ import { useNavigation } from '@react-navigation/core';
 import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import axios from 'axios';
 import { AuthContext } from '../../AuthProvider.js'
-import asyncStorage from '@react-native-async-storage/async-storage';
-
 import config from '../../config.js'
 
 export default function Login() {
@@ -17,10 +15,10 @@ export default function Login() {
 
   const logInUser = async () => {
 
-    axios.post(`${config.LOCALTUNNEL}/auth/login`, { email: email, password: password })
+    axios.post(`http://127.0.0.1:4000/auth/login/`, { email: email, password: password })
       .then((response) => {
-        console.log(response.data);
-        setUsername(response.data.user?.email);
+        console.log('status is...', response.status);
+        setUsername(response.data.user.email);
         // asyncStorage.setItem("token", response.data.user.email);
       })
       .catch((err) => console.log('signup error', err));
@@ -30,10 +28,10 @@ export default function Login() {
   }
 
   const handleSignup = () => {
-    axios.post(`${config.LOCALTUNNEL}/auth/signup`, { email: email, password: password })
+    axios.post(`http://127.0.0.1:4000/auth/signup/`, { email: email, password: password })
       .then((response) => {
         console.log(response.data);
-        setUsername(response.data.user?.email);
+        setUsername(response.data.user.email);
         // asyncStorage.setItem("token", response.data.user.email);
         createAlert();
       })
