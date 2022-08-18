@@ -6,15 +6,15 @@ import config from '../../config';
 
 export default function POICard({ navigation, POI, id }) {
 
-// const handlePress = (e) => {
-//   axios.post(`${config.LOCALTUNNEL}/addPOI`, {
-//     name: POI.name,
-//     id: POI.id,
-//   })
-//     .then((result) => console.log('POST addPOI success!'))
-//     .catch((err) => console.log('POST addPOI err!, err = ', err))
-//   navigation.navigate('DestinationViewer');
-// };
+const handlePress = (e) => {
+  axios.post(`${config.LOCALTUNNEL}/addPOI`, {
+    name: POI.name,
+    id: POI.id,
+  })
+    .then((result) => console.log('POST addPOI success!'))
+    .catch((err) => console.log('POST addPOI err!, err = ', err))
+  navigation.navigate('DestinationViewer');
+};
 
   return (
     <View>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { QueryClient, QueryClientProvider, useQuery, useInfiniteQuery } from 'react-query';
-import axios from 'axios';
-import config from '../../config';
+import { useQuery } from 'react-query';
+// import axios from 'axios';
+// import config from '../../config';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, FlatList, Text, Button } from 'react-native';
 import POICard from './POICard';
@@ -14,9 +14,9 @@ export default function POIList({ navigation, route }) {
   const { city, term } = route.params;
   // const [POIs, setPOIs] = useState([]);
 
-  const { isLoading: getPOIsIsLoading, data: getPOIsData } = useQuery('getPOIs', getPOIs(city, term));
+  const { isLoading: getPOIsIsLoading, data: getPOIsData } = useQuery('getPOIs', () => getPOIs(city, term));
 
-  console.log('useQuery, getPOIsData = ', getPOIsData)
+  // console.log('useQuery, getPOIsData = ', getPOIsData)
 
 
   // const { isLoading: getPOIsLoading, data: getPOIsData } = useInfiniteQuery('getPOIs', getPOIs(city, term), {
@@ -53,6 +53,7 @@ export default function POIList({ navigation, route }) {
   return (
     <View style={styles.container} >
       <Button title="Back" onPress={() => navigation.goBack()} />
+      {console.log(getPOIsData)}
       {/* {POIs && <FlatList
         data={POIs}
         renderItem={({ item }) => (<POICard
@@ -64,13 +65,15 @@ export default function POIList({ navigation, route }) {
         onEndReached={loadMore}
         onEndReachedThreshold={0.4}
       />} */}
-      {getPOIsIsLoading && <FlatList
+
+      {!getPOIsIsLoading && <FlatList
         data={getPOIsData}
         renderItem={({ item }) => (<POICard POI={item} />)}
         keyExtractor={(item) => item.id}
         onEndReached={loadMore}
         onEndReachedThreshold={0.4}
       />}
+
       <StatusBar style="auto" />
     </View>
   );
