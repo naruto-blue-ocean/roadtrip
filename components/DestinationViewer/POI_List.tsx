@@ -92,9 +92,9 @@ const POI_List = (props) => {
         onPress = {() =>
           navigation.navigate('AddPOI',
           {
-            name: city.cityName,
-            lat: city.lat,
-            lng: city.lng,
+            id: props.destinationId,
+            // lat: city.lat,
+            // lng: city.lng,
             current_num_POIs: 0,
             trip_destination_id: 0
           })
