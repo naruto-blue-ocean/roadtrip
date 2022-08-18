@@ -5,12 +5,15 @@ import config from '../../config';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, FlatList, Text, Button } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import POICard from './POICard';
 
 const getPOIs = require('./yelpAPI');
 
-export default function POIList({ navigation }) {
+export default function POIList() {
+  const navigation = useNavigation();
+
   //props: order
   const order = 2;
   const route = useRoute();
