@@ -118,116 +118,88 @@ export default function DestinationViewer() {
 
     return (
       <ScaleDecorator>
-        <ScrollView
-          contentContainerStyle={styles.scrollviewwrapper}
-          horizontal={true}
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onScroll={Animated.event([
-            {
-              nativeEvent: {
-                contentOffset: {
-                  x: scrollX
+        <View style={styles.cityandpoiwrapper}>
+          <ScrollView
+            contentContainerStyle={styles.scrollviewwrapper}
+            horizontal={true}
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScroll={Animated.event([
+              {
+                nativeEvent: {
+                  contentOffset: {
+                    x: scrollX
+                  }
                 }
               }
-            }
-          ], { useNativeDriver: false })}
-          scrollEventThrottle={1}
-        >
-          <View style={styles.cityandpoiwrapper}>
-            <View style={styles.tilewrapper}>
-              <Pressable
-                onPressIn={() => {
-                  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-                  setExpanded(prevState => !prevState);
-                }}
-                style={styles.plusicon}
-              >
+            ], {useNativeDriver: false})}
+            scrollEventThrottle={1}
+          >
+              <View style={styles.tilewrapper}>
+                <Pressable
+                  onPressIn={ () => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                    setExpanded(prevState => !prevState);
+                  }}
+                  style={styles.plusicon}
+                >
                 {expanded ? <FontAwesome name="minus-circle" size={36} color="white" /> : <FontAwesome name="plus-circle" size={36} color="white" />}
-
-              </Pressable>
-              <Pressable
-                onLongPress={drag}
-                disabled={isActive}
-                style={styles.item}
-              >
-                <Text style={styles.title}>{item.cityName}</Text>
-              </Pressable>
-            </View>
-            <View style={styles.deleteicon}>
-              <Pressable
-                style={styles.deletearea}
-                onPressIn={handleDelete}
-              >
-                <AntDesign name="delete" size={36} color="white" />
-              </Pressable>
-            </View>
-            {expanded && (
-              <View style={styles.poiwrapper}>
-                <POI_List POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
+                </Pressable>
+                <Pressable
+                  onLongPress={drag}
+                  disabled={isActive}
+                  style={styles.item}
+                >
+                  <Text style={styles.title}>{item.cityName}</Text>
+                </Pressable>
               </View>
-            )}
-          </View>
-        </ScrollView>
+              <View style={styles.deleteicon}>
+                <Pressable
+                  style={styles.deletearea}
+                  onPressIn={handleDelete}
+                >
+                  <AntDesign name="delete" size={36} color="white" />
+                </Pressable>
+              </View>
+          </ScrollView>
+          {expanded && (
+            <View style={styles.poiwrapper}>
+              <POI_List POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
+            </View>
+          )}
+        </View>
       </ScaleDecorator>
     )
   }
 
 
   return (
-    <View>
-      <View style={styles.addAndShareContainer}>
+    <View style={styles.wrapper}>
+      <View style = {styles.addAndShareContainer}>
         <Pressable style={styles.addCity}
-          onPress={() =>
-            navigation.navigate('AddCity', { city: 'San Francisco' })
+          onPress = {() =>
+            navigation.navigate('AddCity', {city: 'San Francisco'})
           }
-        >
+          >
           <Text>Add Destinations &nbsp;</Text>
-          <FontAwesome name="plus-circle" size={18} color="white" style={styles.addPOIButton} />
+          <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
         </Pressable>
         <Pressable style={styles.share}
-          // onPress={handleModal}
-          onPress={ () => {
-            Alert.prompt('Share trip', 'Enter friend\'s email', (email) => {
-              axios.post(`${config.LOCALTUNNEL}/share/${email}`)
-                .then( (response) => console.log(response.data))
-                .catch( (e) => console.log(e))
-            })
-          }}
-        >
-          <Modal
-            animationType="slide"
-            visible={isModalVisible}
-            style={styles.modal}
+          onPress = {() => {}
+          }
           >
-            <Pressable onPress={() => { setIsModalVisible(false) }}>
-              <Text></Text>
-              <Text>
-                Close
-              </Text>
-              <TextInput
-                onChangeText={setShareEmail}
-                placeholder="input your friend's email"
-              >
-                <Pressable onPress={() => {handleShare}}>
-                  <Text>Share</Text>
-                </Pressable>
-
-                </TextInput>
-            </Pressable>
-          </Modal>
           <Text>Share &nbsp;</Text>
-          <FontAwesome name="plus-circle" size={18} color="white" style={styles.addPOIButton} />
+          <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
         </Pressable>
       </View>
-
-
-      <DraggableFlatList
-        data={cities}
-        onDragEnd={({ data }) => { setCities(data) }}
-        keyExtractor={item => item.cityName}
-        renderItem={renderCities}
-      />
+      <View style={styles.body}>
+        <DraggableFlatList
+          data={cities}
+          onDragEnd={({data}) => {setCities(data)}}
+          keyExtractor={item => item.cityName}
+          renderItem={renderCities}
+        />
+      </View>
     </View>
   );
 
@@ -237,18 +209,19 @@ export default function DestinationViewer() {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: 'red',
   },
   scrollviewwrapper: {
     justifyContent: 'center',
   },
-  header: {
-    flex: 0.2,
-    backgroundColor: '#219EBC',
+  addAndShareContainer: {
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    flex: 1,
+    backgroundColor: '#219EBC',
   },
   body: {
+    flex: 9,
     backgroundColor: '#FB8500',
   },
   container: {
@@ -288,9 +261,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   poiwrapper: {
-    alignItems: 'center',
     width: '100%',
-    backgroundColor: 'red'
   },
   addCity: {
     backgroundColor: 'grey',
@@ -313,18 +284,5 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 6,
     width: '50%'
-  },
-  addAndShareContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  modal: {
-    height: 20,
-    width: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    padding: 35,
-    margin: 20
   }
 });

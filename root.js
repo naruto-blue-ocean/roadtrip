@@ -112,11 +112,11 @@ export default function Root() {
                 component={DestinationViewer}
                 options={{ title: 'Destinations' }}
               />
-              {/* <Stack.Screen
+              <Stack.Screen
                 name="POIViewer"
                 component={PoiViewer}
                 options={{ title: 'Points Of Interest' }}
-              /> */}
+              />
               <Stack.Screen
                 name="AddCity"
                 component={AddCity}
