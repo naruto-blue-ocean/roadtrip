@@ -185,7 +185,12 @@ export default function DestinationViewer() {
           <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
         </Pressable>
         <Pressable style={styles.share}
-          onPress = {() => {}
+          onPress = {() => {
+            Alert.prompt('Share trip', 'Enter friend\'s email', (email) => {
+              axios.post(`${config.LOCALTUNNEL}/share/${email}`)
+                .then( (response) => console.log(response.data))
+                .catch( (e) => console.log(e))
+          })}
           }
           >
           <Text>Share &nbsp;</Text>
