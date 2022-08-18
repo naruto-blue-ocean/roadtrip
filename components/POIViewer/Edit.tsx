@@ -50,7 +50,7 @@ export default function Edit({updateNote, showModal, displayModal, title, note})
         <View style={styles.postBox}>
           <Pressable
           onPress={updatingNote}>
-          <Text style={styles.post}>POST</Text>
+          <Text style={styles.post}>CREATE</Text>
           </Pressable>
 
         </View>

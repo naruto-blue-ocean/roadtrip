@@ -4,6 +4,9 @@ import {Keyboard, Dimensions, StyleSheet, Text, View, Image, TextInput, Pressabl
 import axios from 'axios';
 import config from '../../config.js';
 import Edit from './Edit.tsx';
+import styled from 'react-native-styled-components';
+import Stars from 'react-native-stars';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class PoiViewer extends React.Component {
  constructor(props) {
@@ -30,11 +33,24 @@ class PoiViewer extends React.Component {
   })
   //USING LOCAL TUNNEL TO GET THE CONNECTION TO THE DB
   axios.get(`${config.LOCALTUNNEL}/notes/${userid}/${poiname}`).then((data) => {
+
     // console.log(data.data);
-    this.setState({
-      note:data.data?.content,
-      noteRendered: true
-    })
+    // this.setState({
+    //   note:data.data?.content,
+    //   noteRendered: true
+    // })
+
+    // console.log('data from db in poi viewer', data.data);
+    if (data.data) {
+      this.setState({note:data.data?.content,
+        noteRendered: true
+      })
+    } else {
+      this.setState({
+        noteRendered: true
+      })
+    }
+
   }).catch((err) => {
     console.log('err at getting notes in poi viewer', err.response)
   })
@@ -48,18 +64,19 @@ class PoiViewer extends React.Component {
  }
 
  updateNote(value: String) {
-
+  let poiname = 'jIxS5Td2o0gBWx0G0qx59Q';
+  let userid = 'johnny@email.com';
   //data we will send over to the server
   var data = {
     note: value,
-    user_email: '',
-    poi_id: ''
+    user_email: 'johnny@email.com',
+    poi_id: 'jIxS5Td2o0gBWx0G0qx59Q'
   }
 
   console.log("WHAT IS THE NEW VALUE: ", value)
-  axios.put(`${config.LOCALTUNNEL}/updateNote/${userid}/${poiname}`, data)
-  .then(() => {
-    console.log("POST WAS SUCCESS")
+  axios.put(`${config.LOCALTUNNEL}/updateNote`, data)
+  .then((data) => {
+    console.log("POST WAS SUCCESS", data.data)
     this.setState({
       //where were will update the new note
       note: value
@@ -95,11 +112,19 @@ class PoiViewer extends React.Component {
 
       <Text style={styles.title}>{this.state.data.name}</Text>
       <View style={styles.starRating}>
-        <View style={styles.outerStar}>
-          {[1,2,3,4,5].map((star, index) => {
-            return <Text key={index} style={{color: index < this.state.data.rating ? "#f9a920" : "#D3D3D3" }}>&#9733;</Text>
-          })}
-        </View>
+
+        <View style={{alignItems:'left'}}>
+          <Stars
+            default={this.state.data.rating}
+            count={5}
+            half={true}
+            fullStar={<Icon name={'star'} style={[styles.myStarStyle]}/>}
+            emptyStar={<Icon name={'star-outline'} style={styles.myStarStyle}/>}
+            halfStar={<Icon name={'star-half'} style={[styles.myStarStyle]}/>}
+          />
+      </View>
+
+
 
         <View style={styles.categories}>
         {/* <View style={styles.outerStar}>
@@ -115,7 +140,7 @@ class PoiViewer extends React.Component {
       {/* <Text>{this.state.data.price}</Text> */}
       <Text>{this.state.data.location?.display_address[0]} {this.state.data.location?.display_address[1]}</Text>
       {/* Restaurant Info */}
-      <Text>Stars: {this.state.data.rating}</Text>
+      {/* <Text>Stars: {this.state.data.rating}</Text> */}
       <Text>Phone: {this.state.data.display_phone}</Text>
 
       <View style={styles.note} >
@@ -137,6 +162,8 @@ class PoiViewer extends React.Component {
   )
  }
 }
+
+
 
 const styles = StyleSheet.create({
   categories: {
@@ -196,7 +223,16 @@ const styles = StyleSheet.create({
   },
   editButton: {
     alignSelf: "flex-end"
-  }
+  },
+  myStarStyle: {
+    color: "#f9a920",
+    backgroundColor: 'transparent',
+    fontSize: 28,
+    textShadowColor: '#f9a920',
+    textShadowOffset: {width: 1, height: 1},
+    textShadowRadius: 0.2,
+  },
+
 
 });
 
