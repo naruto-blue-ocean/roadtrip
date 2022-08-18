@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Modal, Pressable, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
 import TripCard from './TripCard';
 import axios from 'axios';
 import config from '../../config';
@@ -24,7 +24,7 @@ export default function HomeScreen(props: any) {
   }, [])
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {
         tripsShowing.map((trip: any) => {
           return (<TripCard key={trip.id} tripName={trip.name} tripStatus={trip.status}/>)
@@ -51,7 +51,7 @@ export default function HomeScreen(props: any) {
         <Text style={styles.plus}>+</Text>
       </View>
       <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 
