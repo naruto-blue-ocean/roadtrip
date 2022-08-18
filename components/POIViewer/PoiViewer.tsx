@@ -26,21 +26,12 @@ class PoiViewer extends React.Component {
   //can use ID instead
   axios.get(`https://api.yelp.com/v3/businesses/${poiname}`).then((data) => {
  // DO A GET REQUEST TO THE DATABASE TO RETRIEVE THE NOTES
-    // console.log(data.data);
     this.setState({
       data:data.data,
     });
   })
   //USING LOCAL TUNNEL TO GET THE CONNECTION TO THE DB
   axios.get(`${config.LOCALTUNNEL}/notes/${userid}/${poiname}`).then((data) => {
-
-    // console.log(data.data);
-    // this.setState({
-    //   note:data.data?.content,
-    //   noteRendered: true
-    // })
-
-    // console.log('data from db in poi viewer', data.data);
     if (data.data) {
       this.setState({note:data.data?.content,
         noteRendered: true
@@ -50,7 +41,6 @@ class PoiViewer extends React.Component {
         noteRendered: true
       })
     }
-
   }).catch((err) => {
     console.log('err at getting notes in poi viewer', err.response)
   })
@@ -89,6 +79,7 @@ class PoiViewer extends React.Component {
  }
 
  render() {
+  console.log('props in poi viewer',this.props.route)
   // console.log("DIMESIONS HEIGHT: ",  Dimensions.get('window').height)
   // console.log("DIMESIONS WIDTH: ",  Dimensions.get('window').width)
   // console.log("WHAT IS THE ADDRESS: ", this.state.data.location?.display_address)
@@ -100,8 +91,8 @@ class PoiViewer extends React.Component {
   // }
   return (
     <ScrollView>
-      <Image source={{uri: `${this.state.data.image_url}`}}
-       style={styles.image} />
+      {this.state.data.image_url ? <Image source={{uri: `${this.state.data?.image_url}`}}
+       style={styles.image} /> : ''}
     <View style={styles.wrapper}>
       {/* <Pressable onPress={()=>{Keyboard.dismiss()}}
       > */}

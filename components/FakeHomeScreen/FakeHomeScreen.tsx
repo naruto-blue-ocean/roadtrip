@@ -17,7 +17,7 @@ export default function FakeHomeScreen({ navigation }) {
         onPress={() => { navigation.navigate('HomeScreen')}}
       />
       <Button
-        title="Destinations"
+        title="Trip Viewer"
         onPress={() => { navigation.navigate('DestinationViewer')}}
       />
       <Button

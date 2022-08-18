@@ -1,27 +1,30 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import FakeHomeScreen from './components/FakeHomeScreen/FakeHomeScreen';
-import PoiViewer from './components/POIViewer/PoiViewer';
-import DestinationViewer from './components/DestinationViewer/DestinationViewer';
-import AddCity from './components/AddCity/AddCityIndex';
-import HomeScreen from './components/HomeScreen/HomeScreen';
-import AddPOI from './components/AddPOI/AddPOI';
-import Initialization from './components/Initialization/Initialization';
-import Login from './components/Login/Login';
-import Archive from './components/Archive/Archive';
-import AuthProvider, { AuthContext } from './AuthProvider';
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import FakeHomeScreen from "./components/FakeHomeScreen/FakeHomeScreen";
+import PoiViewer from "./components/POIViewer/PoiViewer";
+import DestinationViewer from "./components/DestinationViewer/DestinationViewer";
+import AddCity from "./components/AddCity/AddCityIndex";
+import HomeScreen from "./components/HomeScreen/HomeScreen";
+import AddPOI from "./components/AddPOI/AddPOI";
+import Initialization from "./components/Initialization/Initialization";
+import Login from "./components/Login/Login";
+import Archive from "./components/Archive/Archive";
+import AuthProvider, { AuthContext } from "./AuthProvider";
 // import AuthProvider from './AuthProvider';
-import { QueryClient, QueryClientProvider, useQuery, useInfiniteQuery } from 'react-query';
-
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+  useInfiniteQuery,
+} from "react-query";
 
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
 
-
 export default function Root() {
-
   const { username, setUsername } = React.useContext(AuthContext);
+
   const [checking, setIsChecking] = React.useState(true);
 
   // NOTICE: There are two versions of the return block, the first commented out block includes the login page and the second doesn't. If you want to switch, just comment/uncomment out one of the return blocks.

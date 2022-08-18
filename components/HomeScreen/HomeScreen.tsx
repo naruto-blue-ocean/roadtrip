@@ -1,15 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Modal, Pressable, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
 import TripCard from './TripCard';
 import axios from 'axios';
 import config from '../../config';
+
 
 
 export default function HomeScreen(props: any) {
 
   const [showingModal, setShowingModal] = useState(false);
   const [tripsShowing, setTripsShowing] = useState([]);
+
 
   useEffect(() => {
     let userEmail = 'noa@email.com';
@@ -24,44 +26,35 @@ export default function HomeScreen(props: any) {
   }, [])
 
   return (
-    <View style={styles.container}>
-      <TripCard />
-      <TripCard />
+    <ScrollView style={styles.container}>
+      {
+        tripsShowing.map((trip: any) => {
+          console.log('Trip ID: ', trip.id);
+          return (<TripCard key={trip.id} tripId={trip.id} tripName={trip.name} tripStatus={trip.status} />)
+        })
+      }
       <View
         style={styles.newTripContainer}
         onTouchEnd={(e) => {
-          Alert.prompt('Create a new trip', 'Choose a name for your trip!', () => {
-            axios.post(`${config.LOCALTUNNEL}/`)
+          let userEmail = 'noa@email.com'
+          Alert.prompt('Create a new trip', 'Choose a name for your trip!', (text) => {
+            axios.post(`${config.LOCALTUNNEL}/trips`,{
+              tripName: text,
+              email: userEmail
+            })
+            .then((response: any) => {
+              console.log(response.data)
+            })
+            .catch((err: Error) => {
+              console.error(err);
+            })
           })
         }}>
         <Text style={styles.newTripText}>Create a new trip</Text>
         <Text style={styles.plus}>+</Text>
       </View>
-      {/* <View>
-        <Modal
-        animationType="slide"
-        visible={showingModal}
-        style={styles.modal}
-        transparent={true}
-        >
-          <View>
-            <Text>Modal window</Text>
-          </View>
-          <TextInput/>
-          <Pressable onPress={() => {setShowingModal(false)}}>
-            <Text>
-              Close
-            </Text>
-          </Pressable>
-          <Pressable onPress={() => {setShowingModal(false)}}>
-            <Text>
-              Submit
-            </Text>
-          </Pressable>
-        </Modal>
-      </View> */}
       <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 
