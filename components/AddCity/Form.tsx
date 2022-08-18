@@ -8,7 +8,6 @@ import { getZipCode } from 'use-places-autocomplete';
 
 export default function Form ( {list, setList}: {list: any, setList: any}) {
 
-  const ref = useRef(true);
 
   return (
     <View style = {styles.container}>
@@ -37,7 +36,6 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
         language: 'en',
       }}
       fetchDetails = {true}
-      numberOfLines = {10}
       />
 
       {/* List of Cities */}
