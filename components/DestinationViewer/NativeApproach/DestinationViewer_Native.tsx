@@ -27,7 +27,8 @@ export default function DestinationViewer() {
         <Text>Hello</Text>
       </View>
       <View style={styles.body}>
-        {destinations.map((destination) => (
+
+        {cities.map((destination) => (
           <Drag
             key={destination}
             destination={destination}
