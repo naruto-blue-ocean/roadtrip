@@ -4,10 +4,14 @@ import { useNavigation } from "@react-navigation/native";
 import axios from 'axios';
 import Form from './Form';
 import City from './City';
+<<<<<<< HEAD
 import configs from '../../config';
 
 export default function AddCity ( {navigation, route} ) {
   var navigation = useNavigation();
+=======
+import ShareButton from './ShareButton';
+>>>>>>> main
 
 
   var [list, setList] = useState<{name: string, id: string}[]>([]);

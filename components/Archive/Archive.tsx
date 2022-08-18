@@ -1,13 +1,35 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import CompletedList from './CompletedList';
 import TrashList from './TrashList';
+import axios from 'axios';
+import config from '../../config.js'
 
 export default function Archive() {
 
   const [whichTab, setWhichTab] = useState('Completed')
+  const [trashTrips, setTrashTrips] = useState([]);
+  const [completedTrips, setCompletedTrips] = useState([]);
+
+  useEffect(() => {
+    let userEmail = 'noa@email.com';
+    axios.get(`${config.LOCALTUNNEL}/trips/archive/${userEmail}`)
+    .then(({data}) => {
+      var trash = [];
+      var completed = [];
+      for (let trip in data) {
+        if(data[trip].status === 'trash'){
+          trash.push(data[trip]);
+        }
+        else if (data[trip].status === 'completed'){
+          completed.push(data[trip]);
+        }
+      }
+      setCompletedTrips(completed);
+      setTrashTrips(trash);
+    })
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -26,10 +48,10 @@ export default function Archive() {
 
       <View style={styles.items}>
         {whichTab === 'Completed' &&
-          <CompletedList/>
+          <CompletedList completedTrips={completedTrips}/>
         }
         {whichTab === 'Trash' &&
-          <TrashList/>
+          <TrashList trashTrips={trashTrips}/>
         }
       </View>
       <StatusBar style="auto" />
