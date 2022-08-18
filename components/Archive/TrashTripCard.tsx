@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, Pressable} from 'react-native';
 
-export default function TrashTripCard() {
+export default function TrashTripCard(props: any) {
 
   const [active, setActive] = useState(false);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.tripName}>Trash Trip name</Text>
+      <Text style={styles.tripName}>{props.trip.name}</Text>
       <View style={styles.options}>
         <Pressable>
           <Text>Options</Text>
