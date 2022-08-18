@@ -4,20 +4,15 @@ import { useNavigation } from "@react-navigation/native";
 import axios from 'axios';
 import Form from './Form';
 import City from './City';
-<<<<<<< HEAD
-import configs from '../../config';
-
-export default function AddCity ( {navigation, route} ) {
-  var navigation = useNavigation();
-=======
 import ShareButton from './ShareButton';
->>>>>>> main
 
+  export default function AddCity ( { route, navigation }) {
+  var navigation = useNavigation();
 
   var [list, setList] = useState<{name: string, id: string}[]>([]);
   // const {trip_id, current_num_destinations} = route.params;
   console.log('routerrrrrrrr', route);
-  console.log('new checker', navigation)
+  // console.log('new checker', navigation)
 
   var post = () => {
     // sends an array of objects to back end, must deconstruct and store each

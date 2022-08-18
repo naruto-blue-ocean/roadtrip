@@ -11,8 +11,8 @@ import axios from 'axios';
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 
-export default function DestinationViewer() {
-  const navigation = useNavigation();
+export default function DestinationViewer( {navigation}) {
+  var navigation = useNavigation();
   const sampleTrip = {
     id: 100,
     destinations: [
@@ -176,26 +176,9 @@ export default function DestinationViewer() {
   return (
     <View style={styles.wrapper}>
       <View style = {styles.addAndShareContainer}>
-<<<<<<< HEAD
-      <Pressable style={styles.addCity}
-        onPress = {() =>
-          navigation.navigate('AddCity', {trip_id: 1, current_num_destinations: 3})
-        }
-        >
-        <Text>Add Destinations &nbsp;</Text>
-        <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
-      </Pressable>
-      <Pressable style={styles.share}
-        onPress = {() => {}
-        }
-        >
-        <Text>Share &nbsp;</Text>
-        <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
-      </Pressable>
-=======
         <Pressable style={styles.addCity}
           onPress = {() =>
-            navigation.navigate('AddCity', {city: 'San Francisco'})
+            navigation.navigate('AddCity', {trip_id: 1, current_num_destinations: 3 })
           }
           >
           <Text>Add Destinations &nbsp;</Text>
@@ -216,7 +199,6 @@ export default function DestinationViewer() {
           keyExtractor={item => item.cityName}
           renderItem={renderCities}
         />
->>>>>>> main
       </View>
     </View>
   );
