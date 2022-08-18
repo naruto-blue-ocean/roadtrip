@@ -12,6 +12,7 @@ import { panGestureHandlerCustomNativeProps } from 'react-native-gesture-handler
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 
+
 export default function DestinationViewer({route, navigation}) {
   // const navigation = useNavigation();
   const {tripName, tripId} = route.params;
@@ -229,7 +230,7 @@ export default function DestinationViewer({route, navigation}) {
       <View style = {styles.addAndShareContainer}>
         <Pressable style={styles.addCity}
           onPress = {() =>
-            navigation.navigate('AddCity', {city: 'San Francisco'})
+            navigation.navigate('AddCity', {trip_id: 1, current_num_destinations: 3 })
           }
           >
           <Text>Add Destinations &nbsp;</Text>
