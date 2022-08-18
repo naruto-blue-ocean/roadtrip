@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable, Modal, TextInput, Alert } from 'react-native';
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
@@ -7,12 +7,15 @@ import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import config from '../../config.js';
 import axios from 'axios';
+import { panGestureHandlerCustomNativeProps } from 'react-native-gesture-handler/lib/typescript/handlers/PanGestureHandler';
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 
-export default function DestinationViewer() {
-  const navigation = useNavigation();
+
+export default function DestinationViewer({route, navigation}) {
+  // const navigation = useNavigation();
+  const {tripName, tripId} = route.params;
   const sampleTrip = {
     id: 100,
     destinations: [
@@ -82,7 +85,56 @@ export default function DestinationViewer() {
     ]
   }
 
-  const [cities, setCities] = useState(sampleTrip.destinations);
+  const getTrip = (trip_id) => {
+    const path = `${config.LOCALTUNNEL}/trips/destinations/${trip_id}`
+    axios.get(path)
+    .then ((response) => {
+      let trip = response.data;
+      let cities = {};
+      trip.forEach((row, index) => {
+        if (cities[row.destination_name] && row.poi_id) {
+          let poiObj = {};
+          poiObj.id = row.poi_id;
+          poiObj.name = row.poi_name;
+          cities[row.destination_name].POIs.push(poiObj)
+        } else {
+          cities[row.destination_name] = {
+            lat: row.lat,
+            lng: row.lng,
+            POIs: []
+          };
+          if (row.poi_id) {
+            let poiObj = {};
+            poiObj.id = row.poi_id;
+            poiObj.name = row.poi_name;
+            cities[row.destination_name].POIs.push(poiObj)
+          }
+        }
+      })
+      let destinations = [];
+      Object.keys(cities).forEach((key) => {
+        let destObj = {
+          cityName: key,
+          lat: cities[key].lat,
+          lng: cities[key].lng,
+          POIs: cities[key].POIs
+        };
+        destinations.push(destObj);
+      })
+      setCities(destinations);
+
+    })
+    .catch((err) => {
+      console.error('errored in getTrip', err)
+    })
+  }
+
+  useEffect(() => {
+    let trip_id = 1;
+    getTrip(trip_id);
+  }, [])
+
+  const [cities, setCities] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [shareEmail, setShareEmail] = useState('');
 
@@ -178,7 +230,7 @@ export default function DestinationViewer() {
       <View style = {styles.addAndShareContainer}>
         <Pressable style={styles.addCity}
           onPress = {() =>
-            navigation.navigate('AddCity', {city: 'San Francisco'})
+            navigation.navigate('AddCity', {trip_id: 1, current_num_destinations: 3 })
           }
           >
           <Text>Add Destinations &nbsp;</Text>

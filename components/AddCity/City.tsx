@@ -6,7 +6,7 @@ export default function City ( {cityInfo}: {cityInfo: any}) {
   console.log('within the city', cityInfo.name)
   return (
     <View style = {styles.container}>
-      <Text> {cityInfo.name} </Text>
+      <Text style={styles.text}> {cityInfo.name} </Text>
     </View>
   )
 };
@@ -17,5 +17,14 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 5,
+    padding: 10,
+    width: 250,
+    height: 80,
+    borderRadius: 15,
+    backgroundColor: '#94483B'
+  },
+
+  text: {
+    fontSize: 20
   }
 })

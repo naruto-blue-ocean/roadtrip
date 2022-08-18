@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {Text, StyleSheet, View, Image, TextInput, Button } from 'react-native';
 import axios from 'axios';
 import config from '../../config';
@@ -6,7 +6,11 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import City from './City';
 import { getZipCode } from 'use-places-autocomplete';
 
-export default function Form ( {list, setList}: {list: any, setList: any}) {
+export default function Form ( {list, setList, trip_id, current_num_destinations}: {list: any, setList: any, trip_id: number, current_num_destinations: number}) {
+
+  console.log('what ar thsee nums', trip_id, current_num_destinations)
+
+  const [location, setLocation] = useState('');
 
   return (
     <View style = {styles.container}>
@@ -14,17 +18,36 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
       {/* Auto Complete Field */}
      <GooglePlacesAutocomplete
       placeholder='Search'
+      textInputProps= {{
+        value : {location},
+        onChangeText : (text) => {
+          setLocation('')
+        }
+      }}
+      enablePoweredByContainer = {false}
       onPress={(data, details = null) => {
         // main_text is the city name, place_id is the city id
-        console.log('-----flagged', data.structured_formatting.main_text, data.place_id)
-        var cityInfo = {name: data.structured_formatting.main_text, id: data.place_id}
+        // console.log('yeees this is data', details)
+        // console.log('-----flagged', data.structured_formatting.main_text, data.place_id)
+        var cityInfo = {
+          name: data.structured_formatting.main_text,
+          id: data.place_id,
+          lat: details?.geometry.location.lat,
+          lng: details?.geometry.location.lng,
+          trip_id: trip_id,
+          current_num_destinations: current_num_destinations
+        }
+        console.log('what is cityiNof', cityInfo)
         setList([...list, cityInfo])
+        setLocation('')
+        console.log('what is location', location)
       }}
       styles = {{ textInput: styles.textInput, zIndex: 20 }}
       query={{
         key: config.GOOGLE_MAPS_API,
         language: 'en',
       }}
+      fetchDetails = {true}
       />
 
       {/* List of Cities */}
