@@ -17,8 +17,8 @@ export default function DestinationViewer({route, navigation}) {
   // const navigation = useNavigation();
   const {tripName, tripId} = route.params;
 
-  const getTrip = (trip_id) => {
-    const path = `${config.LOCALTUNNEL}/trips/destinations/${trip_id}`
+  const getTrip = (tripId) => {
+    const path = `${config.LOCALTUNNEL}/trips/destinations/${tripId}`
     axios.get(path)
     .then ((response) => {
       let trip = response.data;
@@ -65,14 +65,13 @@ export default function DestinationViewer({route, navigation}) {
     })
   }
 
-  const updateDestinationOrder = () => {
-    console.log('updateDestinationOrder invoked, here is the new order', cities);
+  const updateDestinationOrder = (data:any) => {
+    console.log('updateDestinationOrder invoked, here is the new order', data);
 
   }
 
   useEffect(() => {
-    let trip_id = 1;
-    getTrip(trip_id);
+    getTrip(tripId);
   }, [])
 
   const [cities, setCities] = useState([]);
@@ -157,7 +156,7 @@ export default function DestinationViewer({route, navigation}) {
           </ScrollView>
           {expanded && (
             <View style={styles.poiwrapper}>
-              <POI_List POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
+              <POI_List POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} tripId = {tripId} destinationId = {item.destination_id}/>
             </View>
           )}
         </View>
@@ -188,7 +187,7 @@ export default function DestinationViewer({route, navigation}) {
       <View style={styles.body}>
         <DraggableFlatList
           data={cities}
-          onDragEnd={({data}) => {setCities(data)}}
+          onDragEnd={({data}) => {() => { updateDestinationOrder(data)}}}
           keyExtractor={item => item.cityName}
           renderItem={renderCities}
         />

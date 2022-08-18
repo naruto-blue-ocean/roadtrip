@@ -29,10 +29,28 @@ const POI_List = (props) => {
     //axios put request
     //.then -> getTrip request
     //
-    console.log('reordering data ----------> ', data)
-    // axios.put(`${LOCALTUNNEL}/trips`)
+    // console.log('reordering data ----------> ', data)
 
-    setData(data)
+    // console.log(LOCALTUNNEL);
+    // console.log(props.tripId);
+    // console.log(props.destinationId);
+
+    const axiosObj = {};
+    for (var i = 0; i < data.length; i++) {
+      axiosObj[data[i].id] = i + 1;
+    }
+    // console.log('axiosOBJ ----> ', axiosObj);
+    const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`
+    // console.log(path);
+
+    axios.put(path, axiosObj)
+    .then((response) => {
+      setData(data);
+    })
+    .catch((err) => {
+      console.error ('errored in the POI put request', err)
+    });
+    setData(data);
 
   }
 
@@ -44,7 +62,7 @@ const POI_List = (props) => {
           disabled={isActive}
           style={styles.POI}
           onPress = {() => {
-            console.log(item.id)
+            // console.log(item.id)
             navigation.navigate('POIViewer',
             {
               poi_id: item.id
