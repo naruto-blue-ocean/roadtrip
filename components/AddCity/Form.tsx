@@ -8,6 +8,9 @@ import { getZipCode } from 'use-places-autocomplete';
 
 export default function Form ( {list, setList}: {list: any, setList: any}) {
 
+  var ref = useRef();
+
+  const [location, setLocation] = useState({destination: ''});
 
   return (
     <View style = {styles.container}>
@@ -15,6 +18,12 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
       {/* Auto Complete Field */}
      <GooglePlacesAutocomplete
       placeholder='Search'
+      textInputProps= {{
+        value : {location},
+        onChangeText : (text) => {
+          setLocation({destination: ''})
+        }
+      }}
       onPress={(data, details = null) => {
         // main_text is the city name, place_id is the city id
         // console.log('yeees this is data', details)
@@ -24,7 +33,8 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
           id: data.place_id,
           lat: details?.geometry.location.lat,
           lng: details?.geometry.location.lng,
-          trip_id: 1
+          trip_id: 1,
+          current_num_destination: 3
         }
         console.log('what is cityiNof', cityInfo)
         setList([...list, cityInfo])
