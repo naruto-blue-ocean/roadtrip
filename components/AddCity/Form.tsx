@@ -22,7 +22,8 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
           name: data.structured_formatting.main_text,
           id: data.place_id,
           lat: details?.geometry.location.lat,
-          lng: details?.geometry.location.lng
+          lng: details?.geometry.location.lng,
+          trip_id: 1
         }
         console.log('what is cityiNof', cityInfo)
         setList([...list, cityInfo])
