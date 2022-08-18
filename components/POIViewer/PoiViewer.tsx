@@ -100,8 +100,8 @@ class PoiViewer extends React.Component {
   // }
   return (
     <ScrollView>
-      <Image source={{uri: `${this.state.data.image_url}`}}
-       style={styles.image} />
+      {this.state.data.image_url ? <Image source={{uri: `${this.state.data?.image_url}`}}
+       style={styles.image} /> : ''}
     <View style={styles.wrapper}>
       {/* <Pressable onPress={()=>{Keyboard.dismiss()}}
       > */}

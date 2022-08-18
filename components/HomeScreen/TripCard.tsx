@@ -1,12 +1,16 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 
 export default function TripCard(props: any) {
 
   const [active, setActive] = useState(false);
 
+  const navigation = useNavigation();
+
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} >
       <Text style={styles.tripName}>{props.tripName}</Text>
       <View style={ props.tripStatus === 'active' ? styles.greenIndicator : styles.redIndicator}></View>
     </View>

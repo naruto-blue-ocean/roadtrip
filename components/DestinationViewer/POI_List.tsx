@@ -6,21 +6,20 @@ import DraggableFlatList, {
 import POI_Delete from './POI_Delete';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+import { getItemAsync } from 'expo-secure-store';
+import City from '../AddCity/City';
+import axios from 'axios';
 
 const POI_List = (props) => {
   const navigation = useNavigation();
   const [data, setData] = useState(props.POIs);
-  // console.log('here are the props', props)
 
-  useEffect(() => {
-    let copyOfCities = props.cities.slice();
-    copyOfCities.forEach((city, index) => {
-      if (city && city.cityName === props.currCity.cityName) {
-        copyOfCities[index].POIs = data;
-      }
-    });
-    props.setCities(copyOfCities);
-  }, [data]);
+  // console.log('here are the props', props)
+  // const deletePOI = (POI) => {
+  //   console.log('deletePOI was invoked on', POI);
+  //   const path = `http://localhost:3000/trips/${POI.id}`
+  //   axios.delete('http://localhost:3000/trips/')
+  // }
 
   const reorderPOIs = (data: Array<Object>) => {
     // console.log('reorderPOIs invoked, setting data and attempting a PATCH request')
@@ -29,13 +28,16 @@ const POI_List = (props) => {
   }
 
   const renderPOI = ({item, drag, isActive}) => (
-
     <View style={styles.tilewrapper}>
       <Pressable style={styles.texttile}>
          <TouchableOpacity
           onLongPress={drag}
           disabled={isActive}
-          style={styles.POI}>
+          style={styles.POI}
+          onPress = {() => {
+            navigation.navigate('POIViewer', {poi_id: item.id});
+            //need to pass specific POI ID
+          }}>
           <Text style={styles.title}>{item.name}</Text>
         </TouchableOpacity>
       </Pressable>
@@ -46,7 +48,11 @@ const POI_List = (props) => {
         }}
         style={styles.minusicon}
       >
-        <FontAwesome name="minus-circle" size={36} color="white" />
+        <FontAwesome
+          name="minus-circle"
+          size={36}
+          color="white"
+          onPress = {() => {deletePOI(item)}}/>
       </Pressable>
     </View>
   );
@@ -55,7 +61,14 @@ const POI_List = (props) => {
     <View>
       <Pressable style={styles.addPOI}
         onPress = {() =>
-          navigation.navigate('AddPOI', {city: 'San Francisco'})
+          navigation.navigate('AddPOI',
+          {
+            name: city.cityName,
+            lat: city.lat,
+            lng: city.lng,
+            current_num_POIs: 0,
+            trip_destination_id: 0
+          })
         }
       >
         <Text>Add a POI &nbsp;</Text>
