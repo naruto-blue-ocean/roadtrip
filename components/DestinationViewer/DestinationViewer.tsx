@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable } from 'react-native';
+import { View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable, Modal, TextInput, Alert } from 'react-native';
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 import POI_List from './POI_List';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+import config from '../../config.js';
+import axios from 'axios';
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -81,10 +83,20 @@ export default function DestinationViewer() {
   }
 
   const [cities, setCities] = useState(sampleTrip.destinations);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [shareEmail, setShareEmail] = useState('');
 
-  const renderCities = ({item, drag, isActive}) => {
+  const handleModal = () => {
+    setIsModalVisible(() => !isModalVisible);
+  };
+  const handleShare = () => {
+
+  }
+
+  const renderCities = ({ item, drag, isActive }) => {
     const [expanded, setExpanded] = useState(false);
     const scrollX = useRef(new Animated.Value(0)).current;
+
 
     const handleDelete = () => {
       let copyOfCities;
@@ -103,90 +115,91 @@ export default function DestinationViewer() {
       setCities(copyOfCities);
     };
 
+
     return (
       <ScaleDecorator>
-        <ScrollView
-          contentContainerStyle={styles.scrollviewwrapper}
-          horizontal={true}
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onScroll={Animated.event([
-            {
-              nativeEvent: {
-                contentOffset: {
-                  x: scrollX
+        <View style={styles.cityandpoiwrapper}>
+          <ScrollView
+            contentContainerStyle={styles.scrollviewwrapper}
+            horizontal={true}
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScroll={Animated.event([
+              {
+                nativeEvent: {
+                  contentOffset: {
+                    x: scrollX
+                  }
                 }
               }
-            }
-          ], {useNativeDriver: false})}
-          scrollEventThrottle={1}
-        >
-          <View style={styles.cityandpoiwrapper}>
-            <View style={styles.tilewrapper}>
-              <Pressable
-                onPressIn={ () => {
-                  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-                  setExpanded(prevState => !prevState);
-                }}
-                style={styles.plusicon}
-              >
+            ], {useNativeDriver: false})}
+            scrollEventThrottle={1}
+          >
+              <View style={styles.tilewrapper}>
+                <Pressable
+                  onPressIn={ () => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                    setExpanded(prevState => !prevState);
+                  }}
+                  style={styles.plusicon}
+                >
                 {expanded ? <FontAwesome name="minus-circle" size={36} color="white" /> : <FontAwesome name="plus-circle" size={36} color="white" />}
-
-              </Pressable>
-              <Pressable
-                onLongPress={drag}
-                disabled={isActive}
-                style={styles.item}
-              >
-              <Text style={styles.title}>{item.cityName}</Text>
-            </Pressable>
-            </View>
-            <View style={styles.deleteicon}>
-              <Pressable
-                style={styles.deletearea}
-                onPressIn={handleDelete}
-              >
-                <AntDesign name="delete" size={36} color="white" />
-              </Pressable>
-            </View>
-            {expanded && (
-              <View style={styles.poiwrapper}>
-                <POI_List POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
+                </Pressable>
+                <Pressable
+                  onLongPress={drag}
+                  disabled={isActive}
+                  style={styles.item}
+                >
+                  <Text style={styles.title}>{item.cityName}</Text>
+                </Pressable>
               </View>
-            )}
-          </View>
-        </ScrollView>
+              <View style={styles.deleteicon}>
+                <Pressable
+                  style={styles.deletearea}
+                  onPressIn={handleDelete}
+                >
+                  <AntDesign name="delete" size={36} color="white" />
+                </Pressable>
+              </View>
+          </ScrollView>
+          {expanded && (
+            <View style={styles.poiwrapper}>
+              <POI_List POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} />
+            </View>
+          )}
+        </View>
       </ScaleDecorator>
     )
   }
 
+
   return (
-    <View>
+    <View style={styles.wrapper}>
       <View style = {styles.addAndShareContainer}>
-      <Pressable style={styles.addCity}
-        onPress = {() =>
-          navigation.navigate('AddCity', {city: 'San Francisco'})
-        }
-        >
-        <Text>Add Destinations &nbsp;</Text>
-        <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
-      </Pressable>
-      <Pressable style={styles.share}
-        onPress = {() => {}
-        }
-        >
-        <Text>Share &nbsp;</Text>
-        <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
-      </Pressable>
+        <Pressable style={styles.addCity}
+          onPress = {() =>
+            navigation.navigate('AddCity', {city: 'San Francisco'})
+          }
+          >
+          <Text>Add Destinations &nbsp;</Text>
+          <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
+        </Pressable>
+        <Pressable style={styles.share}
+          onPress = {() => {}
+          }
+          >
+          <Text>Share &nbsp;</Text>
+          <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
+        </Pressable>
       </View>
-
-
-      <DraggableFlatList
-        data={cities}
-        onDragEnd={({data}) => {setCities(data)}}
-        keyExtractor={item => item.cityName}
-        renderItem={renderCities}
-      />
+      <View style={styles.body}>
+        <DraggableFlatList
+          data={cities}
+          onDragEnd={({data}) => {setCities(data)}}
+          keyExtractor={item => item.cityName}
+          renderItem={renderCities}
+        />
+      </View>
     </View>
   );
 
@@ -196,18 +209,19 @@ export default function DestinationViewer() {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: 'red',
   },
   scrollviewwrapper: {
     justifyContent: 'center',
   },
-  header: {
-    flex: 0.2,
-    backgroundColor: '#219EBC',
+  addAndShareContainer: {
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    flex: 1,
+    backgroundColor: '#219EBC',
   },
   body: {
+    flex: 9,
     backgroundColor: '#FB8500',
   },
   container: {
@@ -247,9 +261,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   poiwrapper: {
-    alignItems: 'center',
     width: '100%',
-    backgroundColor: 'red'
   },
   addCity: {
     backgroundColor: 'grey',
@@ -272,9 +284,5 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 6,
     width: '50%'
-  },
-  addAndShareContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center'
   }
 });

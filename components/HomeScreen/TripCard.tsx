@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function TripCard() {
+export default function TripCard(props: any) {
 
   const [active, setActive] = useState(false);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.tripName}>Trip name</Text>
-      <View style={ active ? styles.greenIndicator : styles.redIndicator}></View>
+      <Text style={styles.tripName}>{props.tripName}</Text>
+      <View style={ props.tripStatus === 'active' ? styles.greenIndicator : styles.redIndicator}></View>
     </View>
   )
 }
