@@ -12,8 +12,9 @@ import { panGestureHandlerCustomNativeProps } from 'react-native-gesture-handler
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 
-export default function DestinationViewer() {
-  const navigation = useNavigation();
+export default function DestinationViewer({route, navigation}) {
+  // const navigation = useNavigation();
+  const {tripName, tripId} = route.params;
   const sampleTrip = {
     id: 100,
     destinations: [
@@ -130,7 +131,7 @@ export default function DestinationViewer() {
   useEffect(() => {
     let trip_id = 1;
     getTrip(trip_id);
-  })
+  }, [])
 
   const [cities, setCities] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);

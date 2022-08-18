@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
 import TripCard from './TripCard';
 import axios from 'axios';
 import config from '../../config';
-import { useNavigation } from "@react-navigation/native";
+
 
 
 export default function HomeScreen(props: any) {
@@ -12,7 +12,6 @@ export default function HomeScreen(props: any) {
   const [showingModal, setShowingModal] = useState(false);
   const [tripsShowing, setTripsShowing] = useState([]);
 
-  const navigation = useNavigation();
 
   useEffect(() => {
     let userEmail = 'noa@email.com';
@@ -30,7 +29,8 @@ export default function HomeScreen(props: any) {
     <ScrollView style={styles.container}>
       {
         tripsShowing.map((trip: any) => {
-          return (<TripCard key={trip.id} tripName={trip.name} tripStatus={trip.status} onPress={() => {navigation.navigate('DestinationViewer', {tripId: trip.id, tripName: trip.name})}}/>)
+          console.log('Trip ID: ', trip.id);
+          return (<TripCard key={trip.id} tripId={trip.id} tripName={trip.name} tripStatus={trip.status} />)
         })
       }
       <View
