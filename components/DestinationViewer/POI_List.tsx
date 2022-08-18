@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
   },
   texttile: {
     width: '80%',
-
   },
   addPOI: {
     backgroundColor: 'grey',
