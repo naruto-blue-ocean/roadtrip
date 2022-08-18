@@ -165,7 +165,7 @@ export default function DestinationViewer() {
       <View style = {styles.addAndShareContainer}>
       <Pressable style={styles.addCity}
         onPress = {() =>
-          navigation.navigate('AddCity', {city: 'San Francisco'})
+          navigation.navigate('AddCity', {trip_id: 1, current_num_destinations: 3})
         }
         >
         <Text>Add Destinations &nbsp;</Text>

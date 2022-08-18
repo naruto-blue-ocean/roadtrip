@@ -6,9 +6,9 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import City from './City';
 import { getZipCode } from 'use-places-autocomplete';
 
-export default function Form ( {list, setList}: {list: any, setList: any}) {
+export default function Form ( {list, setList, trip_id, current_num_destinations}: {list: any, setList: any, trip_id: number, current_num_destinations: number}) {
 
-  var ref = useRef();
+  console.log('what ar thsee nums', trip_id, current_num_destinations)
 
   const [location, setLocation] = useState('');
 
@@ -24,6 +24,7 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
           setLocation('')
         }
       }}
+      enablePoweredByContainer = {false}
       onPress={(data, details = null) => {
         // main_text is the city name, place_id is the city id
         // console.log('yeees this is data', details)
@@ -33,8 +34,8 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
           id: data.place_id,
           lat: details?.geometry.location.lat,
           lng: details?.geometry.location.lng,
-          trip_id: 1,
-          current_num_destinations: 3
+          trip_id: trip_id,
+          current_num_destinations: current_num_destinations
         }
         console.log('what is cityiNof', cityInfo)
         setList([...list, cityInfo])

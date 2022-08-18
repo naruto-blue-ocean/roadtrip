@@ -110,7 +110,7 @@ export default function Root() {
               <Stack.Screen
                 name="DestinationViewer"
                 component={DestinationViewer}
-                options={{ title: 'Destinations' }}
+                // options={{ title: 'Destinations' }}
               />
               {/* <Stack.Screen
                 name="POIViewer"
@@ -120,7 +120,7 @@ export default function Root() {
               <Stack.Screen
                 name="AddCity"
                 component={AddCity}
-                options={{ title: 'Add a Destination' }}
+                // options={{ title: 'Add a Destination' }}
               />
               <Stack.Screen
                 name="AddPOI"

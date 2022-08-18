@@ -6,9 +6,14 @@ import Form from './Form';
 import City from './City';
 import configs from '../../config';
 
-export default function AddCity () {
+export default function AddCity ( {navigation, route} ) {
   var navigation = useNavigation();
+
+
   var [list, setList] = useState<{name: string, id: string}[]>([]);
+  // const {trip_id, current_num_destinations} = route.params;
+  console.log('routerrrrrrrr', route);
+  console.log('new checker', navigation)
 
   var post = () => {
     // sends an array of objects to back end, must deconstruct and store each
@@ -22,8 +27,10 @@ export default function AddCity () {
   return (
     <View style= {styles.container}>
       <Form
-        list = {list}
+        // trip_id = {trip_id}
         setList = {setList}
+        // current_num_destinations = {current_num_destinations}
+        list = {list}
         />
     <View style={styles.cityContainer}>
       {list.map((city: any) => {
