@@ -14,7 +14,11 @@ export default function POIList({ navigation, route }) {
   const { city, term } = route.params;
   // const [POIs, setPOIs] = useState([]);
 
+<<<<<<< HEAD
+  var { isLoading: getPOIsIsLoading, data: getPOIsData } = useQuery('getPOIs', getPOIs(city, term));
+=======
   const { isLoading: getPOIsIsLoading, data: getPOIsData } = useQuery('getPOIs', () => getPOIs(city, term));
+>>>>>>> d05fbf5eb2ff2099e4a1323cc5e0252a99001c97
 
   // console.log('useQuery, getPOIsData = ', getPOIsData)
 
