@@ -25,8 +25,11 @@ export default function HomeScreen(props: any) {
 
   return (
     <View style={styles.container}>
-      <TripCard />
-      <TripCard />
+      {
+        tripsShowing.map((trip: any) => {
+          return (<TripCard tripName={trip.name} tripStatus={trip.status}/>)
+        })
+      }
       <View
         style={styles.newTripContainer}
         onTouchEnd={(e) => {
