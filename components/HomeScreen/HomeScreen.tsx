@@ -6,10 +6,12 @@ import axios from 'axios';
 import config from '../../config';
 
 
+
 export default function HomeScreen(props: any) {
 
   const [showingModal, setShowingModal] = useState(false);
   const [tripsShowing, setTripsShowing] = useState([]);
+
 
   useEffect(() => {
     let userEmail = 'noa@email.com';
@@ -27,7 +29,8 @@ export default function HomeScreen(props: any) {
     <ScrollView style={styles.container}>
       {
         tripsShowing.map((trip: any) => {
-          return (<TripCard key={trip.id} tripName={trip.name} tripStatus={trip.status}/>)
+          console.log('Trip ID: ', trip.id);
+          return (<TripCard key={trip.id} tripId={trip.id} tripName={trip.name} tripStatus={trip.status} />)
         })
       }
       <View
