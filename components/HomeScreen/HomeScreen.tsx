@@ -1,16 +1,33 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Modal, Pressable, TextInput } from 'react-native';
 import TripCard from './TripCard';
+import axios from 'axios';
+import config from '../../config.js'
 
-export default function HomeScreen() {
+export default function HomeScreen(props: any) {
 
   const [showingModal, setShowingModal] = useState(false);
+  const [tripsShowing, setTripsShowing] = useState([]);
+
+  useEffect(() => {
+    let userEmail = 'noa@email.com';
+    axios.get(`${config.LOCALTUNNEL}/trips/${userEmail}`)
+    .then((results) => {
+      setTripsShowing(results.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  }, [])
 
   return (
     <View style={styles.container}>
-      <TripCard />
-      <TripCard />
+      {
+        tripsShowing.map((trip: any) => {
+          return (<TripCard tripName={trip.name} tripStatus={trip.status}/>)
+        })
+      }
       <View style={styles.newTripContainer} onTouchEnd={(e) => setShowingModal(true)}>
         <Text style={styles.newTripText}>Create a new trip</Text>
         <Text style={styles.plus}>+</Text>
