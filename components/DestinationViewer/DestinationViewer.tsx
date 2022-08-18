@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable, Modal } from 'react-native';
+import { View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable, Modal, TextInput, Alert } from 'react-native';
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 import POI_List from './POI_List';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+import config from '../../config.js';
+import axios from 'axios';
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -82,10 +84,14 @@ export default function DestinationViewer() {
 
   const [cities, setCities] = useState(sampleTrip.destinations);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [shareEmail, setShareEmail] = useState('');
 
   const handleModal = () => {
     setIsModalVisible(() => !isModalVisible);
   };
+  const handleShare = () => {
+
+  }
 
   const renderCities = ({ item, drag, isActive }) => {
     const [expanded, setExpanded] = useState(false);
@@ -180,7 +186,14 @@ export default function DestinationViewer() {
           <FontAwesome name="plus-circle" size={18} color="white" style={styles.addPOIButton} />
         </Pressable>
         <Pressable style={styles.share}
-          onPress={handleModal}
+          // onPress={handleModal}
+          onPress={ () => {
+            Alert.prompt('Share trip', 'Enter friend\'s email', (email) => {
+              axios.post(`${config.LOCALTUNNEL}/share/${email}`)
+                .then( (response) => console.log(response.data))
+                .catch( (e) => console.log(e))
+            })
+          }}
         >
           <Modal
             animationType="slide"
@@ -188,10 +201,19 @@ export default function DestinationViewer() {
             style={styles.modal}
           >
             <Pressable onPress={() => { setIsModalVisible(false) }}>
-                <Text></Text>
-                <Text>
-                  Close
-                </Text>
+              <Text></Text>
+              <Text>
+                Close
+              </Text>
+              <TextInput
+                onChangeText={setShareEmail}
+                placeholder="input your friend's email"
+              >
+                <Pressable onPress={() => {handleShare}}>
+                  <Text>Share</Text>
+                </Pressable>
+
+                </TextInput>
             </Pressable>
           </Modal>
           <Text>Share &nbsp;</Text>
