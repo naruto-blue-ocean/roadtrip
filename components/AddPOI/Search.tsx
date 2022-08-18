@@ -9,7 +9,8 @@ export default function POICard({ city, navigation }) {
   const latitude = 37.3688;
   const longitude = 121.0365;
 
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState<string>('');
+
   const [suggestion, setSuggestion] = useState([]);
   const handleInputChange = (e: string) => {
     console.log(e);
@@ -26,7 +27,9 @@ export default function POICard({ city, navigation }) {
     })
       .then((result) => {
         console.log('Yelp Autocomplete success!, result.data = ', result.data.categories);
-        setSuggestion(result.data.categories);
+        if (result.data.categories.length === 0) {
+          setSuggestion(result.data.categories);
+        }
       })
       .catch((err) => {
         console.log('Yelp GET failed, err = ', err);
@@ -50,7 +53,7 @@ export default function POICard({ city, navigation }) {
       onSubmitEditing={handleSubmit}
       placeholderTextColor="black"
       ></TextInput>
-
+      <FlatList />
     </View>
 
 );
