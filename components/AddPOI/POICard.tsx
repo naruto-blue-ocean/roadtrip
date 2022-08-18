@@ -5,13 +5,16 @@ import axios from 'axios';
 import config from '../../config';
 import { useNavigation } from '@react-navigation/native';
 
-export default function POICard({ POI, id }) {
+export default function POICard({ POI, desID, order }) {
+
   const navigation = useNavigation();
 
   const handlePress = () => {
     axios.post(`${config.LOCALTUNNEL}/addPOI`, {
-      name: POI.name,
-      id: POI.id,
+      POIname: POI.name,
+      desID,
+      POIID: POI.id,
+      order: (order + 1),
     })
       .then((result) => console.log('POST addPOI success!'))
       .catch((err) => console.log('POST addPOI err!, err = ', err))

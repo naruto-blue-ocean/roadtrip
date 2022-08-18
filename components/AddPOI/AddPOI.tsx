@@ -18,6 +18,7 @@ export default function AddPOI({ route }) {
   const lat = 37.3688;
   const lng = 121.0365;
   const order = 2;
+  const desID = 200;
 
   return (
     <Stack.Navigator initialRouteName="AddPOIHome">
@@ -32,7 +33,7 @@ export default function AddPOI({ route }) {
       <Stack.Screen
         name="POIList"
         children={() => (
-          <POIList city={city} lat={lat} lng={lng} />
+          <POIList order={order} desID={desID} />
         )}
         options={{headerShown: false}} />
       <Stack.Screen
@@ -41,11 +42,5 @@ export default function AddPOI({ route }) {
         options={{headerShown: false}}
       />
     </Stack.Navigator>
-/*
-    <Stack.Screen
-      name="Login"
-      children={() => (<Login /> )}  options={{headerShown: false}} />
-    <Stack.Screen name="DrawerNavigatorRoutes" children={() => (<DrawerNavigatorRoutes /> )}  options={{headerShown: false}}/>
-*/
   );
 }
