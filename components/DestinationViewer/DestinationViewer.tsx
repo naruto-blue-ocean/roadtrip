@@ -16,80 +16,13 @@ const { width: SCREEN_WIDTH } = Dimensions.get("window");
 export default function DestinationViewer({route, navigation}) {
   // const navigation = useNavigation();
   const {tripName, tripId} = route.params;
-  const sampleTrip = {
-    id: 100,
-    destinations: [
-      {
-        id: 200,
-        cityName: 'San Francisco',
-        POIs: [
-          {
-            id: 1,
-            name: 'Golden Gate Bridge',
-            details: 'An iconic red bridge'
-          },
-          {
-            id: 2,
-            name: 'Dolores Park',
-            details: 'A city park'
-          },
-          {
-            id: 3,
-            name: 'Dumpling Home',
-            details: 'A Chinese restaurant specializing in dumplings'
-          }
-        ]
-      },
-      {
-        id: 300,
-        cityName: 'San Diego',
-        POIs: [
-          {
-            id: 4,
-            name: 'Legoland',
-            details: 'An amusement park featuring Legos'
-          },
-          {
-            id: 5,
-            name: 'Tacos El Gordo',
-            details: 'A famous Mexican restaurant'
-          },
-          {
-            id: 6,
-            name: 'UC San Diego',
-            details: 'A public university'
-          }
-        ]
-      },
-      {
-        id: 400,
-        cityName: 'Los Angeles',
-        POIs: [
-          {
-            id: 7,
-            name: 'Griffith Observatory',
-            details: 'An observatory with telecopes and exhibits'
-          },
-          {
-            id: 8,
-            name: 'Disneyland',
-            details: 'The happiest place on Earth'
-          },
-          {
-            id: 9,
-            name: 'Hollywood',
-            details: 'A hub for entertainment and media'
-          }
-        ]
-      }
-    ]
-  }
 
   const getTrip = (trip_id) => {
     const path = `${config.LOCALTUNNEL}/trips/destinations/${trip_id}`
     axios.get(path)
     .then ((response) => {
       let trip = response.data;
+      console.log('trip ------------>', trip);
       let cities = {};
       trip.forEach((row, index) => {
         if (cities[row.destination_name] && row.poi_id) {
@@ -101,7 +34,8 @@ export default function DestinationViewer({route, navigation}) {
           cities[row.destination_name] = {
             lat: row.lat,
             lng: row.lng,
-            POIs: []
+            POIs: [],
+            destination_id: row.destination_id
           };
           if (row.poi_id) {
             let poiObj = {};
@@ -115,18 +49,25 @@ export default function DestinationViewer({route, navigation}) {
       Object.keys(cities).forEach((key) => {
         let destObj = {
           cityName: key,
+          destination_id: cities[key].destination_id,
           lat: cities[key].lat,
           lng: cities[key].lng,
           POIs: cities[key].POIs
         };
         destinations.push(destObj);
       })
+      console.log('destinations --------->', destinations);
       setCities(destinations);
 
     })
     .catch((err) => {
       console.error('errored in getTrip', err)
     })
+  }
+
+  const updateDestinationOrder = () => {
+    console.log('updateDestinationOrder invoked, here is the new order', cities);
+
   }
 
   useEffect(() => {
@@ -338,3 +279,91 @@ const styles = StyleSheet.create({
     width: '50%'
   }
 });
+
+/*
+  destination_id1: order_number1,
+  destination_id2: order_number2
+
+
+  CURRENT ORDER:
+  ChIJfcS6fx7LwoARZYDiqXgXL6E: 1,
+  ChIJSzbuqjfD3IARckzIEB2RVeg: 2,
+  ChIJpYrtFq413YARX4eG8Fd9FAQ: 3
+
+
+  PROPOSED ORDER:
+  ChIJfcS6fx7LwoARZYDiqXgXL6E: 1,
+  ChIJSzbuqjfD3IARckzIEB2RVeg: 3,
+  ChIJpYrtFq413YARX4eG8Fd9FAQ: 2
+
+*/
+
+
+/*const sampleTrip = {
+    id: 100,
+    destinations: [
+      {
+        id: 200,
+        cityName: 'San Francisco',
+        POIs: [
+          {
+            id: 1,
+            name: 'Golden Gate Bridge',
+            details: 'An iconic red bridge'
+          },
+          {
+            id: 2,
+            name: 'Dolores Park',
+            details: 'A city park'
+          },
+          {
+            id: 3,
+            name: 'Dumpling Home',
+            details: 'A Chinese restaurant specializing in dumplings'
+          }
+        ]
+      },
+      {
+        id: 300,
+        cityName: 'San Diego',
+        POIs: [
+          {
+            id: 4,
+            name: 'Legoland',
+            details: 'An amusement park featuring Legos'
+          },
+          {
+            id: 5,
+            name: 'Tacos El Gordo',
+            details: 'A famous Mexican restaurant'
+          },
+          {
+            id: 6,
+            name: 'UC San Diego',
+            details: 'A public university'
+          }
+        ]
+      },
+      {
+        id: 400,
+        cityName: 'Los Angeles',
+        POIs: [
+          {
+            id: 7,
+            name: 'Griffith Observatory',
+            details: 'An observatory with telecopes and exhibits'
+          },
+          {
+            id: 8,
+            name: 'Disneyland',
+            details: 'The happiest place on Earth'
+          },
+          {
+            id: 9,
+            name: 'Hollywood',
+            details: 'A hub for entertainment and media'
+          }
+        ]
+      }
+    ]
+  } */

@@ -9,6 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import { getItemAsync } from 'expo-secure-store';
 import City from '../AddCity/City';
 import axios from 'axios';
+import { LOCALTUNNEL } from '../../config';
 
 const POI_List = (props) => {
   const navigation = useNavigation();
@@ -24,7 +25,15 @@ const POI_List = (props) => {
   const reorderPOIs = (data: Array<Object>) => {
     // console.log('reorderPOIs invoked, setting data and attempting a PATCH request')
     // console.log('new data ->>>>> ', data)
-    setData(data);
+
+    //axios put request
+    //.then -> getTrip request
+    //
+    console.log('reordering data ----------> ', data)
+    // axios.put(`${LOCALTUNNEL}/trips`)
+
+    setData(data)
+
   }
 
   const renderPOI = ({item, drag, isActive}) => (
