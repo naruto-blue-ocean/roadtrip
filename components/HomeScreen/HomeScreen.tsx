@@ -17,7 +17,7 @@ export default function HomeScreen() {
         style={styles.newTripContainer}
         onTouchEnd={(e) => {
           Alert.prompt('Create a new trip', 'Choose a name for your trip!', () => {
-            axios.post(`${config.LOCALTUNNEL}`)
+            axios.post(`${config.LOCALTUNNEL}/`)
           })
         }}>
         <Text style={styles.newTripText}>Create a new trip</Text>
