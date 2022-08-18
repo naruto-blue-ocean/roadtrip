@@ -2,7 +2,7 @@ import config from '../../config';
 import axios from 'axios';
 
 const getPOIs = (city: String, term: String) => {
-  axios.get('https://api.yelp.com/v3/businesses/search', {
+  return axios.get('https://api.yelp.com/v3/businesses/search', {
     headers: {
       Authorization: config.YELPTOKEN,
     },

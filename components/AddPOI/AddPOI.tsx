@@ -10,19 +10,42 @@ import POIList from './POIList';
 
 const Stack = createNativeStackNavigator();
 
-export default function AddPOI() {
-  //props: city, lat, lng, order
+export default function AddPOI({ route }) {
+  //props: city, lat, lng, order, desId
+  // const { city, term } = route.params;
+
   const city = 'sunnyvale';
+  const lat = 37.3688;
+  const lng = 121.0365;
   const order = 2;
-  // const { } = params...
+
   return (
     <Stack.Navigator initialRouteName="AddPOIHome">
-      {/* need to pass city, lat, lng to <AddPOIHome /> */}
-      <Stack.Screen name="AddPOIHome" component={AddPOIHome} options={{headerShown: false}} />
+      <Stack.Screen
+        name="AddPOIHome"
+        children={() => (
+          <AddPOIHome city={city} lat={lat} lng={lng} />
+        )}
+        options={{headerShown: false}}
+      />
       {/* need to pass order to <POIList /> */}
-      <Stack.Screen name="POIList" component={POIList} options={{headerShown: false}} />
-      <Stack.Screen name="DestinationViewer" component={DestinationViewer} options={{headerShown: false}}></Stack.Screen>
+      <Stack.Screen
+        name="POIList"
+        children={() => (
+          <POIList city={city} lat={lat} lng={lng} />
+        )}
+        options={{headerShown: false}} />
+      <Stack.Screen
+        name="DestinationViewer"
+        component={DestinationViewer}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
-
+/*
+    <Stack.Screen
+      name="Login"
+      children={() => (<Login /> )}  options={{headerShown: false}} />
+    <Stack.Screen name="DrawerNavigatorRoutes" children={() => (<DrawerNavigatorRoutes /> )}  options={{headerShown: false}}/>
+*/
   );
 }

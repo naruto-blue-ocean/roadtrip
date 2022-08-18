@@ -3,18 +3,20 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Pressable, Text, View, Image, Button } from 'react-native';
 import axios from 'axios';
 import config from '../../config';
+import { useNavigation } from '@react-navigation/native';
 
-export default function POICard({ navigation, POI, id }) {
+export default function POICard({ POI, id }) {
+  const navigation = useNavigation();
 
-// const handlePress = (e) => {
-//   axios.post(`${config.LOCALTUNNEL}/addPOI`, {
-//     name: POI.name,
-//     id: POI.id,
-//   })
-//     .then((result) => console.log('POST addPOI success!'))
-//     .catch((err) => console.log('POST addPOI err!, err = ', err))
-//   navigation.navigate('DestinationViewer');
-// };
+  const handlePress = () => {
+    axios.post(`${config.LOCALTUNNEL}/addPOI`, {
+      name: POI.name,
+      id: POI.id,
+    })
+      .then((result) => console.log('POST addPOI success!'))
+      .catch((err) => console.log('POST addPOI err!, err = ', err))
+    navigation.navigate('DestinationViewer');
+  };
 
   return (
     <View>
