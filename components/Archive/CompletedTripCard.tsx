@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function CompletedTripCard() {
-
-  const [active, setActive] = useState(false);
+export default function CompletedTripCard(props: any) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.tripName}>Completed Trip name</Text>
+      <Text style={styles.tripName}>{props.trip.name}</Text>
     </View>
   )
 }

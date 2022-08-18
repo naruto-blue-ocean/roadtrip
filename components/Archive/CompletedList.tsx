@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import CompletedTripCard from './CompletedTripCard';
 
-export default function CompletedList() {
+export default function CompletedList(props: any) {
   return (
     <View>
-      <CompletedTripCard/>
-      <CompletedTripCard/>
+      {props.completedTrips.map((trip: any) => {
+        return (<CompletedTripCard trip={trip}/>)
+      })}
     </View>
   )
 }

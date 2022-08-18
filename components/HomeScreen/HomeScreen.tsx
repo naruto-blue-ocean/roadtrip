@@ -15,6 +15,7 @@ export default function HomeScreen(props: any) {
     axios.get(`${config.LOCALTUNNEL}/trips/${userEmail}`)
     .then((results) => {
       setTripsShowing(results.data);
+      console.log(results.data);
     })
     .catch((error) => {
       console.error(error);
