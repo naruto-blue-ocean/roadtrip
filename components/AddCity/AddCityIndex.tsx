@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import {Text, StyleSheet, View, Image, TextInput, Button } from 'react-native';
-import config from '../../config.js';
+import {Text, StyleSheet, View, ScrollView, TouchableHighlight, Button } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 import axios from 'axios';
 import Form from './Form';
 import City from './City';
 import configs from '../../config';
 
 export default function AddCity () {
-
+  var navigation = useNavigation();
   var [list, setList] = useState<{name: string, id: string}[]>([]);
 
   var post = () => {
@@ -16,6 +16,7 @@ export default function AddCity () {
     axios.post(`${configs.LOCALTUNNEL}/postCities`, list)
     .then(() => {console.log('success posting from front end')})
     .catch((err) => {console.log('Err in posting from front end', err)})
+    navigation.navigate('DestinationViewer')
   };
 
   return (
@@ -32,9 +33,13 @@ export default function AddCity () {
         )
       })}
     </View>
-      <Button
-      onPress={post}
-      title='Submit'/>
+      <TouchableHighlight
+      style = {styles.button}
+      onPress={post}>
+
+      <Text style={styles.text}> Submit</Text>
+
+      </TouchableHighlight>
     </View>
   );
 };
@@ -42,16 +47,34 @@ export default function AddCity () {
 var styles = StyleSheet.create({
   container: {
     padding: 10,
-    height: '100%',
+    flex: 1,
     alignContent: 'center',
+    backgroundColor: '#A5C9C9',
   },
 
   cityContainer : {
     position: 'relative',
     zIndex: 0,
-    bottom: 490,
+    bottom: 430,
     width: 200,
-    left: 80
+    left: 53.5,
+    height: 50
+  },
+
+  button: {
+    borderWidth: 1,
+    position: 'relative',
+    left: 75,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 200,
+    borderRadius: 20,
+    backgroundColor: '#D9814F'
+  },
+
+  text: {
+    color: 'white',
   }
 })
 

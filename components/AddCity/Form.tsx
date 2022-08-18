@@ -10,7 +10,7 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
 
   var ref = useRef();
 
-  const [location, setLocation] = useState({destination: ''});
+  const [location, setLocation] = useState('');
 
   return (
     <View style = {styles.container}>
@@ -21,7 +21,7 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
       textInputProps= {{
         value : {location},
         onChangeText : (text) => {
-          setLocation({destination: ''})
+          setLocation('')
         }
       }}
       onPress={(data, details = null) => {
@@ -34,11 +34,12 @@ export default function Form ( {list, setList}: {list: any, setList: any}) {
           lat: details?.geometry.location.lat,
           lng: details?.geometry.location.lng,
           trip_id: 1,
-          current_num_destination: 3
+          current_num_destinations: 3
         }
         console.log('what is cityiNof', cityInfo)
         setList([...list, cityInfo])
-
+        setLocation('')
+        console.log('what is location', location)
       }}
       styles = {{ textInput: styles.textInput, zIndex: 20 }}
       query={{
