@@ -35,7 +35,11 @@ const POI_List = (props) => {
           disabled={isActive}
           style={styles.POI}
           onPress = {() => {
-            navigation.navigate('POIViewer', {poi_id: item.id});
+            console.log(item.id)
+            navigation.navigate('POIViewer',
+            {
+              poi_id: item.id
+            });
             //need to pass specific POI ID
           }}>
           <Text style={styles.title}>{item.name}</Text>
