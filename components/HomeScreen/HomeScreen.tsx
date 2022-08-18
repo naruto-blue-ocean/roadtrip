@@ -1,13 +1,27 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Modal, Pressable, TextInput, Alert } from 'react-native';
 import TripCard from './TripCard';
 import axios from 'axios';
 import config from '../../config';
 
-export default function HomeScreen() {
+
+export default function HomeScreen(props: any) {
 
   const [showingModal, setShowingModal] = useState(false);
+  const [tripsShowing, setTripsShowing] = useState([]);
+
+  useEffect(() => {
+    let userEmail = 'noa@email.com';
+    axios.get(`${config.LOCALTUNNEL}/trips/${userEmail}`)
+    .then((results) => {
+      setTripsShowing(results.data);
+      console.log(results.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  }, [])
 
   return (
     <View style={styles.container}>
