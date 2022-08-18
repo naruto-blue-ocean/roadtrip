@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import TrashTripCard from './TrashTripCard';
 
-export default function CompletedList() {
+export default function CompletedList(props: any) {
   return (
     <View>
-      <TrashTripCard/>
-      <TrashTripCard/>
+      {props.trashTrips.map((trip: any) => {
+        return (<TrashTripCard trip={trip}/>)
+      })}
     </View>
   )
 }
