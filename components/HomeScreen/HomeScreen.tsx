@@ -27,42 +27,29 @@ export default function HomeScreen(props: any) {
     <View style={styles.container}>
       {
         tripsShowing.map((trip: any) => {
-          return (<TripCard tripName={trip.name} tripStatus={trip.status}/>)
+          return (<TripCard key={trip.id} tripName={trip.name} tripStatus={trip.status}/>)
         })
       }
       <View
         style={styles.newTripContainer}
         onTouchEnd={(e) => {
-          Alert.prompt('Create a new trip', 'Choose a name for your trip!', () => {
-            axios.post(`${config.LOCALTUNNEL}/`)
+          let userEmail = 'noa@email.com'
+          Alert.prompt('Create a new trip', 'Choose a name for your trip!', (text) => {
+            axios.post(`${config.LOCALTUNNEL}/trips`,{
+              tripName: text,
+              email: userEmail
+            })
+            .then((response: any) => {
+              console.log(response.data)
+            })
+            .catch((err: Error) => {
+              console.error(err);
+            })
           })
         }}>
         <Text style={styles.newTripText}>Create a new trip</Text>
         <Text style={styles.plus}>+</Text>
       </View>
-      {/* <View>
-        <Modal
-        animationType="slide"
-        visible={showingModal}
-        style={styles.modal}
-        transparent={true}
-        >
-          <View>
-            <Text>Modal window</Text>
-          </View>
-          <TextInput/>
-          <Pressable onPress={() => {setShowingModal(false)}}>
-            <Text>
-              Close
-            </Text>
-          </Pressable>
-          <Pressable onPress={() => {setShowingModal(false)}}>
-            <Text>
-              Submit
-            </Text>
-          </Pressable>
-        </Modal>
-      </View> */}
       <StatusBar style="auto" />
     </View>
   );
