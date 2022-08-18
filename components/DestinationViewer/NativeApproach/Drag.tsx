@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { StyleSheet, Text, Animated, PanResponder, Pressable } from 'react-native';
+import { StyleSheet, Text, Animated, PanResponder, Pressable, LayoutAnimation } from 'react-native';
 
 export default function Drag({
   destination, cities, setCities, setCurrDragItem, currDragItem, setYDistributions, yDistributions,
@@ -28,22 +28,31 @@ export default function Drag({
       yCoord.setValue(dy);
       // console.log(dy);
       // console.log(currDragItem);
-      console.log(yCoord);
+      // console.log(yCoord);
     },
     onPanResponderRelease: () => {
-      // yCoord.stopAnimation((lastOffset) => {
-      //   yCoord.setOffset(lastOffset);
-      //   yCoord.setValue(0);
-      // });
-      Animated.spring(yCoord, {
-        // toValue: yDistributionsArr[indexDragged] - yDistributionsArr[initialDragIndex],
-        toValue: 0,
-        useNativeDriver: false,
-      }).start();
-      setIndexDragged(null);
-      setCurrDragItem(null);
-      setYDragged(null);
-      setInitialDragIndex(null);
+
+      yCoord.stopAnimation((lastOffset) => {
+        yCoord.setOffset(lastOffset);
+        yCoord.setValue(0);
+        LayoutAnimation.configureNext(
+          LayoutAnimation.create(
+            300,
+            LayoutAnimation.Types.spring,
+            LayoutAnimation.Properties.scaleY
+          )
+        );
+        setIndexDragged(null);
+        setCurrDragItem(null);
+        setYDragged(null);
+        setInitialDragIndex(null);
+      });
+      // Animated.spring(yCoord, {
+      //   // toValue: yDistributionsArr[indexDragged] - yDistributionsArr[initialDragIndex],
+      //   toValue: 0,
+      //   useNativeDriver: false,
+      // }).start();
+
     },
   })).current;
 
