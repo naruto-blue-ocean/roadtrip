@@ -20,9 +20,6 @@ export default function AddCity () {
 
   return (
     <View style= {styles.container}>
-      <View>
-        <ShareButton />
-      </View>
       <Form
         list = {list}
         setList = {setList}

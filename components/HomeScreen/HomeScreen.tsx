@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Modal, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Modal, Pressable, TextInput, Alert } from 'react-native';
 import TripCard from './TripCard';
+import axios from 'axios';
+import config from '../../config';
 
 export default function HomeScreen() {
 
@@ -11,11 +13,17 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <TripCard />
       <TripCard />
-      <View style={styles.newTripContainer} onTouchEnd={(e) => setShowingModal(true)}>
+      <View
+        style={styles.newTripContainer}
+        onTouchEnd={(e) => {
+          Alert.prompt('Create a new trip', 'Choose a name for your trip!', () => {
+            axios.post(`${config.LOCALTUNNEL}`)
+          })
+        }}>
         <Text style={styles.newTripText}>Create a new trip</Text>
         <Text style={styles.plus}>+</Text>
       </View>
-      <View>
+      {/* <View>
         <Modal
         animationType="slide"
         visible={showingModal}
@@ -37,7 +45,7 @@ export default function HomeScreen() {
             </Text>
           </Pressable>
         </Modal>
-      </View>
+      </View> */}
       <StatusBar style="auto" />
     </View>
   );
