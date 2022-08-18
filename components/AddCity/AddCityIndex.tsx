@@ -4,6 +4,7 @@ import config from '../../config.js';
 import axios from 'axios';
 import Form from './Form';
 import City from './City';
+import ShareButton from './ShareButton';
 
 export default function AddCity () {
 

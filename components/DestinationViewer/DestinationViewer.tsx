@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable } from 'react-native';
+import { View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable, Modal, TextInput, Alert } from 'react-native';
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 import POI_List from './POI_List';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+import config from '../../config.js';
+import axios from 'axios';
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -81,10 +83,20 @@ export default function DestinationViewer() {
   }
 
   const [cities, setCities] = useState(sampleTrip.destinations);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [shareEmail, setShareEmail] = useState('');
 
-  const renderCities = ({item, drag, isActive}) => {
+  const handleModal = () => {
+    setIsModalVisible(() => !isModalVisible);
+  };
+  const handleShare = () => {
+
+  }
+
+  const renderCities = ({ item, drag, isActive }) => {
     const [expanded, setExpanded] = useState(false);
     const scrollX = useRef(new Animated.Value(0)).current;
+
 
     const handleDelete = () => {
       let copyOfCities;
@@ -102,6 +114,7 @@ export default function DestinationViewer() {
       );
       setCities(copyOfCities);
     };
+
 
     return (
       <ScaleDecorator>
@@ -158,6 +171,7 @@ export default function DestinationViewer() {
       </ScaleDecorator>
     )
   }
+
 
   return (
     <View style={styles.wrapper}>
