@@ -2,7 +2,7 @@ import config from '../../config';
 import axios from 'axios';
 
 const getPOIs = (city: String, term: String) => {
-  axios.get('https://api.yelp.com/v3/businesses/search', {
+  return axios.get('https://api.yelp.com/v3/businesses/search', {
     headers: {
       Authorization: config.YELPTOKEN,
     },
@@ -13,7 +13,11 @@ const getPOIs = (city: String, term: String) => {
   })
     .then((result) => {
       console.log('In yelpAPI, Yelp GET success!');
-      return (result.data.businesses);
+      // return (result.data.businesses);
+      if (result.data) {
+        // console.log('------------->', result);
+        return result.data.businesses;
+      }
     })
     .catch((err) => {
       console.log('In yelpAPI, Yelp GET failed, err = ', err);

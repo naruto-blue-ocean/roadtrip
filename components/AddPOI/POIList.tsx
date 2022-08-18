@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { QueryClient, QueryClientProvider, useQuery, useInfiniteQuery } from 'react-query';
-import axios from 'axios';
-import config from '../../config';
+import { useQuery } from 'react-query';
+// import axios from 'axios';
+// import config from '../../config';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, FlatList, Text, Button } from 'react-native';
-import List from './List';
 import POICard from './POICard';
 
 const getPOIs = require('./yelpAPI');
-const queryClient = new QueryClient();
-
 
 export default function POIList({ navigation, route }) {
-
+  //props: order
+  const order = 2;
   const { city, term } = route.params;
-  const [POIs, setPOIs] = useState([]);
+  // const [POIs, setPOIs] = useState([]);
 
-  const { isLoading: getPOIsIsLoading, data: getPOIsData } = useQuery('getPOIs', getPOIs(city, term));
+  const { isLoading: getPOIsIsLoading, data: getPOIsData } = useQuery('getPOIs', () => getPOIs(city, term));
 
-  // const { isLoading: getPOIsLoading, data: getPOIsData } = useInfiniteQuery('getPOIs', getPOIs(city, term));
+  // console.log('useQuery, getPOIsData = ', getPOIsData)
+
+
+  // const { isLoading: getPOIsLoading, data: getPOIsData } = useInfiniteQuery('getPOIs', getPOIs(city, term), {
+
+  // });
+
+  //console.log('infiniteQuery, getPOIsData.pages = ', getPOIsData)
 
   // useEffect(() => {
   //   console.log('In POIList, city = ', city);
@@ -41,25 +46,36 @@ export default function POIList({ navigation, route }) {
   //     })
   // }, []);
 
-  // const loadMore = () => {
-  //   alert('load more');
-  // };
+  const loadMore = () => {
+    alert('load more');
+  };
 
   return (
-    // <QueryClientProvider client={queryClient}>
-      <View style={styles.container} >
-        <Button title="Go back" onPress={() => navigation.goBack()} />
-        {/* {POIs && <FlatList
-          data={POIs}
-          renderItem={({ item }) => (<POICard POI={item} />)}
-          keyExtractor={(item) => item.id}
-          onEndReached={loadMore}
-          onEndReachedThreshold={0.4}
-        />} */}
-        <List city={city} term={term} />
-        <StatusBar style="auto" />
-      </View>
-    // </QueryClientProvider>
+    <View style={styles.container} >
+      <Button title="Back" onPress={() => navigation.goBack()} />
+      {console.log(getPOIsData)}
+      {/* {POIs && <FlatList
+        data={POIs}
+        renderItem={({ item }) => (<POICard
+          POI={item}
+          order={order}
+          navigation={navigation}
+        />)}
+        keyExtractor={(item) => item.id}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.4}
+      />} */}
+
+      {!getPOIsIsLoading && <FlatList
+        data={getPOIsData}
+        renderItem={({ item }) => (<POICard POI={item} />)}
+        keyExtractor={(item) => item.id}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.4}
+      />}
+
+      <StatusBar style="auto" />
+    </View>
   );
 }
 
