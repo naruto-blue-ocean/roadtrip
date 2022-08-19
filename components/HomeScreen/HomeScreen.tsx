@@ -4,8 +4,8 @@ import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
 import TripCard from './TripCard';
 import axios from 'axios';
 import config from '../../config';
-import { AuthContext } from '../../AuthProvider.js'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from "@react-navigation/native";
+
 
 export default function HomeScreen(props: any) {
 
@@ -16,6 +16,7 @@ export default function HomeScreen(props: any) {
   const navigation = useNavigation()
   const scrollViewRef = useRef();
 
+  const navigation = useNavigation();
 
   useEffect(() => {
     // let userEmail = 'noa@email.com';
@@ -52,15 +53,18 @@ export default function HomeScreen(props: any) {
           Alert.prompt('Create a new trip', 'Choose a name for your trip!', (text) => {
             axios.post(`${config.LOCALTUNNEL}/trips`, {
               tripName: text,
-              email: username
+              email: userEmail
             })
-              .then((response: any) => {
-                console.log('TRIP ID IS...', response.data)
-                setCurrentTripId(response.data.trip_id)
-                setTripsShowing([...tripsShowing, { id: response.data.trip_id, name: text, status: "planned" }])
-                scrollViewRef.current.scrollToEnd({animated: true})
-
-              })
+            .then((response: any) => {
+              var tripData: any = {};
+              tripData.tripId = response.data.trip_id;
+              tripData.tripName = text;
+              setTripsShowing([...tripsShowing, {id: response.data.trip_id, name: text, status: "planned"}])
+              navigation.navigate('DestinationViewer', tripData);
+            })
+            .catch((err: Error) => {
+              console.error(err);
+            })
           })
         }}>
         <Text style={styles.newTripText}>Create a new trip</Text>
