@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     color: 'white',
     background: 'yellow',
   },
@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   share: {
-    backgroundColor: 'grey',
+    backgroundColor: '#B0C4B1',
     justifyContent: 'center',
     fontSize: 20,
     borderColor: 'black',

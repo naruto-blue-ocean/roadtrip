@@ -31,7 +31,7 @@ export default function DrawerNavigatorRoutes() {
         tabBarIcon: () => (
           <Image
             source={{
-              uri: "/Users/louisayonzon/hackReactor/Blue_Ocean/roadtrip/assets/google-maps-pin-google-maps-pin-google-map-maker-places-5abdbd0c442f58.1359204115223841402793.png",
+              uri: "/Users/jasonchiou/Roadtrips/roadtrip/assets/google-maps-pin-google-maps-pin-google-map-maker-places-5abdbd0c442f58.1359204115223841402793.png",
             }}
             style={{ width: 30, height: 30, borderRadius: 10 }}
           />
@@ -44,7 +44,7 @@ export default function DrawerNavigatorRoutes() {
         tabBarIcon: () => (
           <Image
             source={{
-              uri: "/Users/louisayonzon/hackReactor/Blue_Ocean/roadtrip/assets/car.png",
+              uri: "/Users/jasonchiou/Roadtrips/roadtrip/assets/car.png",
             }}
             style={{ width: 30, height: 30, borderRadius: 10 }}
           />
@@ -57,7 +57,7 @@ export default function DrawerNavigatorRoutes() {
           tabBarIcon: () => (
             <Image
               source={{
-                uri: "/Users/louisayonzon/hackReactor/Blue_Ocean/roadtrip/assets/archive_icon.png",
+                uri: "/Users/jasonchiou/Roadtrips/roadtrip/assets/archive_icon.png",
               }}
               style={{ width: 30, height: 30, borderRadius: 10 }}
             />

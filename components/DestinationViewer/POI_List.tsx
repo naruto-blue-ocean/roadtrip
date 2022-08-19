@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
   },
   minusicon: {
     flexDirection: 'row',
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
   },
 
   addStopText: {
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
   }
 
 });
