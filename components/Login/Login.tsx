@@ -22,19 +22,20 @@ export default function Login() {
         // asyncStorage.setItem("token", response.data.user.email);
       })
       .catch((err) => {
-        Alert.alert(
-          'Account not found',
-          'Would you like to create an account?',
-          [
-            {
-              text: "No"
-            },
-            {
-              text: "Yes",
-              onPress: () => handleSignup()
-            }
-          ]
-        )
+        // Alert.alert(
+        //   'Account not found',
+        //   'Would you like to create an account?',
+        //   [
+        //     {
+        //       text: "No"
+        //     },
+        //     {
+        //       text: "Yes",
+        //       onPress: () => handleSignup()
+        //     }
+        //   ]
+        // )
+        console.log(err.message)
       });
     // setIsLoggedIn(true);
 
@@ -107,6 +108,7 @@ export default function Login() {
         <TextInput
           placeholder="Email"
           value={email}
+          autoCapitalize="none"
           onChangeText={text => setEmail(text)}
           style={styles.input}
         />
