@@ -6,9 +6,10 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import City from './City';
 import { getZipCode } from 'use-places-autocomplete';
 
-export default function Form ( {list, setList, trip_id, current_num_destinations}: {list: any, setList: any, trip_id: number, current_num_destinations: number}) {
+export default function Form ( {list, setList, trip_id, lastIndex}:
+  {list: any, setList: any, trip_id: number, lastIndex: number}) {
 
-  console.log('what ar thsee nums', trip_id, current_num_destinations)
+  console.log('what ar thsee nums', trip_id, lastIndex)
 
   const [location, setLocation] = useState('');
 
@@ -35,7 +36,7 @@ export default function Form ( {list, setList, trip_id, current_num_destinations
           lat: details?.geometry.location.lat,
           lng: details?.geometry.location.lng,
           trip_id: trip_id,
-          current_num_destinations: current_num_destinations
+          current_num_destinations: lastIndex
         }
         console.log('what is cityiNof', cityInfo)
         setList([...list, cityInfo])
