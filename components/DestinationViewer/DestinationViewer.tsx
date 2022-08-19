@@ -231,7 +231,9 @@ export default function DestinationViewer() {
                 .then( (response) => {
                   Alert.alert('Sharing successful!', `Your friend ${email} can now access this trip`)
                 })
-                .catch( (e) => console.log(e))
+                .catch( (e) => {
+                  Alert.alert('Sharing unsuccessful', `Your friend ${email} either does not exist or already has access to this trip`)
+                })
           })}
           }
           >
