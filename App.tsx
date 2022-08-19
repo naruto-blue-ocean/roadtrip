@@ -1,37 +1,37 @@
-/* Louisa's section -- uncomment to work on Navigation & Flow
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-// import PoiViewer from './components/PoiViewer.tsx';
-import MainNavigation from './drawerScreens/Login'; //Testing
-import { NavigationContainer } from "@react-navigation/native"; //Testing
-import Login from './drawerScreens/Login'; //Testing
-import DrawerNavigatorRoutes from './drawerScreens/DrawerNavigatorRoutes'; //Testing
-import { createStackNavigator } from "@react-navigation/stack"; //Testing
+// //Louisa's section -- uncomment to work on Navigation & Flow
+// import { StatusBar } from 'expo-status-bar';
+// import { StyleSheet, Text, View } from 'react-native';
+// // import PoiViewer from './components/PoiViewer.tsx';
+// import MainNavigation from './drawerScreens/Login'; //Testing
+// import { NavigationContainer } from "@react-navigation/native"; //Testing
+// import Login from './drawerScreens/Login'; //Testing
+// import DrawerNavigatorRoutes from './drawerScreens/DrawerNavigatorRoutes'; //Testing
+// import { createStackNavigator } from "@react-navigation/stack"; //Testing
 
-Louisa's section -- uncomment to work on Navigation & Flow */
+// //Louisa's section -- uncomment to work on Navigation & Flow
 
 // const Stack = createStackNavigator(); //Testing
-// <View style={styles.container}>
+// <View>
 //   <Text>Stuff</Text>
 //   {/* <MainNavigation /> */}
 
 //   <StatusBar style="auto" />
 // </View>
 
-//ss
 
-/* Louisa's section -- uncomment to work on Navigation and flow
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator  initialRouteName="Login">
-        <Stack.Screen name="Login" children={() => (<Login /> )}  options={{headerShown: false}} />
-        <Stack.Screen name="DrawerNavigatorRoutes" children={() => (<DrawerNavigatorRoutes /> )}  options={{headerShown: false}}/>
-      </Stack.Navigator>
-  </NavigationContainer>
-  );
-}
-*/
+
+// //Louisa's section -- uncomment to work on Navigation and flow
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <Stack.Navigator  initialRouteName="Login">
+//         <Stack.Screen name="Login" children={() => (<Login /> )}  options={{headerShown: false}} />
+//         <Stack.Screen name="DrawerNavigatorRoutes" children={() => (<DrawerNavigatorRoutes /> )}  options={{headerShown: false}}/>
+//       </Stack.Navigator>
+//   </NavigationContainer>
+//   );
+// }
+
 
 
 /* Binh's section to temporarily render everyone's components - work on flow later */
