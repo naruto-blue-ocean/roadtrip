@@ -36,7 +36,7 @@ export default function Form ( {list, setList, trip_id, lastIndex}:
           lat: details?.geometry.location.lat,
           lng: details?.geometry.location.lng,
           trip_id: trip_id,
-          current_num_destinations: lastIndex
+          lastIndex: lastIndex
         }
         console.log('what is cityiNof', cityInfo)
         setList([...list, cityInfo])
