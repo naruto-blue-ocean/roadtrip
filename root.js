@@ -29,7 +29,7 @@ export default function Root() {
 
   // NOTICE: There are two versions of the return block, the first commented out block includes the login page and the second doesn't. If you want to switch, just comment/uncomment out one of the return blocks.
 
-  // return (
+  //return (
   //   <NavigationContainer>
   //     <Stack.Navigator initialRouteName="FakeHomeScreen">
   //       {
