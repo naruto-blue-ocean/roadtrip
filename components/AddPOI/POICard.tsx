@@ -13,6 +13,7 @@ export default function POICard({ POI, desID, order, tripID }) {
     axios.post(`${config.LOCALTUNNEL}/addPOI`, {
       POIname: POI.name,
       desID,
+      tripID,
       POIID: POI.id,
       order: (order + 1),
     })
