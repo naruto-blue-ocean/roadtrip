@@ -88,8 +88,10 @@ const POI_List = (props) => {
           onPress = {() => {
             navigation.navigate('PoiViewer',
             {
-              poi_id: item.id,
-              user_email: username
+              params: {
+                poi_id: item.id,
+               user_email: username
+              }
             });
             //need to pass specific POI ID
           }}>
@@ -117,6 +119,16 @@ const POI_List = (props) => {
       <Pressable style={styles.addPOI}
         onPress = {() => {
           console.log(props.lat, props.lng, props.cityName);
+
+          console.log('props', props)
+          let maxIndex = 0;
+          for (var i = 0; i < props.POIs.length; i++) {
+            if (props.POIs[i].order_number > maxIndex) {
+              maxIndex = props.POIs[i].order_number;
+            }
+          }
+          console.log(maxIndex);
+
           navigation.navigate('AddPOI',
           {
             destination_id: props.destinationId,
@@ -124,7 +136,7 @@ const POI_List = (props) => {
             trip_id: props.tripId,
             latitude: props.lat,
             longitude: props.lng,
-            current_num_POIs: 0
+            maxIndex: maxIndex
           })
         }
         }
