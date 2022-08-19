@@ -91,14 +91,21 @@ export default function DestinationViewer({route, navigation}) {
     const [expanded, setExpanded] = useState(false);
     const scrollX = useRef(new Animated.Value(0)).current;
 
-
-    const handleDelete = () => {
+    const handleDeleteDestination = () => {
       let copyOfCities;
       cities.forEach((city, index) => {
         if (city.cityName === item.cityName) {
           copyOfCities = cities.slice(0, index).concat(cities.slice(index + 1));
         }
       });
+
+      console.log('---------------->', item);
+
+
+      const path = `${config.LOCALTUNNEL}/trips/${tripId}/destinations/${item.destination_id}`;
+      // axios.delete(path)
+      //   .then(() => {})
+      //   .catch((err) => {});
 
       LayoutAnimation.configureNext(
         LayoutAnimation.create(
@@ -151,7 +158,7 @@ export default function DestinationViewer({route, navigation}) {
               <View style={styles.deleteicon}>
                 <Pressable
                   style={styles.deletearea}
-                  onPressIn={handleDelete}
+                  onPressIn={handleDeleteDestination}
                 >
                   <AntDesign name="delete" size={36} color="white" />
                 </Pressable>
