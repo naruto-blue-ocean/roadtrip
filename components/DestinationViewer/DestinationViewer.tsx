@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensions, Pressable, Modal, TextInput, Alert } from 'react-native';
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 import POI_List from './POI_List';
-import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { AntDesign, FontAwesome, Entypo } from '@expo/vector-icons';
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import config from '../../config.js';
 import axios from 'axios';
@@ -167,7 +167,6 @@ export default function DestinationViewer(props) {
                   onLongPress={drag}
                   disabled={isActive}
                   style={styles.item}
-
                 >
                   <Text style={styles.title}>{item.cityName}</Text>
                 </Pressable>
@@ -206,6 +205,8 @@ export default function DestinationViewer(props) {
 
   return (
     <View style={styles.wrapper}>
+        {/* <Entypo name="location" size={36} color="black" />
+        <AntDesign name="adduser" size={36} color="black" /> */}
       <View style = {styles.addAndShareContainer}>
         <Pressable style={styles.addCity}
           onPress = {() => {
@@ -264,39 +265,48 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    backgroundColor: '#219EBC',
+    // backgroundColor: '#219EBC',
   },
   body: {
     flex: 9,
-    backgroundColor: '#FB8500',
+    // backgroundColor: '#FB8500',
   },
   container: {
     flex: 1,
   },
   item: {
-    paddingVertical: 20,
     marginVertical: 8,
     width: '80%',
-    alignItems: 'flex-start',
   },
   deleteicon: {
+    height: 70,
     backgroundColor: '#E76F51',
-    padding: 20,
+    padding: 10,
     width: SCREEN_WIDTH,
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: 5,
+    borderWidth: 0.5,
+    marginBottom: 2,
+    marginTop: 2,
   },
   title: {
     fontSize: 32,
-    fontFamily: 'Georgia',
+    fontFamily: 'Inter',
     color: 'white',
+    background: 'yellow',
   },
   tilewrapper: {
-    backgroundColor: '#2A9D8F',
+    height:70,
+    backgroundColor: '#4A5759',
     width: SCREEN_WIDTH,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: 5,
+    borderWidth: 0.5,
+    marginBottom: 2,
+    marginTop: 2,
   },
   plusicon: {
     width: '20%',
@@ -305,12 +315,14 @@ const styles = StyleSheet.create({
   },
   deletearea: {
     alignItems: 'center',
+    borderRadius: 6
+    // height:
   },
   poiwrapper: {
     width: '100%',
   },
   addCity: {
-    backgroundColor: '#D9814F',
+    backgroundColor: '#B0C4B1',
     justifyContent: 'center',
     fontSize: 20,
     borderColor: 'black',
@@ -331,9 +343,9 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     width: '50%'
   },
-  addDestination: {
-    backgroundColor: '#D9814F'
-  }
+  // addDestination: {
+  //   backgroundColor: '#D9814F'
+  // }
 });
 
 /*
