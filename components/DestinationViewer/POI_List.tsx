@@ -28,10 +28,9 @@ const POI_List = (props) => {
     //.then -> getTrip request
     //
     // console.log('reordering data ----------> ', data)
-<<<<<<< HEAD
+
     // axios.put(`${LOCALTUNNEL}/trips`)
-=======
->>>>>>> 59edf5981d2f00e6026f7dbf943f32a6068b733b
+
 
     // console.log(LOCALTUNNEL);
     // console.log(props.tripId);
@@ -42,7 +41,7 @@ const POI_List = (props) => {
       axiosObj[data[i].id] = i + 1;
     }
     // console.log('axiosOBJ ----> ', axiosObj);
-    const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`
+    const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`;
     // console.log(path);
 
     axios.put(path, axiosObj)
@@ -57,9 +56,15 @@ const POI_List = (props) => {
   }
 
   const deletePOI = (item) => {
-    const path = (`${LOCALTUNNEL}/trips/:tripId/destinations/${props.currCity.destination_id}/pois/${item.id}`);
+    const path = (`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.currCity.destination_id}/pois/${item.id}`);
+    // axios.delete(path)
+    //   .then(() => {})
+    //   .catch((err) => {
+
+    //   });
     console.log('--------------->', item);
     console.log('---------> currCity', props.currCity);
+    console.log('---------> tripId', props.tripId);
   };
 
   const renderPOI = ({item, drag, isActive}) => (

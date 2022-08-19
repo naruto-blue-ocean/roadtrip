@@ -68,10 +68,6 @@ export default function DestinationViewer({route, navigation}) {
   }
 
 
-  const updateDestinationOrder = () => {
-    // console.log('updateDestinationOrder invoked, here is the new order', cities);
-  }
-
   const updateDestinationOrder = (data:any) => {
     console.log('updateDestinationOrder invoked, here is the new order', data);
   }
