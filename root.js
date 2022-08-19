@@ -140,7 +140,6 @@ import { NavigationContainer } from "@react-navigation/native"; //Testing
 // import Login from './drawerScreens/Login'; //Testing
 import DrawerNavigatorRoutes from "./drawerScreens/DrawerNavigatorRoutes"; //Testing
 import { createStackNavigator } from "@react-navigation/stack"; //Testing
-import AuthProvider, { AuthContext } from "./AuthProvider";
 //NEW THINGS TO IMPORT
 import FakeHomeScreen from "./components/FakeHomeScreen/FakeHomeScreen";
 import Login from "./components/Login/Login";
