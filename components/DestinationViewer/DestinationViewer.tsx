@@ -130,7 +130,6 @@ export default function DestinationViewer() {
           LayoutAnimation.Properties.scaleY
         )
       );
-      // setCities(copyOfCities);
     };
 
     return (
