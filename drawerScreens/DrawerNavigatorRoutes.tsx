@@ -23,7 +23,10 @@ export default function DrawerNavigatorRoutes() {
 
 
   return (
-    <Bottom.Navigator  initialRouteName="All Trips">
+    <Bottom.Navigator  initialRouteName="All Trips"
+    screenOptions={{
+      headerShown: false
+    }}>
       <Bottom.Screen name="All Trips"   children={() => (<Login /> )} />
 
       <Bottom.Screen name="Active Trip"children={() => (<ActiveTrip /> )} />

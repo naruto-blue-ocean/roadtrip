@@ -82,8 +82,8 @@ class PoiViewer extends React.Component {
 
  render() {
   const {route} = this.props;
-  console.log('props in poi viewer',this.props)
-  console.log('poiviewer route', route.params)
+  // console.log('props in poi viewer',this.props)
+  // console.log('poiviewer route', route.params)
   // console.log("DIMESIONS HEIGHT: ",  Dimensions.get('window').height)
   // console.log("DIMESIONS WIDTH: ",  Dimensions.get('window').width)
   // console.log("WHAT IS THE ADDRESS: ", this.state.data.location?.display_address)
@@ -93,6 +93,13 @@ class PoiViewer extends React.Component {
   // if (this.state.noteRendered) {
   //  var modal = <Edit updateNote={this.updateNote.bind(this)} showModal={this.state.showModal} displayModal={this.displayModal.bind(this)} title={this.state.data.name} note={this.state.note}/>
   // }
+  var isOpen;
+  var price;
+  if (this.state.data) {
+    // console.log("WHAT IS THE hours ------------------:", this.state.data?.price)
+    isOpen = this.state.data?.hours[0].is_open_now
+    price = this.state.data?.price
+  }
   return (
     <ScrollView>
       {this.state.data.image_url ? <Image source={{uri: `${this.state.data?.image_url}`}}
@@ -108,7 +115,7 @@ class PoiViewer extends React.Component {
       <Text style={styles.title}>{this.state.data.name}</Text>
       <View style={styles.starRating}>
 
-        <View style={{alignItems:'left'}}>
+        <View style={{alignItems:'left', flex: 1, flexDirection: 'row'}}>
           <Stars
             default={this.state.data.rating}
             count={5}
@@ -117,26 +124,27 @@ class PoiViewer extends React.Component {
             emptyStar={<Icon name={'star-outline'} style={styles.myStarStyle}/>}
             halfStar={<Icon name={'star-half'} style={[styles.myStarStyle]}/>}
           />
+           <Text style={{paddingLeft: 5 ,marginTop: 5, fontSize: 16}}>{this.state.data.review_count} Reviews</Text>
       </View>
 
 
 
         <View style={styles.categories}>
-        {/* <View style={styles.outerStar}>
-          {[1,2,3,4].map((star, index) => {
-            return <Text key={index} style={{color: index < this.state.data.price.length ? "black" : "#D3D3D3" }}>&#9733;</Text>
-          })}
-        </View> */}
+        {price && <Text style={{paddingRight: 10, fontSize: 15}}>{price} · </Text>}
+        {this.state.data?.price === undefined && <Text style={{paddingRight: 10, fontSize: 15}}>$ ·</Text>}
         {this.state.data?.categories?.map((category, index) => {
           return(<Text key={index}>{category.title}{index === this.state.data.categories.length - 1 ? '' : ', ' }</Text>)
         })}
         </View>
       </View>
       {/* <Text>{this.state.data.price}</Text> */}
-      <Text>{this.state.data.location?.display_address[0]} {this.state.data.location?.display_address[1]}</Text>
+      <Text style={{marginTop: 5}}>{this.state.data.location?.display_address[0]} {this.state.data.location?.display_address[1]}</Text>
       {/* Restaurant Info */}
       {/* <Text>Stars: {this.state.data.rating}</Text> */}
       <Text>Phone: {this.state.data.display_phone}</Text>
+      {isOpen &&  <Text style={{color: 'green', marginVertical: 5}}>Open</Text>}
+      {!isOpen &&  <Text style={{color: 'red'}}>Open</Text>}
+
 
       <View style={styles.note} >
       <Text>{this.state.note || 'Add a note here...'}</Text>
@@ -164,6 +172,7 @@ const styles = StyleSheet.create({
   categories: {
     flex: 1,
     flexDirection: 'row',
+    marginTop: 5,
   },
   note: {
     // flex: .75,
@@ -220,12 +229,14 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end"
   },
   myStarStyle: {
-    color: "#f9a920",
-    backgroundColor: 'transparent',
+    color: "white",
+    backgroundColor: 'red',
     fontSize: 28,
     textShadowColor: '#f9a920',
     textShadowOffset: {width: 1, height: 1},
     textShadowRadius: 0.2,
+    marginHorizontal: 2,
+    borderRadius: 15,
   },
 
 
