@@ -17,6 +17,8 @@ const Bottom = createBottomTabNavigator();
 export default function DrawerNavigatorRoutes() {
   const { username } = React.useContext(AuthContext);
 
+
+
   return (
     <Bottom.Navigator  initialRouteName="All Trips">
       <Bottom.Screen name="All Trips"   children={() => (<AllTrips /> )} />
