@@ -7,8 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 export default function Suggestion({ city }) {
   const navigation = useNavigation();
   const handlePress = (term: string) => {
-    console.log('In Suggestion, Pressed term = ', term);
-    console.log('In Suggestion, city = ', city);
+    // console.log('In Suggestion, Pressed term = ', term);
+    // console.log('In Suggestion, city = ', city);
 
     navigation.navigate('POIList', {
       city: city,

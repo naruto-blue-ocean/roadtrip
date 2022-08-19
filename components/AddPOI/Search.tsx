@@ -39,7 +39,7 @@ export default function POICard({ city, lat, lng }) {
   }
   const handleSubmit = (selected: string) => {
     const term = selected || input
-    console.log('Submit!');
+    // console.log('Submit!');
     navigation.navigate('POIList', {
       city,
       term,

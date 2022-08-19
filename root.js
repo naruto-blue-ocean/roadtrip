@@ -30,66 +30,63 @@ export default function Root() {
   // NOTICE: There are two versions of the return block, the first commented out block includes the login page and the second doesn't. If you want to switch, just comment/uncomment out one of the return blocks.
 
   // return (
-  //   <NavigationContainer>
-  //     <Stack.Navigator initialRouteName="FakeHomeScreen">
-  //       {
-  //         username !== null ? (
-  //           <>
-  //             <Stack.Screen
-  //               name="FakeHomeScreen"
-  //               component={FakeHomeScreen}
-  //               options={{ title: 'Fake Home' }}
-  //             />
-  //             <Stack.Screen
-  //               name="HomeScreen"
-  //               component={HomeScreen}
-  //               options={{ title: 'Home' }}
-  //             />
-  //             <Stack.Screen
-  //               name="Archive"
-  //               component={Archive}
-  //               options={{ title: 'View Archived Trips' }}
-  //             />
-  //             <Stack.Screen
-  //               name="DestinationViewer"
-  //               component={DestinationViewer}
-  //               options={{ title: 'Destinations' }}
-  //             />
-  //             <Stack.Screen
-  //               name="POIViewer"
-  //               component={PoiViewer}
-  //               options={{ title: 'Points Of Interest' }}
-  //             />
-  //             <Stack.Screen
-  //               name="AddCity"
-  //               component={AddCity}
-  //               options={{ title: 'Add a Destination' }}
-  //             />
-  //             <Stack.Screen
-  //               name="AddPOI"
-  //               component={AddPOI}
-  //               options={{ title: 'Add a Point of Interest' }}
-  //             />
-  //           </>
-  //         ) : (
-  //           <>
-  //             {/* <Stack.Screen
-  //               name="Initialization"
-  //               component={Initialization}
-  //               options={{ title: 'Initialization' }}
-  //             /> */}
+  //   <QueryClientProvider client={queryClient}>
+  //     <NavigationContainer>
+  //       <Stack.Navigator initialRouteName="HomeScreen">
+  //         {
+  //           username !== null ? (
+  //             <>
+  //               {/* <Stack.Screen
+  //                 name="FakeHomeScreen"
+  //                 component={FakeHomeScreen}
+  //                 options={{ title: 'Fake Home' }}
+  //               /> */}
+  //               <Stack.Screen
+  //                 name="HomeScreen"
+  //                 component={HomeScreen}
+  //                 options={{ title: 'Home' }}
+  //               />
+  //               <Stack.Screen
+  //                 name="Archive"
+  //                 component={Archive}
+  //                 options={{ title: 'View Archived Trips' }}
+  //               />
+  //               <Stack.Screen
+  //                 name="DestinationViewer"
+  //                 component={DestinationViewer}
+  //                 options={{ title: 'Destinations' }}
+  //               />
+  //               <Stack.Screen
+  //                 name="POIViewer"
+  //                 component={PoiViewer}
+  //                 options={{ title: 'Points Of Interest' }}
+  //               />
+  //               <Stack.Screen
+  //                 name="AddCity"
+  //                 component={AddCity}
+  //                 options={{ title: 'Add a Destination' }}
+  //               />
+  //               <Stack.Screen
+  //                 name="AddPOI"
+  //                 component={AddPOI}
+  //                 options={{ title: 'Add a Point of Interest' }}
+  //               />
+  //             </>
+
+  //           ) : (
   //             <Stack.Screen
   //               name="Login"
   //               component={Login}
   //               options={{ title: 'Log In' }}
   //             />
-  //           </>
-  //         )
-  //       }
-
-  //     </Stack.Navigator>
-  //   </NavigationContainer>
+  //           )
+  //         }
+  //       </Stack.Navigator>
+  //     </NavigationContainer>
+  //   </QueryClientProvider>
   // )
+
+
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
@@ -98,41 +95,42 @@ export default function Root() {
             <Stack.Screen
               name="FakeHomeScreen"
               component={FakeHomeScreen}
-              options={{ title: "Fake Home" }}
+              options={{ title: 'Fake Home' }}
             />
             <Stack.Screen
               name="HomeScreen"
               component={HomeScreen}
-              options={{ title: "Home" }}
+              options={{ title: 'Home' }}
             />
             <Stack.Screen
               name="Archive"
               component={Archive}
-              options={{ title: "View Archived Trips" }}
+              options={{ title: 'View Archived Trips' }}
             />
             <Stack.Screen
               name="DestinationViewer"
               component={DestinationViewer}
-              options={{ title: "Destinations" }}
+              options={{ title: 'Destinations' }}
             />
             <Stack.Screen
               name="POIViewer"
               component={PoiViewer}
-              options={{ title: "Points Of Interest" }}
+              options={{ title: 'Points Of Interest' }}
             />
             <Stack.Screen
               name="AddCity"
               component={AddCity}
-              options={{ title: "Add a Destination" }}
+              options={{ title: 'Add a Destination' }}
             />
             <Stack.Screen
               name="AddPOI"
               component={AddPOI}
-              options={{ title: "Add a Point of Interest" }}
+              options={{ title: 'Add a Point of Interest' }}
             />
           </>
         </Stack.Navigator>
       </NavigationContainer>
     </QueryClientProvider>
-  );
+  )
+
 }

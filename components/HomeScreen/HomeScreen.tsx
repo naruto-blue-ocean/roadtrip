@@ -1,20 +1,24 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
 import TripCard from './TripCard';
 import axios from 'axios';
 import config from '../../config';
+import { useNavigation } from "@react-navigation/native";
 
+import { AuthContext } from '../../AuthProvider.js'
 
 
 export default function HomeScreen(props: any) {
 
   const [showingModal, setShowingModal] = useState(false);
   const [tripsShowing, setTripsShowing] = useState([]);
+  const { username } = useContext(AuthContext);
 
+  const navigation = useNavigation();
 
   useEffect(() => {
-    let userEmail = 'noa@email.com';
+    let userEmail = username || 'noa@email.com';
     axios.get(`${config.LOCALTUNNEL}/trips/${userEmail}`)
     .then((results) => {
       setTripsShowing(results.data);
@@ -36,14 +40,18 @@ export default function HomeScreen(props: any) {
       <View
         style={styles.newTripContainer}
         onTouchEnd={(e) => {
-          let userEmail = 'noa@email.com'
+          let userEmail = username || 'noa@email.com'
           Alert.prompt('Create a new trip', 'Choose a name for your trip!', (text) => {
             axios.post(`${config.LOCALTUNNEL}/trips`,{
               tripName: text,
               email: userEmail
             })
             .then((response: any) => {
-              // console.log(response.data)
+              var tripData: any = {};
+              tripData.tripId = response.data.trip_id;
+              tripData.tripName = text;
+              setTripsShowing([...tripsShowing, {id: response.data.trip_id, name: text, status: "planned"}])
+              navigation.navigate('DestinationViewer', tripData);
             })
             .catch((err: Error) => {
               console.error(err);

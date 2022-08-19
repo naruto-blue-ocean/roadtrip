@@ -40,9 +40,12 @@ const POI_List = (props) => {
     for (var i = 0; i < data.length; i++) {
       axiosObj[data[i].id] = i + 1;
     }
+
     // console.log('axiosOBJ ----> ', axiosObj);
     const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`;
     // console.log(path);
+
+    const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`
 
     axios.put(path, axiosObj)
     .then((response) => {
@@ -104,15 +107,19 @@ const POI_List = (props) => {
   return (
     <View>
       <Pressable style={styles.addPOI}
-        onPress = {() =>
+        onPress = {() => {
+          console.log(props.lat, props.lng, props.cityName);
           navigation.navigate('AddPOI',
           {
-            id: props.destinationId,
-            // lat: city.lat,
-            // lng: city.lng,
+            destination_id: props.destinationId,
+            cityName: props.cityName,
+            trip_id: props.tripId,
+            latitude: props.lat,
+            longitude: props.lng,
             current_num_POIs: 0,
             trip_destination_id: 0
           })
+        }
         }
       >
         <Text>Add a POI &nbsp;</Text>

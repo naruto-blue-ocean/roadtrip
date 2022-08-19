@@ -4,6 +4,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useRoute } from '@react-navigation/native';
+
 import DestinationViewer from '../DestinationViewer/DestinationViewer';
 import AddPOIHome from './AddPOIHome';
 import POIList from './POIList';
@@ -12,13 +14,22 @@ const Stack = createNativeStackNavigator();
 
 export default function AddPOI({ route }) {
   //props: city, lat, lng, order, desId
-  // const { city, term } = route.params;
+  // const route = useRoute();
 
-  const city = 'sunnyvale';
-  const lat = 37.3688;
-  const lng = 121.0365;
-  const order = 2;
-  const desID = 200;
+  const { destination_id, trip_id, current_num_POIs, term, latitude, longitude, cityName } = route.params;
+  const city = cityName;
+  const lat = latitude;
+  const lng = longitude;
+  const order = current_num_POIs;
+  const tripID = trip_id;
+  const desID = destination_id;
+
+  // const city = 'sunnyvale';
+  // const lat = 37.3688;
+  // const lng = 122.0363;
+  // const order = 1;
+  // const tripID = 200;
+  // const desID = 200;
 
   return (
     <Stack.Navigator initialRouteName="AddPOIHome">
@@ -33,7 +44,7 @@ export default function AddPOI({ route }) {
       <Stack.Screen
         name="POIList"
         children={() => (
-          <POIList order={order} desID={desID} />
+          <POIList order={order} desID={desID} tripID={tripID} />
         )}
         options={{headerShown: false}} />
       <Stack.Screen

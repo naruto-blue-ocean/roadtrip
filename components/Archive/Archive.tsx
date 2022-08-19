@@ -6,11 +6,14 @@ import TrashList from './TrashList';
 import axios from 'axios';
 import config from '../../config.js'
 
+
 export default function Archive() {
 
   const [whichTab, setWhichTab] = useState('Completed')
   const [trashTrips, setTrashTrips] = useState([]);
   const [completedTrips, setCompletedTrips] = useState([]);
+
+
 
   useEffect(() => {
     let userEmail = 'noa@email.com';
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
   },
   tabs: {
     display: "flex",
-    flex: 1,
+    width: 250,
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
