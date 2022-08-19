@@ -1,12 +1,23 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, Pressable} from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 
 export default function CompletedTripCard(props: any) {
 
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => {
+        navigation.navigate('DestinationViewer', {
+          tripId: props.trip.id,
+          tripName: props.trip.name
+        })
+      }}
+    >
       <Text style={styles.tripName}>{props.trip.name}</Text>
-    </View>
+    </Pressable>
   )
 }
 
@@ -15,9 +26,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     height: 60,
+    width: 250,
     backgroundColor: 'lightgrey',
     alignItems: 'center',
-    justifyContent:'flex-start',
+    justifyContent:'space-between',
     borderRadius: 10,
     margin: 20,
   },
