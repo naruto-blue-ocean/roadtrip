@@ -46,10 +46,11 @@ export default function Suggestion({ city }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop:40,
+    marginTop: 10,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'scroll',
   },
 
   buttonContainer: {
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: 'center',
     width: 250,
-    height: 80,
+    height: 70,
     borderWidth: 2,
     borderRadius: 15,
     padding: 20,
