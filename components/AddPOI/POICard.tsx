@@ -5,7 +5,7 @@ import axios from 'axios';
 import config from '../../config';
 import { useNavigation } from '@react-navigation/native';
 
-export default function POICard({ POI, desID, order }) {
+export default function POICard({ POI, desID, order, tripID }) {
 
   const navigation = useNavigation();
 
@@ -16,9 +16,13 @@ export default function POICard({ POI, desID, order }) {
       POIID: POI.id,
       order: (order + 1),
     })
-      .then((result) => console.log('POST addPOI success!'))
+      .then((result) => {
+        // console.log('POST addPOI success!')
+      })
       .catch((err) => console.log('POST addPOI err!, err = ', err))
-    navigation.navigate('DestinationViewer');
+    navigation.navigate('DestinationViewer', {
+      trip_id: tripID
+    });
   };
 
   return (

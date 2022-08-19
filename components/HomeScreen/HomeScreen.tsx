@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
 import TripCard from './TripCard';
 import axios from 'axios';
 import config from '../../config';
-
+import { useNavigation } from "@react-navigation/native";
 
 
 export default function HomeScreen(props: any) {
@@ -12,6 +12,7 @@ export default function HomeScreen(props: any) {
   const [showingModal, setShowingModal] = useState(false);
   const [tripsShowing, setTripsShowing] = useState([]);
 
+  const navigation = useNavigation();
 
   useEffect(() => {
     let userEmail = 'noa@email.com';
@@ -43,7 +44,11 @@ export default function HomeScreen(props: any) {
               email: userEmail
             })
             .then((response: any) => {
-              console.log(response.data)
+              var tripData: any = {};
+              tripData.tripId = response.data.trip_id;
+              tripData.tripName = text;
+              setTripsShowing([...tripsShowing, {id: response.data.trip_id, name: text, status: "planned"}])
+              navigation.navigate('DestinationViewer', tripData);
             })
             .catch((err: Error) => {
               console.error(err);
