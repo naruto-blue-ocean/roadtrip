@@ -3,9 +3,13 @@ import axios from 'axios';
 import config from '../../config';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, FlatList, Pressable, Text, TextInput, SafeAreaView, Button } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import { getItemAsync } from 'expo-secure-store';
 
-export default function POICard({ navigation, city, lat, lng }) {
+export default function POICard({ city, lat, lng }) {
+
+  const navigation = useNavigation();
 
   const [input, setInput] = useState<string>('');
   const [suggestions, setSuggestions] = useState([]);
@@ -35,7 +39,7 @@ export default function POICard({ navigation, city, lat, lng }) {
   }
   const handleSubmit = (selected: string) => {
     const term = selected || input
-    // console.log('Submit!');
+    console.log('Submit!');
     navigation.navigate('POIList', {
       city,
       term,

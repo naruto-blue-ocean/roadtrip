@@ -3,11 +3,9 @@ import {View, StyleSheet, TouchableOpacity, Text, Pressable, LayoutAnimation} fr
 import DraggableFlatList, {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
-import POI_Delete from './POI_Delete';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { getItemAsync } from 'expo-secure-store';
-import City from '../AddCity/City';
 import axios from 'axios';
 import { LOCALTUNNEL } from '../../config';
 
@@ -30,9 +28,31 @@ const POI_List = (props) => {
     //.then -> getTrip request
     //
     // console.log('reordering data ----------> ', data)
+<<<<<<< HEAD
     // axios.put(`${LOCALTUNNEL}/trips`)
+=======
+>>>>>>> 59edf5981d2f00e6026f7dbf943f32a6068b733b
 
-    setData(data)
+    // console.log(LOCALTUNNEL);
+    // console.log(props.tripId);
+    // console.log(props.destinationId);
+
+    const axiosObj = {};
+    for (var i = 0; i < data.length; i++) {
+      axiosObj[data[i].id] = i + 1;
+    }
+    // console.log('axiosOBJ ----> ', axiosObj);
+    const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`
+    // console.log(path);
+
+    axios.put(path, axiosObj)
+    .then((response) => {
+      setData(data);
+    })
+    .catch((err) => {
+      console.error ('errored in the POI put request', err)
+    });
+    setData(data);
 
   }
 
@@ -82,9 +102,9 @@ const POI_List = (props) => {
         onPress = {() =>
           navigation.navigate('AddPOI',
           {
-            name: city.cityName,
-            lat: city.lat,
-            lng: city.lng,
+            id: props.destinationId,
+            // lat: city.lat,
+            // lng: city.lng,
             current_num_POIs: 0,
             trip_destination_id: 0
           })

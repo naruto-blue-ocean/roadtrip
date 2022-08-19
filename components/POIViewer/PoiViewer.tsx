@@ -21,7 +21,7 @@ class PoiViewer extends React.Component {
 
  componentDidMount() {
   axios.defaults.headers.common['Authorization'] = config.YELPTOKEN;
-  let poiname = 'jIxS5Td2o0gBWx0G0qx59Q';
+  let poiname = this.props.route.params.poi_id;
   let userid = 'johnny@email.com';
   //can use ID instead
   axios.get(`https://api.yelp.com/v3/businesses/${poiname}`).then((data) => {
@@ -54,13 +54,13 @@ class PoiViewer extends React.Component {
  }
 
  updateNote(value: String) {
-  let poiname = 'jIxS5Td2o0gBWx0G0qx59Q';
+  let poiname = this.props.route.params.poi_id;
   let userid = 'johnny@email.com';
   //data we will send over to the server
   var data = {
     note: value,
     user_email: 'johnny@email.com',
-    poi_id: 'jIxS5Td2o0gBWx0G0qx59Q'
+    poi_id: this.props.route.params.poi_id
   }
 
   console.log("WHAT IS THE NEW VALUE: ", value)
@@ -135,7 +135,7 @@ class PoiViewer extends React.Component {
       <Text>Phone: {this.state.data.display_phone}</Text>
 
       <View style={styles.note} >
-      <Text>{this.state.note}</Text>
+      <Text>{this.state.note || 'Add a note here...'}</Text>
          <Pressable
          onPress={this.displayModal.bind(this)}
          >
