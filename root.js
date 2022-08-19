@@ -86,7 +86,6 @@ export default function Root() {
   //   </QueryClientProvider>
   // )
 
-
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
