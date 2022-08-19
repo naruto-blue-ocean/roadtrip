@@ -1,25 +1,38 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, Pressable} from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 
 export default function TrashTripCard(props: any) {
 
-  const [active, setActive] = useState(false);
+  const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => {
+        navigation.navigate('DestinationViewer', {
+          tripId: props.trip.id,
+          tripName: props.trip.name
+        })
+      }}
+    >
       <Text style={styles.tripName}>{props.trip.name}</Text>
       <View style={styles.options}>
-        <Pressable>
-          <Text>Options</Text>
+        <Pressable style={styles.option}>
+          <Text>Recover</Text>
+        </Pressable>
+        <Pressable style={styles.option}>
+          <Text>Delete</Text>
         </Pressable>
       </View>
-    </View>
+    </Pressable>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
+
     flexDirection: 'row',
     height: 60,
     backgroundColor: 'lightgrey',
@@ -32,11 +45,16 @@ const styles = StyleSheet.create({
     marginLeft: 30
   },
   options: {
-    backgroundColor: 'green',
     borderStyle: 'solid',
     borderRadius: 5,
-    marginRight: 30,
+    margin: 20,
     borderWidth: 1,
     borderColor: 'grey'
   },
+  option: {
+    borderStyle: 'solid',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'grey'
+  }
 })
