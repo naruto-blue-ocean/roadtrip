@@ -12,12 +12,13 @@ import { panGestureHandlerCustomNativeProps } from 'react-native-gesture-handler
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 
-export default function DestinationViewer({route, navigation}) {
-  // const navigation = useNavigation();
+export default function DestinationViewer() {
+  const route = useRoute();
+  const navigation = useNavigation();
   const {tripId} = route.params;
 
   const getTrip = (tripId) => {
-    const path = `${config.LOCALTUNNEL}/trips/destinations/${tripId}`
+    const path = `${config.LOCALTUNNEL}/trips/${tripId}`
     axios.get(path)
     .then ((response) => {
       let trip = response.data;
