@@ -64,7 +64,7 @@ var styles = StyleSheet.create({
   cityContainer : {
     position: 'relative',
     zIndex: 0,
-    bottom: 380,
+    bottom: 360,
     width: 400,
     left: 17,
     height: 50,

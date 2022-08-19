@@ -21,7 +21,7 @@ var styles = StyleSheet.create({
     width: 150,
     height: 80,
     borderRadius: 15,
-    backgroundColor: '#B0C4B1',
+    backgroundColor: '#DEDBD2',
     // width: 300,
     // height: 50,
   },
