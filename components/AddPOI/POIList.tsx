@@ -52,7 +52,6 @@ export default function POIList({ order, desID }) {
   return (
     <View style={styles.container} >
       <Button title="Back" onPress={() => navigation.goBack()} />
-      {console.log(getPOIsData)}
       {/* {POIs && <FlatList
         data={POIs}
         renderItem={({ item }) => (<POICard
