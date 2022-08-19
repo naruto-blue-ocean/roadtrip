@@ -18,7 +18,9 @@ export default function DestinationViewer() {
   const {tripId} = route.params;
 
   const getTrip = (tripId) => {
-    const path = `${config.LOCALTUNNEL}/trips/${tripId}`
+    console.log('getTrip was invoked')
+    console.log(tripId)
+    const path = `${config.LOCALTUNNEL}/trips/tripinfo/${tripId}`
     axios.get(path)
     .then ((response) => {
       let trip = response.data;
@@ -218,10 +220,9 @@ export default function DestinationViewer() {
 
             navigation.navigate('AddCity', {trip_id: tripId, lastIndex: maxIndex})
           }
-
           }
           >
-          <Text>Add Destinations &nbsp;</Text>
+          <Text style = {styles.addDestination}>Add Destinations &nbsp;</Text>
           <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
         </Pressable>
         <Pressable style={styles.share}
@@ -311,7 +312,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   addCity: {
-    backgroundColor: 'grey',
+    backgroundColor: '#D9814F',
     justifyContent: 'center',
     fontSize: 20,
     borderColor: 'black',
@@ -331,6 +332,9 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 6,
     width: '50%'
+  },
+  addDestination: {
+    backgroundColor: '#D9814F'
   }
 });
 
