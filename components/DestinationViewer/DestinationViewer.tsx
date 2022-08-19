@@ -75,7 +75,6 @@ export default function DestinationViewer({route, navigation}) {
     for (var i = 0; i < afterData.length; i++) {
       axiosObj[afterData[i].destination_id] = i + 1;
     }
-
     axios.put(path, axiosObj)
     .catch((err) => {
       console.error('errored in the POI put request', err);
@@ -106,11 +105,21 @@ export default function DestinationViewer({route, navigation}) {
 
     const handleDelete = () => {
       let copyOfCities;
+      let beforeData = cities;
+      let afterData = [];
       cities.forEach((city, index) => {
-        if (city.cityName === item.cityName) {
-          copyOfCities = cities.slice(0, index).concat(cities.slice(index + 1));
+        if (city.cityName !== item.cityName) {
+          afterData.push(city);
         }
-      });
+      })
+      const path = `${config.LOCALTUNNEL}/trips/${tripId}/destinations/${item.destination_id}`
+      axios.delete(path)
+      .catch((err) => {
+        console.error('errored when deleted destination', err)
+        setCities(beforeData);
+      })
+      setCities(afterData);
+
       LayoutAnimation.configureNext(
         LayoutAnimation.create(
           150,
@@ -118,9 +127,8 @@ export default function DestinationViewer({route, navigation}) {
           LayoutAnimation.Properties.scaleY
         )
       );
-      setCities(copyOfCities);
+      // setCities(copyOfCities);
     };
-
 
     return (
       <ScaleDecorator>

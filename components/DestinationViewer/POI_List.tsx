@@ -21,32 +21,47 @@ const POI_List = (props) => {
   // }
 
   const reorderPOIs = (afterData: Array<Object>) => {
-    // console.log('reorderPOIs invoked, setting data and attempting a PATCH request')
-    // console.log('new data ->>>>> ', data)
-    //axios put request
-    //.then -> getTrip request
-
-    // console.log('reordering data ----------> ', data)
-
-    // console.log(LOCALTUNNEL);
-    // console.log(props.tripId);
-    // console.log(props.destinationId);
     const beforeData = data;
     const axiosObj = {};
     for (var i = 0; i < afterData.length; i++) {
       axiosObj[afterData[i].id] = i + 1;
     }
-    console.log('axiosOBJ ----> ', axiosObj);
-    const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`
-    console.log(path);
+
+    // console.log('axiosOBJ ----> ', axiosObj);
+    const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`;
+    // console.log(path);
+
 
     axios.put(path, axiosObj)
     .catch((err) => {
       console.error ('errored in the POI put request', err)
       setData(beforeData);
     });
-    setData(afterData);
+    setData( afterData);
   }
+
+  const deletePOI = (item) => {
+    const beforeData = data;
+
+    const afterData = []
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].name !== item.name) {
+        afterData.push(data[i])
+      }
+    }
+
+    const path = (`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.currCity.destination_id}/pois/${item.id}`);
+    axios.delete(path)
+      .catch((err) => {
+        setData(beforeData);
+      });
+
+    setData(afterData);
+
+
+    console.log('afterData, ', afterData)
+
+  };
 
   const renderPOI = ({item, drag, isActive}) => (
     <View style={styles.tilewrapper}>

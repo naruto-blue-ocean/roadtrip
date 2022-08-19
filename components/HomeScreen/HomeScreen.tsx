@@ -22,7 +22,7 @@ export default function HomeScreen(props: any) {
     axios.get(`${config.LOCALTUNNEL}/trips/${userEmail}`)
     .then((results) => {
       setTripsShowing(results.data);
-      console.log(results.data);
+      // console.log(results.data);
     })
     .catch((error) => {
       console.error(error);
@@ -33,7 +33,7 @@ export default function HomeScreen(props: any) {
     <ScrollView style={styles.container}>
       {
         tripsShowing.map((trip: any) => {
-          console.log('Trip ID: ', trip.id);
+          // console.log('Trip ID: ', trip.id);
           return (<TripCard key={trip.id} tripId={trip.id} tripName={trip.name} tripStatus={trip.status} />)
         })
       }
