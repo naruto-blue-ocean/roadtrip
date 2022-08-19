@@ -105,14 +105,10 @@ class PoiViewer extends React.Component {
       {this.state.data.image_url ? <Image source={{uri: `${this.state.data?.image_url}`}}
        style={styles.image} /> : ''}
     <View style={styles.wrapper}>
-      {/* <Pressable onPress={()=>{Keyboard.dismiss()}}
-      > */}
-      {/* <View style={styles.menuBox}> */}
+      <View style={styles.coverTitle}>
+        <Text style={styles.title}>{this.state.data.name}</Text>
+      </View>
 
-      {/* </View> */}
-      {/* <Pressable onPress={()=>{Keyboard.dismiss()}}> */}
-
-      <Text style={styles.title}>{this.state.data.name}</Text>
       <View style={styles.starRating}>
 
         <View style={{alignItems:'left', flex: 1, flexDirection: 'row'}}>
@@ -141,21 +137,23 @@ class PoiViewer extends React.Component {
       <Text style={{marginTop: 5}}>{this.state.data.location?.display_address[0]} {this.state.data.location?.display_address[1]}</Text>
       {/* Restaurant Info */}
       {/* <Text>Stars: {this.state.data.rating}</Text> */}
-      <Text>Phone: {this.state.data.display_phone}</Text>
+      <Text style={{marginTop: 5}}>{this.state.data.display_phone}</Text>
       {isOpen &&  <Text style={{color: 'green', marginVertical: 5}}>Open</Text>}
       {!isOpen &&  <Text style={{color: 'red'}}>Open</Text>}
 
-
-      <View style={styles.note} >
-      <Text>{this.state.note || 'Add a note here...'}</Text>
-         <Pressable
+      <Pressable
          onPress={this.displayModal.bind(this)}
          >
-          <Text style={styles.editButton}>Edit</Text>
-         </Pressable>
+      <View style={styles.note}>
+     {!this.state.note.length && <Text style={{color: 'gray'}}>Add a note here...</Text>}
+    { this.state.note && <Text>{this.state.note}</Text>}
+
+
+
  {this.state.noteRendered && <Edit updateNote={this.updateNote.bind(this)} showModal={this.state.showModal} displayModal={this.displayModal.bind(this)} title={this.state.data.name} note={this.state.note}/>}
 
       </View>
+      </Pressable>
 
     <StatusBar style="auto" />
     {/* </Pressable> */}
@@ -177,8 +175,8 @@ const styles = StyleSheet.create({
   note: {
     // flex: .75,
     textAlign: 'center',
-    borderWidth: 1,
-    height: "30%",
+    // borderWidth: 1,
+    // height: "30%",
     padding: 10,
     marginTop: 10,
     borderRadius: 10,
@@ -190,13 +188,25 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     padding: 10,
-    margin: 10,
+    // margin: 5,
+  },
+  coverTitle: {
+    backgroundColor: '#DEDEDE',
+    marginTop: 0,
+    marginBottom: 10,
+    paddingTop: 10,
+    height: 80,
+    borderRadius: 20,
   },
   title: {
     textAlign: 'center',
-    margin: 5,
-    marginBottom: 25,
+    margin: 15,
+    // marginBottom: 20,
+    // paddingHorizontal: 60,
+    // paddingVertical: 40,
+    // padding: 50,
     fontSize: 20,
+    // backgroundColor: '#DEDEDE'
   },
   body: {
 
