@@ -58,7 +58,7 @@ var styles = StyleSheet.create({
     padding: 10,
     flex: 1,
     alignContent: 'center',
-    backgroundColor: '#F0E8E4',
+    backgroundColor: '#FFFFFF',
   },
 
   cityContainer : {
@@ -81,7 +81,7 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     width: 200,
     borderRadius: 20,
-    backgroundColor: '#D9814F'
+    backgroundColor: '#B0C4B1'
   },
 
   text: {
