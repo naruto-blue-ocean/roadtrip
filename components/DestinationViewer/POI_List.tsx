@@ -38,6 +38,13 @@ const POI_List = (props) => {
       setData(beforeData);
     });
     setData( afterData);
+    LayoutAnimation.configureNext(
+      LayoutAnimation.create(
+        150,
+        LayoutAnimation.Types.linear,
+        LayoutAnimation.Properties.scaleY
+      )
+    );
   }
 
   const deletePOI = (item) => {
@@ -56,10 +63,16 @@ const POI_List = (props) => {
         setData(beforeData);
       });
 
+
+    LayoutAnimation.configureNext(
+      LayoutAnimation.create(
+        150,
+        LayoutAnimation.Types.linear,
+        LayoutAnimation.Properties.scaleY
+      )
+    );
     setData(afterData);
-
-
-    console.log('afterData, ', afterData)
+    props.setPOIsAfterDelete(afterData);
 
   };
 

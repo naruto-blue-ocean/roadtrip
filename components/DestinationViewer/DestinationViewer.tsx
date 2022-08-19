@@ -12,7 +12,6 @@ import { panGestureHandlerCustomNativeProps } from 'react-native-gesture-handler
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 
-
 export default function DestinationViewer({route, navigation}) {
   // const navigation = useNavigation();
   const {tripId} = route.params;
@@ -102,6 +101,9 @@ export default function DestinationViewer({route, navigation}) {
     const [expanded, setExpanded] = useState(false);
     const scrollX = useRef(new Animated.Value(0)).current;
 
+    const setPOIsAfterDelete = (newPOIs) => {
+      item.POIs = newPOIs;
+    }
 
     const handleDelete = () => {
       let copyOfCities;
@@ -188,7 +190,10 @@ export default function DestinationViewer({route, navigation}) {
                 destinationId = {item.destination_id}
                 lat = {item.lat}
                 lng = {item.lng}
-                cityName = {item.cityName}/>
+                cityName = {item.cityName}
+                setPOIsAfterDelete = {setPOIsAfterDelete}
+                />
+
             </View>
           )}
         </View>
