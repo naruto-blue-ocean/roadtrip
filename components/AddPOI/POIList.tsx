@@ -90,7 +90,7 @@ export default function POIList({ order, desID, tripID }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#B0C4B1',
     alignItems: 'center',
     // justifyContent: 'center',
   },
