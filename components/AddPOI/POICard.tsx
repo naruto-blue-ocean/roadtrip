@@ -31,24 +31,24 @@ export default function POICard({ POI, desID, order, tripID }) {
 
 
   return (
-    <View style={styles.container}>
-      <Pressable onPress={handlePress}>
-        <Image style={styles.tinyLogo} source={{uri: POI.image_url}}/>
-        <View style={styles.textContainer}>
-          <Text style={styles.name}>{POI.name}</Text>
-          {/* <Text>{POI.rating}</Text> */}
-          <Stars
-            default={POI.rating}
-            count={5}
-            half={true}
-            fullStar={<Icon name={'star'} style={[styles.star]}/>}
-            emptyStar={<Icon name={'star-outline'} style={styles.star}/>}
-            halfStar={<Icon name={'star-half'} style={[styles.star]}/>}
-          />
-          <Text>{POI.categories[0].title}</Text>
-        </View>
-      </Pressable>
-    </View>
+    // <View style={styles.container}>
+    <Pressable style={styles.container} onPress={handlePress}>
+      <Image style={styles.tinyLogo} source={{uri: POI.image_url}}/>
+      <View style={styles.textContainer}>
+        <Text style={styles.name}>{POI.name}</Text>
+        {/* <Text>{POI.rating}</Text> */}
+        <Stars
+          default={POI.rating}
+          count={5}
+          half={true}
+          fullStar={<Icon name={'star'} style={[styles.star]}/>}
+          emptyStar={<Icon name={'star-outline'} style={styles.star}/>}
+          halfStar={<Icon name={'star-half'} style={[styles.star]}/>}
+        />
+        <Text style={styles.des} >{POI.categories[0].title}</Text>
+      </View>
+    </Pressable>
+    // </View>
   );
 }
 
@@ -61,23 +61,31 @@ const styles = StyleSheet.create({
     height: 100,
     borderWidth: 2,
     borderRadius: 30,
-    padding: 20,
+    paddingLeft: 10,
     marginVertical: 15,
     fontSize: 20,
     backgroundColor: '#fff',
   },
   tinyLogo: {
-    width: 80,
-    height: 80,
+    width: 75,
+    height: 75,
     borderRadius: 20,
   },
   textContainer: {
     flexDirection: 'column',
-
+    paddingLeft: 10,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    width: 200,
+    marginVertical: 10,
   },
   name: {
     fontSize: 15,
     fontWeight: 'bold',
+    marginLeft: 5,
+  },
+  des: {
+    marginLeft: 5,
   },
   star: {
     color: "#f9a920",

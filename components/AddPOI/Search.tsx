@@ -61,11 +61,11 @@ export default function POICard({ city, lat, lng }) {
         />
       </View>
       {input && <FlatList
-        style={styles.suggestions}
+        style={styles.suggestionContainer}
         data={suggestions}
         renderItem={({ item }) => (
           <Pressable onPress={() => handleSubmit(item.alias)}>
-            <Text>{item.alias}</Text>
+            <Text style={styles.suggestionText}>{item.alias}</Text>
           </Pressable>
         )}
         keyExtractor={(item) => item.alias}
@@ -85,10 +85,10 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     backgroundColor: 'white',
     paddingHorizontal: 10,
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 10,
     marginTop: 30,
-    fontSize: 20,
+    fontSize: 30,
   },
   searchIcon: {
     paddingRight: 10,
@@ -99,9 +99,16 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 0,
     color: '#424242',
+    fontSize: 15,
+    fontWeight: '500',
   },
-  suggestions: {
+  suggestionContainer: {
     marginLeft: 45,
-    fontSize: 40,
+    fontSize: 50,
   },
+  suggestionText: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+  }
 });
