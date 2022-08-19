@@ -16,15 +16,18 @@ var styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 5,
+    margin: 6,
     padding: 10,
-    width: 250,
+    width: 150,
     height: 80,
     borderRadius: 15,
-    backgroundColor: '#94483B'
+    backgroundColor: '#E2E6E4',
+    // width: 300,
+    // height: 50,
   },
 
   text: {
-    fontSize: 20
+    fontSize: 18,
+
   }
 })

@@ -13,6 +13,7 @@ export default function POICard({ POI, desID, order, tripID }) {
     axios.post(`${config.LOCALTUNNEL}/addPOI`, {
       POIname: POI.name,
       desID,
+      tripID,
       POIID: POI.id,
       order: (order + 1),
     })
@@ -21,7 +22,7 @@ export default function POICard({ POI, desID, order, tripID }) {
       })
       .catch((err) => console.log('POST addPOI err!, err = ', err))
     navigation.navigate('DestinationViewer', {
-      trip_id: tripID
+      tripId: tripID
     });
   };
 

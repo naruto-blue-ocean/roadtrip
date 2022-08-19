@@ -11,7 +11,6 @@ import { AuthContext } from '../../AuthProvider.js'
 
 export default function HomeScreen(props: any) {
 
-  const [showingModal, setShowingModal] = useState(false);
   const [tripsShowing, setTripsShowing] = useState([]);
   const { username } = useContext(AuthContext);
 
@@ -22,7 +21,7 @@ export default function HomeScreen(props: any) {
     axios.get(`${config.LOCALTUNNEL}/trips/${userEmail}`)
     .then((results) => {
       setTripsShowing(results.data);
-      console.log(results.data);
+      // console.log(results.data);
     })
     .catch((error) => {
       console.error(error);
@@ -33,13 +32,14 @@ export default function HomeScreen(props: any) {
     <ScrollView style={styles.container}>
       {
         tripsShowing.map((trip: any) => {
-          console.log('Trip ID: ', trip.id);
+          // console.log('Trip ID: ', trip.id);
           return (<TripCard key={trip.id} tripId={trip.id} tripName={trip.name} tripStatus={trip.status} />)
         })
       }
       <View
         style={styles.newTripContainer}
         onTouchEnd={(e) => {
+          e.preventDefault();
           let userEmail = username || 'noa@email.com'
           Alert.prompt('Create a new trip', 'Choose a name for your trip!', (text) => {
             axios.post(`${config.LOCALTUNNEL}/trips`,{
