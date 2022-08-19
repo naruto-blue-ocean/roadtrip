@@ -12,13 +12,14 @@ const Stack = createNativeStackNavigator();
 
 export default function AddPOI({ route }) {
   //props: city, lat, lng, order, desId
-  // const { city, term } = route.params;
+  const { destination_id, trip_id, current_num_POIs, term, latitude, longitude, cityName } = route.params;
 
-  const city = 'sunnyvale';
-  const lat = 37.3688;
-  const lng = 121.0365;
-  const order = 2;
-  const desID = 200;
+  const city = cityName;
+  const lat = latitude;
+  const lng = longitude;
+  const order = current_num_POIs;
+  const tripID = trip_id;
+  const desID = destination_id;
 
   return (
     <Stack.Navigator initialRouteName="AddPOIHome">
@@ -33,7 +34,7 @@ export default function AddPOI({ route }) {
       <Stack.Screen
         name="POIList"
         children={() => (
-          <POIList order={order} desID={desID} />
+          <POIList order={order} desID={desID} tripID={tripID} />
         )}
         options={{headerShown: false}} />
       <Stack.Screen
