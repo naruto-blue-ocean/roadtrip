@@ -18,8 +18,8 @@ export default function HomeScreen(props: any) {
   const navigation = useNavigation();
 
   useEffect(() => {
-    let userEmail = 'noa@email.com';
-    axios.get(`${config.LOCALTUNNEL}/trips/${username}`)
+    let userEmail = username || 'noa@email.com';
+    axios.get(`${config.LOCALTUNNEL}/trips/${userEmail}`)
     .then((results) => {
       setTripsShowing(results.data);
       console.log(results.data);
@@ -40,11 +40,11 @@ export default function HomeScreen(props: any) {
       <View
         style={styles.newTripContainer}
         onTouchEnd={(e) => {
-          let userEmail = 'noa@email.com'
+          let userEmail = username || 'noa@email.com'
           Alert.prompt('Create a new trip', 'Choose a name for your trip!', (text) => {
             axios.post(`${config.LOCALTUNNEL}/trips`,{
               tripName: text,
-              email: username
+              email: userEmail
             })
             .then((response: any) => {
               var tripData: any = {};
