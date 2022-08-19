@@ -85,7 +85,7 @@ const POI_List = (props) => {
           style={styles.POI}
           onPress = {() => {
             // console.log(item.id)
-            navigation.navigate('POIViewer',
+            navigation.navigate('PoiViewer',
             {
               poi_id: item.id
             });

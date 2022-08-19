@@ -21,8 +21,9 @@ class PoiViewer extends React.Component {
 
  componentDidMount() {
   axios.defaults.headers.common['Authorization'] = config.YELPTOKEN;
-  let poiname = this.props.route.params.poi_id;
-  let userid = 'johnny@email.com';
+  //computer history as a backup
+  let poiname = this.props.route?.params.poi_id || 'Z6gkivXc4B_eG5oj4OgaxQ'
+  let userid = this.props.route?.params.email || 'johnny@email.com';
   //can use ID instead
   axios.get(`https://api.yelp.com/v3/businesses/${poiname}`).then((data) => {
  // DO A GET REQUEST TO THE DATABASE TO RETRIEVE THE NOTES
@@ -54,13 +55,13 @@ class PoiViewer extends React.Component {
  }
 
  updateNote(value: String) {
-  let poiname = this.props.route.params.poi_id;
+  let poiname = this.props.route?.params.poi_id;
   let userid = 'johnny@email.com';
   //data we will send over to the server
   var data = {
     note: value,
     user_email: 'johnny@email.com',
-    poi_id: this.props.route.params.poi_id
+    poi_id: this.props.route?.params.poi_id
   }
 
   console.log("WHAT IS THE NEW VALUE: ", value)
@@ -79,7 +80,7 @@ class PoiViewer extends React.Component {
  }
 
  render() {
-  console.log('props in poi viewer',this.props.route)
+  console.log('props in poi viewer',this.props)
   // console.log("DIMESIONS HEIGHT: ",  Dimensions.get('window').height)
   // console.log("DIMESIONS WIDTH: ",  Dimensions.get('window').width)
   // console.log("WHAT IS THE ADDRESS: ", this.state.data.location?.display_address)
