@@ -3,12 +3,11 @@ import {View, StyleSheet, TouchableOpacity, Text, Pressable, LayoutAnimation} fr
 import DraggableFlatList, {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
-import POI_Delete from './POI_Delete';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { getItemAsync } from 'expo-secure-store';
-import City from '../AddCity/City';
 import axios from 'axios';
+import { LOCALTUNNEL } from '../../config';
 
 const POI_List = (props) => {
   const navigation = useNavigation();
@@ -24,7 +23,33 @@ const POI_List = (props) => {
   const reorderPOIs = (data: Array<Object>) => {
     // console.log('reorderPOIs invoked, setting data and attempting a PATCH request')
     // console.log('new data ->>>>> ', data)
+
+    //axios put request
+    //.then -> getTrip request
+    //
+    // console.log('reordering data ----------> ', data)
+
+    // console.log(LOCALTUNNEL);
+    // console.log(props.tripId);
+    // console.log(props.destinationId);
+
+    const axiosObj = {};
+    for (var i = 0; i < data.length; i++) {
+      axiosObj[data[i].id] = i + 1;
+    }
+    // console.log('axiosOBJ ----> ', axiosObj);
+    const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`
+    // console.log(path);
+
+    axios.put(path, axiosObj)
+    .then((response) => {
+      setData(data);
+    })
+    .catch((err) => {
+      console.error ('errored in the POI put request', err)
+    });
     setData(data);
+
   }
 
   const renderPOI = ({item, drag, isActive}) => (
@@ -35,7 +60,7 @@ const POI_List = (props) => {
           disabled={isActive}
           style={styles.POI}
           onPress = {() => {
-            console.log(item.id)
+            // console.log(item.id)
             navigation.navigate('POIViewer',
             {
               poi_id: item.id
@@ -67,9 +92,9 @@ const POI_List = (props) => {
         onPress = {() =>
           navigation.navigate('AddPOI',
           {
-            name: city.cityName,
-            lat: city.lat,
-            lng: city.lng,
+            id: props.destinationId,
+            // lat: city.lat,
+            // lng: city.lng,
             current_num_POIs: 0,
             trip_destination_id: 0
           })
