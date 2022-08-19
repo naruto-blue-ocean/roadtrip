@@ -47,6 +47,7 @@ export default function HomeScreen(props: any) {
               var tripData: any = {};
               tripData.tripId = response.data.trip_id;
               tripData.tripName = text;
+              setTripsShowing([...tripsShowing, {id: response.data.trip_id, name: text, status: "planned"}])
               navigation.navigate('DestinationViewer', tripData);
             })
             .catch((err: Error) => {
