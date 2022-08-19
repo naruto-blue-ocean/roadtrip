@@ -54,7 +54,7 @@ export default function Archive() {
           <CompletedList completedTrips={completedTrips}/>
         }
         {whichTab === 'Trash' &&
-          <TrashList trashTrips={trashTrips}/>
+          <TrashList trashTrips={trashTrips} setTrashTrips={setTrashTrips}/>
         }
       </View>
       <StatusBar style="auto" />
@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
   },
   tabs: {
     display: "flex",
-    width: 250,
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
