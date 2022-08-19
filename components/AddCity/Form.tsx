@@ -18,6 +18,12 @@ export default function Form ( {list, setList, trip_id, lastIndex}:
 
       {/* Auto Complete Field */}
      <GooglePlacesAutocomplete
+      // styles = {{
+      //   textInputContainer: {
+      //     backgroundColor: 'black'
+      //   },
+      //   textInput:
+      // }}
       placeholder='Search'
       textInputProps= {{
         value : {location},
@@ -68,5 +74,14 @@ var styles = StyleSheet.create({
     height: 50,
     backgroundColor: '#eee',
     marginVertical: 5,
+    borderRadius: 30,
+    fontSize: 20,
+    paddingHorizontal: 25
+  }
+})
+
+var inputStyle = StyleSheet.create({
+  textInput: {
+
   }
 })
