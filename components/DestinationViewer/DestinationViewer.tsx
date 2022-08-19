@@ -199,7 +199,15 @@ export default function DestinationViewer({route, navigation}) {
           <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
         </Pressable>
         <Pressable style={styles.share}
-          onPress = {() => {}
+          onPress = {() => {
+            Alert.prompt('Share trip', 'Enter friend\'s email', (email) => {
+              axios.post(`${config.LOCALTUNNEL}/share/${email}/${tripId}`)
+                .then( (response) => {
+                  console.log(response.data)
+                  Alert.alert('Sharing successful!', `Your friend ${email} can now access this trip`)
+                })
+                .catch( (e) => console.log(e))
+          })}
           }
           >
           <Text>Share &nbsp;</Text>
@@ -304,25 +312,19 @@ const styles = StyleSheet.create({
 /*
   destination_id1: order_number1,
   destination_id2: order_number2
-
-
   CURRENT ORDER:
   ChIJfcS6fx7LwoARZYDiqXgXL6E: 1,
   ChIJSzbuqjfD3IARckzIEB2RVeg: 2,
   ChIJpYrtFq413YARX4eG8Fd9FAQ: 3
-
-
   PROPOSED ORDER:
   ChIJfcS6fx7LwoARZYDiqXgXL6E: 1,
   ChIJSzbuqjfD3IARckzIEB2RVeg: 3,
   ChIJpYrtFq413YARX4eG8Fd9FAQ: 2
-
 */
 
 
 /*const sampleTrip = {
 =======
-
 /*
 const sampleTrip = {
 >>>>>>> jason-branch
