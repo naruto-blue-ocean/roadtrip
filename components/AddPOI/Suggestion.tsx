@@ -63,13 +63,14 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 20,
     marginVertical: 15,
-    backgroundColor: '#fff',
+    backgroundColor: '#B0C4B1',
   },
   text: {
-    fontSize: 15,
-    fontWeight: '500',
+    fontSize: 18,
+    fontWeight: '400',
+    color: 'white',
   },
   plusIcon: {
-
+    color: 'white',
   }
 });
