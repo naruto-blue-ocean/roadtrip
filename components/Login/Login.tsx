@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/core';
 // import { StatusBar } from 'expo-status-bar';
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image } from 'react-native';
 import axios from 'axios';
 import { AuthContext } from '../../AuthProvider.js'
 import config from '../../config.js'
@@ -101,9 +101,11 @@ export default function Login() {
   }
 
   return (
+    <>
     <KeyboardAvoidingView
       style={styles.container}
       behavior="padding">
+    <Image source={require('../../assets/roadTripSplash-removebg-preview.png')} style={styles.img} />
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -111,7 +113,7 @@ export default function Login() {
           autoCapitalize="none"
           onChangeText={text => setEmail(text)}
           style={styles.input}
-        />
+          />
         <TextInput
           placeholder="Password"
           value={password}
@@ -147,6 +149,8 @@ export default function Login() {
       </View>
 
     </KeyboardAvoidingView>
+    </>
+
   );
 }
 
@@ -156,9 +160,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    alignContent: 'flex-start'
+  },
+  img: {
+    width: 300,
+    height: 400,
+    marginTop: -110
   },
   inputContainer: {
-    width: '80%'
+    width: '75%'
   },
   input: {
     backgroundColor: 'white',
@@ -171,10 +181,10 @@ const styles = StyleSheet.create({
     width: '70%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 35,
   },
   button: {
-    backgroundColor: '#0782F9',
+    backgroundColor: '#B0C4B1',
     width: '100%',
     padding: 15,
     borderRadius: 10,
@@ -185,8 +195,14 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
+    fontWeight: '500',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  buttonTextLogin: {
+    color: 'white',
     fontWeight: '700',
-    fontSize: 14,
+    fontSize: 16,
     textAlign: 'center',
   },
   buttonOutlineText: {

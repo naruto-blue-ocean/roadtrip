@@ -12,10 +12,10 @@ import axios from 'axios';
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 
-export default function DestinationViewer() {
+export default function DestinationViewer(props) {
   const route = useRoute();
   const navigation = useNavigation();
-  const {tripId} = route.params;
+  const tripId = props.tripId || route.params.tripId;
 
   const getTrip = (tripId) => {
     const path = `${config.LOCALTUNNEL}/trips/tripinfo/${tripId}`
