@@ -1,6 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {Keyboard, Dimensions, StyleSheet, Text, View, Image, TextInput, Pressable, TouchableHighlight, ScrollView, NativeModules } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import config from '../../config.js';
 import Edit from './Edit.tsx';
@@ -55,8 +56,8 @@ class PoiViewer extends React.Component {
  }
 
  updateNote(value: String) {
-  let poiname = this.props.route?.params.poi_id;
-  let userid = 'johnny@email.com';
+  let poiname = this.props.route?.params.poi_id || 'Z6gkivXc4B_eG5oj4OgaxQ'
+  let userid = this.props.route?.params.email || 'johnny@email.com';
   //data we will send over to the server
   var data = {
     note: value,
@@ -80,7 +81,9 @@ class PoiViewer extends React.Component {
  }
 
  render() {
+  const {route} = this.props;
   console.log('props in poi viewer',this.props)
+  console.log('poiviewer route', route.params)
   // console.log("DIMESIONS HEIGHT: ",  Dimensions.get('window').height)
   // console.log("DIMESIONS WIDTH: ",  Dimensions.get('window').width)
   // console.log("WHAT IS THE ADDRESS: ", this.state.data.location?.display_address)
@@ -228,4 +231,7 @@ const styles = StyleSheet.create({
 
 });
 
-export default PoiViewer;
+export default function(props) {
+  const route = useRoute();
+  return <PoiViewer {...props} route={route}/>
+}
