@@ -47,7 +47,6 @@ export default function DestinationViewer({route, navigation}) {
           }
         }
       })
-      console.log(cities);
       let destinations = [];
       Object.keys(cities).forEach((key) => {
         let destObj = {
@@ -69,17 +68,13 @@ export default function DestinationViewer({route, navigation}) {
   }
 
   const updateDestinationOrder = (afterData:any) => {
-    console.log('updateDestinationOrder invoked, here is the new order', afterData);
-
     const beforeData = cities;
     const path = `${config.LOCALTUNNEL}/trips/${tripId}/destinations`
-    console.log(path);
-    console.log(afterData);
+
     const axiosObj = {}
     for (var i = 0; i < afterData.length; i++) {
       axiosObj[afterData[i].destination_id] = i + 1;
     }
-    console.log('axiosObj ', axiosObj)
 
     axios.put(path, axiosObj)
     .catch((err) => {
@@ -160,9 +155,7 @@ export default function DestinationViewer({route, navigation}) {
                   onLongPress={drag}
                   disabled={isActive}
                   style={styles.item}
-                  onPressOut={() => {
-                    console.log('onPressOut')
-                  }}
+
                 >
                   <Text style={styles.title}>{item.cityName}</Text>
                 </Pressable>
@@ -201,14 +194,13 @@ export default function DestinationViewer({route, navigation}) {
       <View style = {styles.addAndShareContainer}>
         <Pressable style={styles.addCity}
           onPress = {() => {
-            console.log('cities', cities)
             let maxIndex = 0;
             for (var i = 0; i < cities.length; i++) {
               if (cities[i]['order_number'] > maxIndex) {
                 maxIndex = cities[i]['order_number'];
               }
             }
-            console.log("maxIndex", maxIndex)
+
             navigation.navigate('AddCity', {trip_id: tripId, lastIndex: maxIndex})
           }
 
@@ -222,7 +214,6 @@ export default function DestinationViewer({route, navigation}) {
             Alert.prompt('Share trip', 'Enter friend\'s email', (email) => {
               axios.post(`${config.LOCALTUNNEL}/share/${email}/${tripId}`)
                 .then( (response) => {
-                  console.log(response.data)
                   Alert.alert('Sharing successful!', `Your friend ${email} can now access this trip`)
                 })
                 .catch( (e) => console.log(e))
