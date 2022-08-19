@@ -4,7 +4,7 @@ import { View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensio
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 import POI_List from './POI_List';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import config from '../../config.js';
 import axios from 'axios';
 import { panGestureHandlerCustomNativeProps } from 'react-native-gesture-handler/lib/typescript/handlers/PanGestureHandler';
@@ -83,9 +83,11 @@ export default function DestinationViewer() {
     setCities(afterData);
   }
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    getTrip(tripId);
-  }, [])
+    isFocused && getTrip(tripId);
+  }, [isFocused])
 
   const [cities, setCities] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);

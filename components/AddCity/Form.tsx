@@ -6,9 +6,8 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import City from './City';
 import { getZipCode } from 'use-places-autocomplete';
 
-export default function Form ( {list, setList, trip_id, current_num_destinations}: {list: any, setList: any, trip_id: number, current_num_destinations: number}) {
-
-  console.log('what ar thsee nums', trip_id, current_num_destinations)
+export default function Form ( {list, setList, trip_id, lastIndex}:
+  {list: any, setList: any, trip_id: number, lastIndex: number}) {
 
   const [location, setLocation] = useState('');
 
@@ -17,6 +16,12 @@ export default function Form ( {list, setList, trip_id, current_num_destinations
 
       {/* Auto Complete Field */}
      <GooglePlacesAutocomplete
+      // styles = {{
+      //   textInputContainer: {
+      //     backgroundColor: 'black'
+      //   },
+      //   textInput:
+      // }}
       placeholder='Search'
       textInputProps= {{
         value : {location},
@@ -35,12 +40,10 @@ export default function Form ( {list, setList, trip_id, current_num_destinations
           lat: details?.geometry.location.lat,
           lng: details?.geometry.location.lng,
           trip_id: trip_id,
-          current_num_destinations: current_num_destinations
+          lastIndex: lastIndex
         }
-        console.log('what is cityiNof', cityInfo)
         setList([...list, cityInfo])
         setLocation('')
-        console.log('what is location', location)
       }}
       styles = {{ textInput: styles.textInput, zIndex: 20 }}
       query={{
@@ -67,5 +70,14 @@ var styles = StyleSheet.create({
     height: 50,
     backgroundColor: '#eee',
     marginVertical: 5,
+    borderRadius: 30,
+    fontSize: 20,
+    paddingHorizontal: 25
+  }
+})
+
+var inputStyle = StyleSheet.create({
+  textInput: {
+
   }
 })
