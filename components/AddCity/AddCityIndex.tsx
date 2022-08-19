@@ -1,34 +1,37 @@
 import React, { useState } from 'react';
 import {Text, StyleSheet, View, ScrollView, TouchableHighlight, Button } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from 'axios';
 import Form from './Form';
 import City from './City';
 import ShareButton from './ShareButton';
+import config from '../../config'
 
-  export default function AddCity ( { route, navigation }) {
-  var navigation = useNavigation();
+  export default function AddCity ( { }) {
+  const navigation = useNavigation();
+  const route = useRoute();
 
   var [list, setList] = useState<{name: string, id: string}[]>([]);
-  // const {trip_id, current_num_destinations} = route.params;
+  const {trip_id, lastIndex} = route.params;
   console.log('routerrrrrrrr', route);
   // console.log('new checker', navigation)
 
   var post = () => {
     // sends an array of objects to back end, must deconstruct and store each
     // individual city server side
-    axios.post(`${configs.LOCALTUNNEL}/postCities`, list)
+    axios.post(`${config.LOCALTUNNEL}/postCities`, list)
     .then(() => {console.log('success posting from front end')})
     .catch((err) => {console.log('Err in posting from front end', err)})
-    navigation.navigate('DestinationViewer')
+    navigation.navigate('DestinationViewer', {tripId: trip_id})
+    // return trip id {tripId: trip_id}
   };
 
   return (
     <View style= {styles.container}>
       <Form
-        // trip_id = {trip_id}
+        trip_id = {trip_id}
         setList = {setList}
-        // current_num_destinations = {current_num_destinations}
+        lastIndex = {lastIndex}
         list = {list}
         />
     <View style={styles.cityContainer}>
@@ -55,16 +58,18 @@ var styles = StyleSheet.create({
     padding: 10,
     flex: 1,
     alignContent: 'center',
-    backgroundColor: '#A5C9C9',
+    backgroundColor: '#F0E8E4',
   },
 
   cityContainer : {
     position: 'relative',
     zIndex: 0,
     bottom: 430,
-    width: 200,
-    left: 53.5,
-    height: 50
+    width: 400,
+    left: 17,
+    height: 50,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 
   button: {

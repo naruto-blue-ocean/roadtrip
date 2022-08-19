@@ -20,10 +20,10 @@ export default function FakeHomeScreen({ navigation }) {
         title="Trip Viewer"
         onPress={() => { navigation.navigate('DestinationViewer')}}
       /> */}
-      <Button
+      {/* <Button
         title="Points of Interest"
         onPress={() => { navigation.navigate('POIViewer')}}
-      />
+      /> */}
       <Button
         title="Add a City"
         onPress={() => { navigation.navigate('AddCity')}}

@@ -4,21 +4,21 @@ import { View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensio
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 import POI_List from './POI_List';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import config from '../../config.js';
 import axios from 'axios';
-import { panGestureHandlerCustomNativeProps } from 'react-native-gesture-handler/lib/typescript/handlers/PanGestureHandler';
+
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 
-
-export default function DestinationViewer({route, navigation}) {
-  // const navigation = useNavigation();
+export default function DestinationViewer() {
+  const route = useRoute();
+  const navigation = useNavigation();
   const {tripId} = route.params;
 
   const getTrip = (tripId) => {
-    const path = `${config.LOCALTUNNEL}/trips/destinations/${tripId}`
+    const path = `${config.LOCALTUNNEL}/trips/tripinfo/${tripId}`
     axios.get(path)
     .then ((response) => {
       let trip = response.data;
@@ -47,7 +47,6 @@ export default function DestinationViewer({route, navigation}) {
           }
         }
       })
-      console.log(cities);
       let destinations = [];
       Object.keys(cities).forEach((key) => {
         let destObj = {
@@ -68,14 +67,27 @@ export default function DestinationViewer({route, navigation}) {
     })
   }
 
-  const updateDestinationOrder = (data:any) => {
-    // console.log('updateDestinationOrder invoked, here is the new order', data);
+  const updateDestinationOrder = (afterData:any) => {
+    const beforeData = cities;
+    const path = `${config.LOCALTUNNEL}/trips/${tripId}/destinations`
 
+    const axiosObj = {}
+    for (var i = 0; i < afterData.length; i++) {
+      axiosObj[afterData[i].destination_id] = i + 1;
+    }
+    axios.put(path, axiosObj)
+    .catch((err) => {
+      console.error('errored in the POI put request', err);
+      setCities(beforeData);
+    })
+    setCities(afterData);
   }
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    getTrip(tripId);
-  }, [])
+    isFocused && getTrip(tripId);
+  }, [isFocused])
 
   const [cities, setCities] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -92,14 +104,27 @@ export default function DestinationViewer({route, navigation}) {
     const [expanded, setExpanded] = useState(false);
     const scrollX = useRef(new Animated.Value(0)).current;
 
+    const setPOIsAfterDelete = (newPOIs) => {
+      item.POIs = newPOIs;
+    }
 
     const handleDelete = () => {
       let copyOfCities;
+      let beforeData = cities;
+      let afterData = [];
       cities.forEach((city, index) => {
-        if (city.cityName === item.cityName) {
-          copyOfCities = cities.slice(0, index).concat(cities.slice(index + 1));
+        if (city.cityName !== item.cityName) {
+          afterData.push(city);
         }
-      });
+      })
+      const path = `${config.LOCALTUNNEL}/trips/${tripId}/destinations/${item.destination_id}`
+      axios.delete(path)
+      .catch((err) => {
+        console.error('errored when deleted destination', err)
+        setCities(beforeData);
+      })
+      setCities(afterData);
+
       LayoutAnimation.configureNext(
         LayoutAnimation.create(
           150,
@@ -107,9 +132,7 @@ export default function DestinationViewer({route, navigation}) {
           LayoutAnimation.Properties.scaleY
         )
       );
-      setCities(copyOfCities);
     };
-
 
     return (
       <ScaleDecorator>
@@ -144,6 +167,7 @@ export default function DestinationViewer({route, navigation}) {
                   onLongPress={drag}
                   disabled={isActive}
                   style={styles.item}
+
                 >
                   <Text style={styles.title}>{item.cityName}</Text>
                 </Pressable>
@@ -168,7 +192,10 @@ export default function DestinationViewer({route, navigation}) {
                 destinationId = {item.destination_id}
                 lat = {item.lat}
                 lng = {item.lng}
-                cityName = {item.cityName}/>
+                cityName = {item.cityName}
+                setPOIsAfterDelete = {setPOIsAfterDelete}
+                />
+
             </View>
           )}
         </View>
@@ -182,20 +209,18 @@ export default function DestinationViewer({route, navigation}) {
       <View style = {styles.addAndShareContainer}>
         <Pressable style={styles.addCity}
           onPress = {() => {
-            console.log('cities', cities)
             let maxIndex = 0;
             for (var i = 0; i < cities.length; i++) {
               if (cities[i]['order_number'] > maxIndex) {
                 maxIndex = cities[i]['order_number'];
               }
             }
-            console.log("maxIndex", maxIndex)
+
             navigation.navigate('AddCity', {trip_id: tripId, lastIndex: maxIndex})
           }
-
           }
           >
-          <Text>Add Destinations &nbsp;</Text>
+          <Text style = {styles.addDestination}>Add Destinations &nbsp;</Text>
           <FontAwesome name="plus-circle" size={18} color = "white" style={styles.addPOIButton}/>
         </Pressable>
         <Pressable style={styles.share}
@@ -203,7 +228,6 @@ export default function DestinationViewer({route, navigation}) {
             Alert.prompt('Share trip', 'Enter friend\'s email', (email) => {
               axios.post(`${config.LOCALTUNNEL}/share/${email}/${tripId}`)
                 .then( (response) => {
-                  console.log(response.data)
                   Alert.alert('Sharing successful!', `Your friend ${email} can now access this trip`)
                 })
                 .catch( (e) => console.log(e))
@@ -217,7 +241,7 @@ export default function DestinationViewer({route, navigation}) {
       <View style={styles.body}>
         <DraggableFlatList
           data={cities}
-          onDragEnd={({data}) => {() => { updateDestinationOrder(data)}}}
+          onDragEnd={({data}) => updateDestinationOrder(data)}
           keyExtractor={item => item.cityName}
           renderItem={renderCities}
         />
@@ -286,7 +310,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   addCity: {
-    backgroundColor: 'grey',
+    backgroundColor: '#D9814F',
     justifyContent: 'center',
     fontSize: 20,
     borderColor: 'black',
@@ -306,6 +330,9 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 6,
     width: '50%'
+  },
+  addDestination: {
+    backgroundColor: '#D9814F'
   }
 });
 

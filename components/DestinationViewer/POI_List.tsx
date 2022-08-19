@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {View, StyleSheet, TouchableOpacity, Text, Pressable, LayoutAnimation} from 'react-native';
 import DraggableFlatList, {
   ScaleDecorator,
@@ -8,10 +8,12 @@ import { useNavigation } from "@react-navigation/native";
 import { getItemAsync } from 'expo-secure-store';
 import axios from 'axios';
 import { LOCALTUNNEL } from '../../config';
+import { AuthContext } from '../../AuthProvider.js'
 
 const POI_List = (props) => {
   const navigation = useNavigation();
   const [data, setData] = useState(props.POIs);
+
 
   // console.log('here are the props', props)
   // const deletePOI = (POI) => {
@@ -19,38 +21,62 @@ const POI_List = (props) => {
   //   const path = `http://localhost:3000/trips/${POI.id}`
   //   axios.delete('http://localhost:3000/trips/')
   // }
-
-  const reorderPOIs = (data: Array<Object>) => {
-    // console.log('reorderPOIs invoked, setting data and attempting a PATCH request')
-    // console.log('new data ->>>>> ', data)
-
-    //axios put request
-    //.then -> getTrip request
-    //
-    // console.log('reordering data ----------> ', data)
-
-    // console.log(LOCALTUNNEL);
-    // console.log(props.tripId);
-    // console.log(props.destinationId);
-
+  const { username } = useContext(AuthContext);
+  const reorderPOIs = (afterData: Array<Object>) => {
+    const beforeData = data;
     const axiosObj = {};
-    for (var i = 0; i < data.length; i++) {
-      axiosObj[data[i].id] = i + 1;
+    for (var i = 0; i < afterData.length; i++) {
+      axiosObj[afterData[i].id] = i + 1;
     }
-    console.log('axiosOBJ ----> ', axiosObj);
-    const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`
-    console.log(path);
+
+    // console.log('axiosOBJ ----> ', axiosObj);
+    const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`;
+    // console.log(path);
+
 
     axios.put(path, axiosObj)
-    .then((response) => {
-      setData(data);
-    })
     .catch((err) => {
       console.error ('errored in the POI put request', err)
+      setData(beforeData);
     });
-    setData(data);
-
+    setData( afterData);
+    LayoutAnimation.configureNext(
+      LayoutAnimation.create(
+        150,
+        LayoutAnimation.Types.linear,
+        LayoutAnimation.Properties.scaleY
+      )
+    );
   }
+
+  const deletePOI = (item) => {
+    const beforeData = data;
+
+    const afterData = []
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].name !== item.name) {
+        afterData.push(data[i])
+      }
+    }
+
+    const path = (`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.currCity.destination_id}/pois/${item.id}`);
+    axios.delete(path)
+      .catch((err) => {
+        setData(beforeData);
+      });
+
+
+    LayoutAnimation.configureNext(
+      LayoutAnimation.create(
+        150,
+        LayoutAnimation.Types.linear,
+        LayoutAnimation.Properties.scaleY
+      )
+    );
+    setData(afterData);
+    props.setPOIsAfterDelete(afterData);
+
+  };
 
   const renderPOI = ({item, drag, isActive}) => (
     <View style={styles.tilewrapper}>
@@ -60,10 +86,12 @@ const POI_List = (props) => {
           disabled={isActive}
           style={styles.POI}
           onPress = {() => {
-            // console.log(item.id)
-            navigation.navigate('POIViewer',
+            navigation.navigate('PoiViewer',
             {
-              poi_id: item.id
+              params: {
+                poi_id: item.id,
+               user_email: username
+              }
             });
             //need to pass specific POI ID
           }}>
@@ -91,6 +119,16 @@ const POI_List = (props) => {
       <Pressable style={styles.addPOI}
         onPress = {() => {
           console.log(props.lat, props.lng, props.cityName);
+
+          console.log('props', props)
+          let maxIndex = 0;
+          for (var i = 0; i < props.POIs.length; i++) {
+            if (props.POIs[i].order_number > maxIndex) {
+              maxIndex = props.POIs[i].order_number;
+            }
+          }
+          console.log(maxIndex);
+
           navigation.navigate('AddPOI',
           {
             destination_id: props.destinationId,
@@ -98,8 +136,7 @@ const POI_List = (props) => {
             trip_id: props.tripId,
             latitude: props.lat,
             longitude: props.lng,
-            current_num_POIs: 0,
-            trip_destination_id: 0
+            maxIndex: maxIndex
           })
         }
         }
