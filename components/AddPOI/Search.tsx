@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import config from '../../config';
+import Search from 'react-native-vector-icons/Feather';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, FlatList, Pressable, Text, TextInput, SafeAreaView, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -10,7 +11,7 @@ import { getItemAsync } from 'expo-secure-store';
 export default function POICard({ city, lat, lng }) {
 
   const navigation = useNavigation();
-
+  const [click, setClick] = useState()
   const [input, setInput] = useState<string>('');
   const [suggestions, setSuggestions] = useState([]);
 
@@ -47,16 +48,20 @@ export default function POICard({ city, lat, lng }) {
   }
   return (
     <View>
-      <TextInput
-        style={styles.input}
-        placeholder={'Search here'}
-        keyboardType="web-search"
-        returnKeyType="send"
-        onChangeText={(e) => handleInputChange(e)}
-        onSubmitEditing={handleSubmit}
-        placeholderTextColor="black"
-      />
+      <View style={styles.searchBar}>
+        <Search style={styles.searchIcon} name="search" size={20} color="#000"/>
+        <TextInput
+          style={styles.input}
+          placeholder={'Search here'}
+          keyboardType="web-search"
+          returnKeyType="send"
+          onChangeText={(e) => handleInputChange(e)}
+          onSubmitEditing={handleSubmit}
+          placeholderTextColor="lightgrey"
+        />
+      </View>
       {input && <FlatList
+        style={styles.suggestions}
         data={suggestions}
         renderItem={({ item }) => (
           <Pressable onPress={() => handleSubmit(item.alias)}>
@@ -71,14 +76,32 @@ export default function POICard({ city, lat, lng }) {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    width: 300,
-    height: 50,
+  searchBar: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: 285,
+    height: 40,
     textAlign: 'left',
-    backgroundColor: '#eee',
-    paddingHorizontal: 25,
-    borderRadius: 30,
-    marginTop: 20,
+    backgroundColor: 'white',
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    marginTop: 30,
     fontSize: 20,
+  },
+  searchIcon: {
+    paddingRight: 10,
+  },
+  input: {
+    paddingTop: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+    paddingLeft: 0,
+    color: '#424242',
+  },
+  suggestions: {
+    marginLeft: 45,
+    fontSize: 40,
   },
 });
