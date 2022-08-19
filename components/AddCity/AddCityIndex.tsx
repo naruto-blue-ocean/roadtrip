@@ -57,16 +57,18 @@ var styles = StyleSheet.create({
     padding: 10,
     flex: 1,
     alignContent: 'center',
-    backgroundColor: '#A5C9C9',
+    backgroundColor: '#F0E8E4',
   },
 
   cityContainer : {
     position: 'relative',
     zIndex: 0,
     bottom: 430,
-    width: 200,
-    left: 53.5,
-    height: 50
+    width: 400,
+    left: 17,
+    height: 50,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 
   button: {
