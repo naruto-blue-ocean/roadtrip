@@ -11,7 +11,7 @@ import POICard from './POICard';
 
 const getPOIs = require('./yelpAPI');
 
-export default function POIList({ order, desID }) {
+export default function POIList({ order, desID, tripID }) {
   const navigation = useNavigation();
   const route = useRoute();
   const { city, term } = route.params;
@@ -70,6 +70,7 @@ export default function POIList({ order, desID }) {
             POI={item}
             desID={desID}
             order={order}
+            tripID ={tripID}
           />
         )}
         keyExtractor={(item) => item.id}
