@@ -4,7 +4,7 @@ import { View, StyleSheet, Text, LayoutAnimation, ScrollView, Animated, Dimensio
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 import POI_List from './POI_List';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import config from '../../config.js';
 import axios from 'axios';
 import { panGestureHandlerCustomNativeProps } from 'react-native-gesture-handler/lib/typescript/handlers/PanGestureHandler';
@@ -15,7 +15,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 export default function DestinationViewer({route, navigation}) {
   // const navigation = useNavigation();
-  const {tripName, tripId} = route.params;
+  const {tripId} = route.params;
 
   const getTrip = (tripId) => {
     const path = `${config.LOCALTUNNEL}/trips/destinations/${tripId}`
@@ -28,22 +28,26 @@ export default function DestinationViewer({route, navigation}) {
           let poiObj = {};
           poiObj.id = row.poi_id;
           poiObj.name = row.poi_name;
+          poiObj.order_number = row.poi_order
           cities[row.destination_name].POIs.push(poiObj)
         } else {
           cities[row.destination_name] = {
             lat: row.lat,
             lng: row.lng,
             POIs: [],
+            order_number: row.destination_order,
             destination_id: row.destination_id
           };
           if (row.poi_id) {
             let poiObj = {};
             poiObj.id = row.poi_id;
             poiObj.name = row.poi_name;
+            poiObj.order_number = row.poi_order
             cities[row.destination_name].POIs.push(poiObj)
           }
         }
       })
+      console.log(cities);
       let destinations = [];
       Object.keys(cities).forEach((key) => {
         let destObj = {
@@ -51,11 +55,11 @@ export default function DestinationViewer({route, navigation}) {
           destination_id: cities[key].destination_id,
           lat: cities[key].lat,
           lng: cities[key].lng,
+          order_number: cities[key].order_number,
           POIs: cities[key].POIs
         };
         destinations.push(destObj);
       })
-      console.log('destinations --------->', destinations);
       setCities(destinations);
 
     })
@@ -65,7 +69,7 @@ export default function DestinationViewer({route, navigation}) {
   }
 
   const updateDestinationOrder = (data:any) => {
-    console.log('updateDestinationOrder invoked, here is the new order', data);
+    // console.log('updateDestinationOrder invoked, here is the new order', data);
 
   }
 
@@ -155,7 +159,16 @@ export default function DestinationViewer({route, navigation}) {
           </ScrollView>
           {expanded && (
             <View style={styles.poiwrapper}>
-              <POI_List POIs={item.POIs} currCity={item} cities={cities} setCities={setCities} tripId = {tripId} destinationId = {item.destination_id}/>
+              <POI_List
+                POIs={item.POIs}
+                currCity={item}
+                cities={cities}
+                setCities={setCities}
+                tripId = {tripId}
+                destinationId = {item.destination_id}
+                lat = {item.lat}
+                lng = {item.lng}
+                cityName = {item.cityName}/>
             </View>
           )}
         </View>
@@ -168,8 +181,18 @@ export default function DestinationViewer({route, navigation}) {
     <View style={styles.wrapper}>
       <View style = {styles.addAndShareContainer}>
         <Pressable style={styles.addCity}
-          onPress = {() =>
-            navigation.navigate('AddCity', {trip_id: tripId})
+          onPress = {() => {
+            console.log('cities', cities)
+            let maxIndex = 0;
+            for (var i = 0; i < cities.length; i++) {
+              if (cities[i]['order_number'] > maxIndex) {
+                maxIndex = cities[i]['order_number'];
+              }
+            }
+            console.log("maxIndex", maxIndex)
+            navigation.navigate('AddCity', {trip_id: tripId, lastIndex: maxIndex})
+          }
+
           }
           >
           <Text>Add Destinations &nbsp;</Text>
