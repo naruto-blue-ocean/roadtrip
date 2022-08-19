@@ -29,34 +29,38 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    height: 60,
-    backgroundColor: 'lightgrey',
+    height: 90,
+    width: 300,
+    backgroundColor: '#DEDBD2',
     alignItems: 'center',
     justifyContent:'space-between',
-    borderRadius: 10,
+    borderRadius: 30,
     margin: 20,
+    borderStyle: 'solid',
+    borderWidth: 1,
   },
   tripName: {
-    marginLeft: 30
+    marginLeft: 30,
+    width: 200,
   },
   greenIndicator: {
     width: 10,
     height: 10,
-    backgroundColor: 'green',
+    backgroundColor: '#00FF28',
     borderStyle: 'solid',
     borderRadius: 5,
     marginRight: 30,
     borderWidth: 1,
-    borderColor: 'grey'
+    borderColor: 'black'
   },
   redIndicator: {
     width: 10,
     height: 10,
-    backgroundColor: '#f14c56',
+    backgroundColor: '#FF2200',
     borderStyle: 'solid',
     borderRadius: 5,
     marginRight: 30,
     borderWidth: 1,
-    borderColor: 'grey'
+    borderColor: 'black'
   }
 })
