@@ -67,14 +67,16 @@ export default function TrashTripCard(props: any) {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-
     flexDirection: 'row',
     height: 60,
+    width: 265,
     backgroundColor: 'lightgrey',
     alignItems: 'center',
     justifyContent:'space-between',
-    borderRadius: 10,
+    borderRadius: 30,
     margin: 20,
+    borderStyle: 'solid',
+    borderWidth: 1,
   },
   tripName: {
     marginLeft: 30
@@ -83,13 +85,11 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderRadius: 5,
     margin: 20,
-    borderWidth: 1,
-    borderColor: 'grey'
   },
   option: {
     borderStyle: 'solid',
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: 'grey'
+    borderColor: 'grey',
   }
 })

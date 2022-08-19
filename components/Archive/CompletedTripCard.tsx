@@ -25,12 +25,14 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    height: 60,
+    height: 65,
     width: 250,
     backgroundColor: 'lightgrey',
     alignItems: 'center',
     justifyContent:'space-between',
-    borderRadius: 10,
+    borderRadius: 30,
+    borderStyle: 'solid',
+    borderWidth: 1,
     margin: 20,
   },
   tripName: {
