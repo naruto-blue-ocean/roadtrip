@@ -9,8 +9,6 @@ import { getZipCode } from 'use-places-autocomplete';
 export default function Form ( {list, setList, trip_id, lastIndex}:
   {list: any, setList: any, trip_id: number, lastIndex: number}) {
 
-  console.log('what ar thsee nums', trip_id, lastIndex)
-
   const [location, setLocation] = useState('');
 
   return (
@@ -44,10 +42,8 @@ export default function Form ( {list, setList, trip_id, lastIndex}:
           trip_id: trip_id,
           lastIndex: lastIndex
         }
-        console.log('what is cityiNof', cityInfo)
         setList([...list, cityInfo])
         setLocation('')
-        console.log('what is location', location)
       }}
       styles = {{ textInput: styles.textInput, zIndex: 20 }}
       query={{
