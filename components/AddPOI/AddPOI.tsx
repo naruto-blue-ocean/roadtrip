@@ -12,15 +12,15 @@ import POIList from './POIList';
 
 const Stack = createNativeStackNavigator();
 
-export default function AddPOI({ route }) {
+export default function AddPOI({ }) {
   //props: city, lat, lng, order, desId
-  // const route = useRoute();
+  const route = useRoute();
 
-  const { destination_id, trip_id, current_num_POIs, term, latitude, longitude, cityName } = route.params;
+  const { destination_id, trip_id, maxIndex, term, latitude, longitude, cityName } = route.params;
   const city = cityName;
   const lat = latitude;
   const lng = longitude;
-  const order = current_num_POIs;
+  const order = maxIndex;
   const tripID = trip_id;
   const desID = destination_id;
 

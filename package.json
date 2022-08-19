@@ -42,6 +42,7 @@
     "react-native-screens": "~3.15.0",
     "react-native-stars": "^1.2.2",
     "react-native-styled-components": "^2.1.0",
+    "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.7",
     "react-query": "^3.39.2",
     "use-places-autocomplete": "^4.0.0"

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 // import axios from 'axios';
 // import config from '../../config';
+// import Arrow from 'react-native-vector-icons/AntDesign';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, FlatList, Text, Button } from 'react-native';
+import { StyleSheet, View, FlatList, Text, Button, Pressable } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -51,7 +52,10 @@ export default function POIList({ order, desID, tripID }) {
 
   return (
     <View style={styles.container} >
-      <Button title="Back" onPress={() => navigation.goBack()} />
+      {/* <Pressable style={styles.container} onPress={() => navigation.goBack()}>
+        <Arrow style={styles.backIcon} name="arrowleft" size={20} color="#000"/>
+      </Pressable> */}
+      {/* <Button title="Back" onPress={() => navigation.goBack()} /> */}
       {/* {POIs && <FlatList
         data={POIs}
         renderItem={({ item }) => (<POICard
@@ -88,6 +92,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
+  },
+  backIcon: {
+
   },
 });
