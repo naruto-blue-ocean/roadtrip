@@ -39,6 +39,7 @@ export default function HomeScreen(props: any) {
       <View
         style={styles.newTripContainer}
         onTouchEnd={(e) => {
+          e.preventDefault();
           let userEmail = username || 'noa@email.com'
           Alert.prompt('Create a new trip', 'Choose a name for your trip!', (text) => {
             axios.post(`${config.LOCALTUNNEL}/trips`,{
