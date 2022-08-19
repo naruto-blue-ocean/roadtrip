@@ -32,21 +32,13 @@ const POI_List = (props) => {
     // console.log('axiosOBJ ----> ', axiosObj);
     const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`;
     // console.log(path);
-
-
     axios.put(path, axiosObj)
     .catch((err) => {
       console.error ('errored in the POI put request', err)
       setData(beforeData);
     });
     setData( afterData);
-    LayoutAnimation.configureNext(
-      LayoutAnimation.create(
-        150,
-        LayoutAnimation.Types.linear,
-        LayoutAnimation.Properties.scaleY
-      )
-    );
+
   }
 
   const deletePOI = (item) => {
