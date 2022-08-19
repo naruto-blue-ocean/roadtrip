@@ -9,11 +9,13 @@ import AllTrips from "./bottomNavigation/AllTrips";
 import ActiveTrip from "./bottomNavigation/ActiveTrip";
 import Archive from "./bottomNavigation/Archive";
 import { ScreenStackHeaderBackButtonImage } from "react-native-screens";
+import { AuthContext } from "../AuthProvider";
 
 const Bottom = createBottomTabNavigator();
 
 
 export default function DrawerNavigatorRoutes() {
+  const { username } = React.useContext(AuthContext);
 
   return (
     <Bottom.Navigator  initialRouteName="All Trips">
