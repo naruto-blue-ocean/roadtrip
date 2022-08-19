@@ -12,10 +12,9 @@ const getPOIs = (city: String, term: String) => {
     },
   })
     .then((result) => {
-      console.log('In yelpAPI, Yelp GET success!');
+      // console.log('In yelpAPI, Yelp GET success!');
       // return (result.data.businesses);
       if (result.data) {
-        // console.log('------------->', result);
         return result.data.businesses;
       }
     })
