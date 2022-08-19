@@ -15,7 +15,7 @@ export default function Login() {
 
   const logInUser = async () => {
 
-    axios.post(`http://127.0.0.1:4000/auth/login/`, { email: email, password: password })
+    axios.post(`${config.LOCALTUNNEL}/auth/login/`, { email: email, password: password })
       .then((response) => {
         console.log('status is...', response.status);
         setUsername(response.data.user.email);
@@ -56,7 +56,7 @@ export default function Login() {
       return;
     }
 
-    axios.post(`http://127.0.0.1:4000/auth/signup/`, { email: email, password: password })
+    axios.post(`${config.LOCALTUNNEL}/auth/signup/`, { email: email, password: password })
       .then((response) => {
         console.log(response.data);
         // asyncStorage.setItem("token", response.data.user.email);

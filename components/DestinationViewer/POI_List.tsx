@@ -37,9 +37,9 @@ const POI_List = (props) => {
     for (var i = 0; i < data.length; i++) {
       axiosObj[data[i].id] = i + 1;
     }
-    // console.log('axiosOBJ ----> ', axiosObj);
+    console.log('axiosOBJ ----> ', axiosObj);
     const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`
-    // console.log(path);
+    console.log(path);
 
     axios.put(path, axiosObj)
     .then((response) => {
