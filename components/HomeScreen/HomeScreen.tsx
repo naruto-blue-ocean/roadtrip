@@ -11,7 +11,6 @@ import { AuthContext } from '../../AuthProvider.js'
 
 export default function HomeScreen(props: any) {
 
-  const [showingModal, setShowingModal] = useState(false);
   const [tripsShowing, setTripsShowing] = useState([]);
   const { username } = useContext(AuthContext);
 

@@ -11,7 +11,6 @@ import Initialization from "./components/Initialization/Initialization";
 import Login from "./components/Login/Login";
 import Archive from "./components/Archive/Archive";
 import AuthProvider, { AuthContext } from "./AuthProvider";
-// import AuthProvider from './AuthProvider';
 import {
   QueryClient,
   QueryClientProvider,
