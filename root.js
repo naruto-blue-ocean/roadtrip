@@ -32,15 +32,15 @@ export default function Root() {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="FakeHomeScreen">
+        <Stack.Navigator initialRouteName="HomeScreen">
           {
             username !== null ? (
               <>
-                <Stack.Screen
+                {/* <Stack.Screen
                   name="FakeHomeScreen"
                   component={FakeHomeScreen}
                   options={{ title: 'Fake Home' }}
-                />
+                /> */}
                 <Stack.Screen
                   name="HomeScreen"
                   component={HomeScreen}
