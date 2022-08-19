@@ -7,7 +7,7 @@ import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import config from '../../config.js';
 import axios from 'axios';
-import { panGestureHandlerCustomNativeProps } from 'react-native-gesture-handler/lib/typescript/handlers/PanGestureHandler';
+
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -18,8 +18,6 @@ export default function DestinationViewer() {
   const {tripId} = route.params;
 
   const getTrip = (tripId) => {
-    console.log('getTrip was invoked')
-    console.log(tripId)
     const path = `${config.LOCALTUNNEL}/trips/tripinfo/${tripId}`
     axios.get(path)
     .then ((response) => {

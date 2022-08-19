@@ -7,6 +7,7 @@ import Edit from './Edit.tsx';
 import styled from 'react-native-styled-components';
 import Stars from 'react-native-stars';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useRoute} from"@react-navigation/native"
 
 class PoiViewer extends React.Component {
  constructor(props) {
@@ -22,7 +23,8 @@ class PoiViewer extends React.Component {
  componentDidMount() {
   axios.defaults.headers.common['Authorization'] = config.YELPTOKEN;
   let poiname = this.props.route.params.poi_id;
-  let userid = 'johnny@email.com';
+  let userid =  this.props.route.params.user_email;
+
   //can use ID instead
   axios.get(`https://api.yelp.com/v3/businesses/${poiname}`).then((data) => {
  // DO A GET REQUEST TO THE DATABASE TO RETRIEVE THE NOTES

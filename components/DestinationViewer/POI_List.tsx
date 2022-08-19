@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {View, StyleSheet, TouchableOpacity, Text, Pressable, LayoutAnimation} from 'react-native';
 import DraggableFlatList, {
   ScaleDecorator,
@@ -8,10 +8,12 @@ import { useNavigation } from "@react-navigation/native";
 import { getItemAsync } from 'expo-secure-store';
 import axios from 'axios';
 import { LOCALTUNNEL } from '../../config';
+import { AuthContext } from '../../AuthProvider.js'
 
 const POI_List = (props) => {
   const navigation = useNavigation();
   const [data, setData] = useState(props.POIs);
+
 
   // console.log('here are the props', props)
   // const deletePOI = (POI) => {
@@ -19,7 +21,7 @@ const POI_List = (props) => {
   //   const path = `http://localhost:3000/trips/${POI.id}`
   //   axios.delete('http://localhost:3000/trips/')
   // }
-
+  const { username } = useContext(AuthContext);
   const reorderPOIs = (afterData: Array<Object>) => {
     const beforeData = data;
     const axiosObj = {};
@@ -84,10 +86,10 @@ const POI_List = (props) => {
           disabled={isActive}
           style={styles.POI}
           onPress = {() => {
-            // console.log(item.id)
-            navigation.navigate('POIViewer',
+            navigation.navigate('PoiViewer',
             {
-              poi_id: item.id
+              poi_id: item.id,
+              user_email: username
             });
             //need to pass specific POI ID
           }}>
@@ -122,8 +124,7 @@ const POI_List = (props) => {
             trip_id: props.tripId,
             latitude: props.lat,
             longitude: props.lng,
-            current_num_POIs: 0,
-            trip_destination_id: 0
+            current_num_POIs: 0
           })
         }
         }
