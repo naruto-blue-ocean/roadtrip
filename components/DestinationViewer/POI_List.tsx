@@ -20,37 +20,61 @@ const POI_List = (props) => {
   //   axios.delete('http://localhost:3000/trips/')
   // }
 
-  const reorderPOIs = (data: Array<Object>) => {
-    // console.log('reorderPOIs invoked, setting data and attempting a PATCH request')
-    // console.log('new data ->>>>> ', data)
-
-    //axios put request
-    //.then -> getTrip request
-    //
-    // console.log('reordering data ----------> ', data)
-
-    // console.log(LOCALTUNNEL);
-    // console.log(props.tripId);
-    // console.log(props.destinationId);
-
+  const reorderPOIs = (afterData: Array<Object>) => {
+    const beforeData = data;
     const axiosObj = {};
-    for (var i = 0; i < data.length; i++) {
-      axiosObj[data[i].id] = i + 1;
+    for (var i = 0; i < afterData.length; i++) {
+      axiosObj[afterData[i].id] = i + 1;
     }
-    console.log('axiosOBJ ----> ', axiosObj);
-    const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`
-    console.log(path);
+
+    // console.log('axiosOBJ ----> ', axiosObj);
+    const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`;
+    // console.log(path);
+
 
     axios.put(path, axiosObj)
-    .then((response) => {
-      setData(data);
-    })
     .catch((err) => {
       console.error ('errored in the POI put request', err)
+      setData(beforeData);
     });
-    setData(data);
-
+    setData( afterData);
+    LayoutAnimation.configureNext(
+      LayoutAnimation.create(
+        150,
+        LayoutAnimation.Types.linear,
+        LayoutAnimation.Properties.scaleY
+      )
+    );
   }
+
+  const deletePOI = (item) => {
+    const beforeData = data;
+
+    const afterData = []
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].name !== item.name) {
+        afterData.push(data[i])
+      }
+    }
+
+    const path = (`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.currCity.destination_id}/pois/${item.id}`);
+    axios.delete(path)
+      .catch((err) => {
+        setData(beforeData);
+      });
+
+
+    LayoutAnimation.configureNext(
+      LayoutAnimation.create(
+        150,
+        LayoutAnimation.Types.linear,
+        LayoutAnimation.Properties.scaleY
+      )
+    );
+    setData(afterData);
+    props.setPOIsAfterDelete(afterData);
+
+  };
 
   const renderPOI = ({item, drag, isActive}) => (
     <View style={styles.tilewrapper}>

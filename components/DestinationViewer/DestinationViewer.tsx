@@ -12,7 +12,6 @@ import { panGestureHandlerCustomNativeProps } from 'react-native-gesture-handler
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 
-
 export default function DestinationViewer() {
   const route = useRoute();
   const navigation = useNavigation();
@@ -48,7 +47,6 @@ export default function DestinationViewer() {
           }
         }
       })
-      console.log(cities);
       let destinations = [];
       Object.keys(cities).forEach((key) => {
         let destObj = {
@@ -69,9 +67,20 @@ export default function DestinationViewer() {
     })
   }
 
-  const updateDestinationOrder = (data:any) => {
-    // console.log('updateDestinationOrder invoked, here is the new order', data);
+  const updateDestinationOrder = (afterData:any) => {
+    const beforeData = cities;
+    const path = `${config.LOCALTUNNEL}/trips/${tripId}/destinations`
 
+    const axiosObj = {}
+    for (var i = 0; i < afterData.length; i++) {
+      axiosObj[afterData[i].destination_id] = i + 1;
+    }
+    axios.put(path, axiosObj)
+    .catch((err) => {
+      console.error('errored in the POI put request', err);
+      setCities(beforeData);
+    })
+    setCities(afterData);
   }
 
   const isFocused = useIsFocused();
@@ -95,14 +104,27 @@ export default function DestinationViewer() {
     const [expanded, setExpanded] = useState(false);
     const scrollX = useRef(new Animated.Value(0)).current;
 
+    const setPOIsAfterDelete = (newPOIs) => {
+      item.POIs = newPOIs;
+    }
 
     const handleDelete = () => {
       let copyOfCities;
+      let beforeData = cities;
+      let afterData = [];
       cities.forEach((city, index) => {
-        if (city.cityName === item.cityName) {
-          copyOfCities = cities.slice(0, index).concat(cities.slice(index + 1));
+        if (city.cityName !== item.cityName) {
+          afterData.push(city);
         }
-      });
+      })
+      const path = `${config.LOCALTUNNEL}/trips/${tripId}/destinations/${item.destination_id}`
+      axios.delete(path)
+      .catch((err) => {
+        console.error('errored when deleted destination', err)
+        setCities(beforeData);
+      })
+      setCities(afterData);
+
       LayoutAnimation.configureNext(
         LayoutAnimation.create(
           150,
@@ -110,9 +132,7 @@ export default function DestinationViewer() {
           LayoutAnimation.Properties.scaleY
         )
       );
-      setCities(copyOfCities);
     };
-
 
     return (
       <ScaleDecorator>
@@ -147,6 +167,7 @@ export default function DestinationViewer() {
                   onLongPress={drag}
                   disabled={isActive}
                   style={styles.item}
+
                 >
                   <Text style={styles.title}>{item.cityName}</Text>
                 </Pressable>
@@ -171,7 +192,10 @@ export default function DestinationViewer() {
                 destinationId = {item.destination_id}
                 lat = {item.lat}
                 lng = {item.lng}
-                cityName = {item.cityName}/>
+                cityName = {item.cityName}
+                setPOIsAfterDelete = {setPOIsAfterDelete}
+                />
+
             </View>
           )}
         </View>
@@ -185,14 +209,13 @@ export default function DestinationViewer() {
       <View style = {styles.addAndShareContainer}>
         <Pressable style={styles.addCity}
           onPress = {() => {
-            console.log('cities', cities)
             let maxIndex = 0;
             for (var i = 0; i < cities.length; i++) {
               if (cities[i]['order_number'] > maxIndex) {
                 maxIndex = cities[i]['order_number'];
               }
             }
-            console.log("maxIndex", maxIndex)
+
             navigation.navigate('AddCity', {trip_id: tripId, lastIndex: maxIndex})
           }
 
@@ -206,7 +229,6 @@ export default function DestinationViewer() {
             Alert.prompt('Share trip', 'Enter friend\'s email', (email) => {
               axios.post(`${config.LOCALTUNNEL}/share/${email}/${tripId}`)
                 .then( (response) => {
-                  console.log(response.data)
                   Alert.alert('Sharing successful!', `Your friend ${email} can now access this trip`)
                 })
                 .catch( (e) => console.log(e))
@@ -220,7 +242,7 @@ export default function DestinationViewer() {
       <View style={styles.body}>
         <DraggableFlatList
           data={cities}
-          onDragEnd={({data}) => {() => { updateDestinationOrder(data)}}}
+          onDragEnd={({data}) => updateDestinationOrder(data)}
           keyExtractor={item => item.cityName}
           renderItem={renderCities}
         />
