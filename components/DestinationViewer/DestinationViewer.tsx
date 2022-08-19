@@ -68,9 +68,25 @@ export default function DestinationViewer({route, navigation}) {
     })
   }
 
-  const updateDestinationOrder = (data:any) => {
-    // console.log('updateDestinationOrder invoked, here is the new order', data);
+  const updateDestinationOrder = (afterData:any) => {
+    console.log('updateDestinationOrder invoked, here is the new order', afterData);
 
+    const beforeData = cities;
+    const path = `${config.LOCALTUNNEL}/trips/${tripId}/destinations`
+    console.log(path);
+    console.log(afterData);
+    const axiosObj = {}
+    for (var i = 0; i < afterData.length; i++) {
+      axiosObj[afterData[i].destination_id] = i + 1;
+    }
+    console.log('axiosObj ', axiosObj)
+
+    axios.put(path, axiosObj)
+    .catch((err) => {
+      console.error('errored in the POI put request', err);
+      setCities(beforeData);
+    })
+    setCities(afterData);
   }
 
   useEffect(() => {
@@ -144,6 +160,9 @@ export default function DestinationViewer({route, navigation}) {
                   onLongPress={drag}
                   disabled={isActive}
                   style={styles.item}
+                  onPressOut={() => {
+                    console.log('onPressOut')
+                  }}
                 >
                   <Text style={styles.title}>{item.cityName}</Text>
                 </Pressable>
@@ -217,7 +236,7 @@ export default function DestinationViewer({route, navigation}) {
       <View style={styles.body}>
         <DraggableFlatList
           data={cities}
-          onDragEnd={({data}) => {() => { updateDestinationOrder(data)}}}
+          onDragEnd={({data}) => updateDestinationOrder(data)}
           keyExtractor={item => item.cityName}
           renderItem={renderCities}
         />
