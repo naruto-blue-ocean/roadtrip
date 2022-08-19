@@ -5,9 +5,10 @@ export const AuthContext = React.createContext();
 export default AuthProvider = ( {children} ) => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState(null);
+  const [currentTripId, setCurrentTripId] = useState(null);
 
   return (
-    <AuthContext.Provider value={{ username, setUsername }}>
+    <AuthContext.Provider value={{ username, setUsername, currentTripId, setCurrentTripId }}>
       {children}
     </AuthContext.Provider>
   )

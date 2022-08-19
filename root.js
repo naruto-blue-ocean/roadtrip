@@ -29,11 +29,10 @@ export default function Root() {
 
   // NOTICE: There are two versions of the return block, the first commented out block includes the login page and the second doesn't. If you want to switch, just comment/uncomment out one of the return blocks.
 
+
   //return (
   //   <NavigationContainer>
   //     <Stack.Navigator initialRouteName="FakeHomeScreen">
-  //       {
-  //         username !== null ? (
   //           <>
   //             <Stack.Screen
   //               name="FakeHomeScreen"
@@ -71,24 +70,9 @@ export default function Root() {
   //               options={{ title: 'Add a Point of Interest' }}
   //             />
   //           </>
-  //         ) : (
-  //           <>
-  //             {/* <Stack.Screen
-  //               name="Initialization"
-  //               component={Initialization}
-  //               options={{ title: 'Initialization' }}
-  //             /> */}
-  //             <Stack.Screen
-  //               name="Login"
-  //               component={Login}
-  //               options={{ title: 'Log In' }}
-  //             />
-  //           </>
-  //         )
-  //       }
-
   //     </Stack.Navigator>
   //   </NavigationContainer>
+  //   </QueryClientProvider>
   // )
   return (
     <QueryClientProvider client={queryClient}>
