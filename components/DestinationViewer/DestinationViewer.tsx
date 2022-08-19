@@ -312,25 +312,19 @@ const styles = StyleSheet.create({
 /*
   destination_id1: order_number1,
   destination_id2: order_number2
-
-
   CURRENT ORDER:
   ChIJfcS6fx7LwoARZYDiqXgXL6E: 1,
   ChIJSzbuqjfD3IARckzIEB2RVeg: 2,
   ChIJpYrtFq413YARX4eG8Fd9FAQ: 3
-
-
   PROPOSED ORDER:
   ChIJfcS6fx7LwoARZYDiqXgXL6E: 1,
   ChIJSzbuqjfD3IARckzIEB2RVeg: 3,
   ChIJpYrtFq413YARX4eG8Fd9FAQ: 2
-
 */
 
 
 /*const sampleTrip = {
 =======
-
 /*
 const sampleTrip = {
 >>>>>>> jason-branch
