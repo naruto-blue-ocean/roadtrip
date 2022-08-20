@@ -43,13 +43,6 @@ const POI_List = (props) => {
       setData(beforeData);
     });
     setData( afterData);
-    LayoutAnimation.configureNext(
-      LayoutAnimation.create(
-        150,
-        LayoutAnimation.Types.linear,
-        LayoutAnimation.Properties.scaleY
-      )
-    );
   }
 
   const deletePOI = (item) => {
