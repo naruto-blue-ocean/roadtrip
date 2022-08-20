@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {View, StyleSheet, TouchableOpacity, Text, Pressable, LayoutAnimation} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text, Pressable, LayoutAnimation, Dimensions} from 'react-native';
 import DraggableFlatList, {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
@@ -9,6 +9,9 @@ import { getItemAsync } from 'expo-secure-store';
 import axios from 'axios';
 import { LOCALTUNNEL } from '../../config';
 import { AuthContext } from '../../AuthProvider.js'
+
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
+
 
 const POI_List = (props) => {
   const navigation = useNavigation();
@@ -40,13 +43,6 @@ const POI_List = (props) => {
       setData(beforeData);
     });
     setData( afterData);
-    LayoutAnimation.configureNext(
-      LayoutAnimation.create(
-        150,
-        LayoutAnimation.Types.linear,
-        LayoutAnimation.Properties.scaleY
-      )
-    );
   }
 
   const deletePOI = (item) => {
@@ -115,7 +111,7 @@ const POI_List = (props) => {
   );
 
   return (
-    <View>
+    <View style = {styles.listWrapper}>
       <Pressable style={styles.addPOI}
         onPress = {() => {
           console.log(props.lat, props.lng, props.cityName);
@@ -141,7 +137,7 @@ const POI_List = (props) => {
         }
         }
       >
-        <Text>Add a POI &nbsp;</Text>
+        <Text style = {styles.addStopText}>Add Stops &nbsp;</Text>
         <FontAwesome name="plus-circle" size={18} color="white" style={styles.addPOIButton}/>
       </Pressable>
       <DraggableFlatList
@@ -167,33 +163,47 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
+    // fontFamily: 'Inter',
   },
   minusicon: {
     flexDirection: 'row',
+    fontSize: 2
   },
   tilewrapper: {
     // width: '80%',
-    backgroundColor: '#F4A261',
+    backgroundColor: '#DEDBD2',
     flexDirection: 'row',
     alignItems: 'center',
     borderColor: 'black',
-    borderWidth: 1,
+    borderWidth: 0.5,
     marginTop: 4,
-    borderRadius: 6
+    borderRadius: 5,
+    width: '70%',
+    marginHorizontal: '15%'
   },
   texttile: {
     width: '80%',
   },
   addPOI: {
-    backgroundColor: 'grey',
+    backgroundColor: '#B0C4B1',
     justifyContent: 'center',
     fontSize: 20,
     borderColor: 'black',
-    borderWidth: 1,
+    borderWidth: 0.5,
     flexDirection: 'row',
     padding: 10,
-    borderRadius: 6
+    borderRadius: 5,
+    width: '60%',
+    marginHorizontal: '20%',
   },
+  listWrapper: {
+    width: SCREEN_WIDTH,
+    justifyContent: 'center',
+  },
+
+  addStopText: {
+    // fontFamily: 'Inter',
+  }
 
 });
 

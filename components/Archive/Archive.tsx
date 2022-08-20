@@ -39,11 +39,13 @@ export default function Archive() {
       <View style={styles.tabs}>
         <Pressable
           onPress={() => setWhichTab('Completed')}
+          style={styles.tab}
         >
           <Text>Completed</Text>
         </Pressable>
         <Pressable
           onPress={() => setWhichTab('Trash')}
+          style={styles.tab}
         >
           <Text>Trash</Text>
         </Pressable>
@@ -72,7 +74,22 @@ const styles = StyleSheet.create({
   tabs: {
     display: "flex",
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    width: 400,
+  },
+  tab:{
+    width: 120,
+    height: 60,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+    marginLeft: 10,
+    marginTop: 30,
+    backgroundColor: '#B0C4B1',
+    borderRadius: 30,
+    borderStyle: 'solid',
+    borderWidth: 1,
   },
   items: {
     flex: 7,

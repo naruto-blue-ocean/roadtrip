@@ -44,6 +44,7 @@ export default function POICard({ POI, desID, order, tripID }) {
           fullStar={<Icon name={'star'} style={[styles.star]}/>}
           emptyStar={<Icon name={'star-outline'} style={styles.star}/>}
           halfStar={<Icon name={'star-half'} style={[styles.star]}/>}
+          disabled={true}
         />
         <Text style={styles.des} >{POI.categories[0].title}</Text>
       </View>

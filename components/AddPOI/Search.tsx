@@ -54,7 +54,6 @@ export default function POICard({ city, lat, lng }) {
           style={styles.input}
           placeholder={'Search here'}
           keyboardType="web-search"
-          returnKeyType="send"
           onChangeText={(e) => handleInputChange(e)}
           onSubmitEditing={handleSubmit}
           placeholderTextColor="lightgrey"

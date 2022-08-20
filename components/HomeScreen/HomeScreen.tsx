@@ -1,12 +1,14 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Alert, ScrollView, ImageBackground } from 'react-native';
 import TripCard from './TripCard';
 import axios from 'axios';
 import config from '../../config';
 import { useNavigation } from "@react-navigation/native";
 
 import { AuthContext } from '../../AuthProvider.js'
+import { withStyleAnimation } from 'react-native-reanimated/lib/types/lib/reanimated2/animation';
+import { FlipInEasyX } from 'react-native-reanimated';
 
 
 export default function HomeScreen(props: any) {
@@ -21,7 +23,6 @@ export default function HomeScreen(props: any) {
     axios.get(`${config.LOCALTUNNEL}/trips/${userEmail}`)
     .then((results) => {
       setTripsShowing(results.data);
-      // console.log(results.data);
     })
     .catch((error) => {
       console.error(error);
@@ -29,14 +30,18 @@ export default function HomeScreen(props: any) {
   }, [])
 
   return (
-    <ScrollView style={styles.container}>
-      {
-        tripsShowing.map((trip: any) => {
-          // console.log('Trip ID: ', trip.id);
-          return (<TripCard key={trip.id} tripId={trip.id} tripName={trip.name} tripStatus={trip.status} />)
-        })
-      }
-      <View
+    <View style={styles.container}>
+      <ImageBackground source={require('../../assets/road.png')} style={styles.backgroundImage}>
+        <ScrollView contentContainerStyle={styles.scroll}>
+          {
+            tripsShowing.map((trip: any) => {
+              // console.log('Trip ID: ', trip.id);
+              return (<TripCard key={trip.id} tripId={trip.id} tripName={trip.name} tripStatus={trip.status} />)
+            })
+          }
+          <StatusBar style="auto" />
+        </ScrollView>
+        <View
         style={styles.newTripContainer}
         onTouchEnd={(e) => {
           e.preventDefault();
@@ -58,35 +63,52 @@ export default function HomeScreen(props: any) {
             })
           })
         }}>
-        <Text style={styles.newTripText}>Create a new trip</Text>
-        <Text style={styles.plus}>+</Text>
-      </View>
-      <StatusBar style="auto" />
-    </ScrollView>
+          <Text style={styles.newTripText}>Create a new trip</Text>
+          <Text style={styles.plus}>+</Text>
+        </View>
+      </ImageBackground>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
+  },
+  scroll: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  backgroundImage: {
+    marginTop: 25,
+    marginRight: 0,
+    marginLeft: 0,
+    justifyContent: 'space-between',
   },
   newTripContainer: {
     display: 'flex',
     flexDirection: 'row',
-    height: 60,
-    backgroundColor: 'lightgrey',
+    height: 55,
+    width: 265,
+    backgroundColor: '#B0C4B1',
     alignItems: 'center',
     justifyContent:'space-between',
-    borderRadius: 10,
+    borderRadius: 20,
+    borderStyle: 'solid',
+    borderWidth: 1,
     margin: 20,
+    position: 'relative',
+    left: 45,
   },
   newTripText: {
+    fontSize: 18,
     marginLeft: 30,
+    color: 'white',
   },
   plus: {
     marginRight: 27,
     fontSize: 25,
-    color: 'grey',
+    color: 'white',
   },
   modal: {
     height: 20,
@@ -96,5 +118,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 35,
     margin: 20
+  },
+  page: {
+
   }
 });

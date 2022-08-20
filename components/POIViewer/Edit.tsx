@@ -27,7 +27,7 @@ export default function Edit({updateNote, showModal, displayModal, title, note})
         <Pressable
       onPress={displayModal}>
         <View style={styles.hide}>
-        <Text>HIDE</Text>
+        <Text style={{color: 'white', textAlign:'center', fontWeight: 'bold'}}>HIDE</Text>
         </View>
       </Pressable>
 
@@ -76,6 +76,13 @@ const styles = StyleSheet.create({
   },
   hide: {
   padding: 5,
+  margin: 10,
+  marginRight: 20,
+  backgroundColor: 'red',
+  width: "100%",
+  height: 25,
+  borderRadius: 10,
+
   // borderWidth: 1,
   },
 
@@ -92,9 +99,18 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   postBox: {
-    margin: 10
+    margin: 10,
+    backgroundColor: 'red',
+    width: "30%",
+    height: 26,
+    borderRadius: 10,
+    alignSelf: 'flex-end',
+    padding: 5,
+
   },
   post: {
-    textAlign: 'right'
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold'
   }
 })

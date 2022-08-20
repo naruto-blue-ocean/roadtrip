@@ -22,12 +22,14 @@ export default function Login() {
  /*change navigate to replace when compelete */
 
   return (
-    <Stack.Navigator initialRouteName="Home Screen">
+    <Stack.Navigator initialRouteName="Home Screen"
+    // screenOptions={{ headerTransparent: true}}
+    >
       <Stack.Screen name= "Home Screen" children={() => <HomeScreen /> }/>
       <Stack.Screen name= "DestinationViewer" children={() => <DestinationViewer /> }/>
       <Stack.Screen name= "AddCity" children={() => <AddCity /> }/>
       <Stack.Screen name= "AddPOI" children={() => <AddPOI /> }/>
-      <Stack.Screen name= "PoiViewer" children={() => <PoiViewer /> }/>
+      <Stack.Screen options={{ headerTransparent: true}} name= "PoiViewer" children={() => <PoiViewer /> }/>
 
     </Stack.Navigator>
     // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
