@@ -48,10 +48,10 @@ This repository serves client side for this application. You will also need to c
   - `npm run db-seed`. This will seed the database with some initial data.
   - Set up a .env file in the root directory that follows the exact format of the provided example.env file.
   - `npm run server-dev` to start the server.
-### Because the server is hosted on `localhost` on your computer but the client is on a mobile device, the client will not have access to `localhost` and thus, the server. To connect the client to the server using a localtunnel:
-  - Install localtunnel globally on your computer by running the command `npm install -g localtunnel` in a terminal window.
-  - While the server is running, open a separate terminal window and run the command `lt --port 3000`. This will give you a localtunnel URL.
-  - Copy the localtunnel URL obtained in the previous step into the config.js file in the client-side repo.
+  - Because the server is hosted on `localhost` on your computer but the client is on a mobile device, the client will not have access to `localhost` and thus, the server. To connect the client to the server using a localtunnel:
+    - Install localtunnel globally on your computer by running the command `npm install -g localtunnel` in a terminal window.
+    - While the server is running, open a separate terminal window and run the command `lt --port 3000`. This will give you a localtunnel URL.
+    - Copy the localtunnel URL obtained in the previous step into the config.js file in the client-side repo.
 ### Check out the application
   - Keep both your server and the localtunnel running while using the app.
   - In the root directory of the client-side repo: run the command `expo start` in your terminal.
