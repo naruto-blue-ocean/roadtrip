@@ -4,6 +4,8 @@
 
 This project was a 1-week sprint where our team completed a MVP for an external client. Roadtrip is a service for travel enthusiasts or anyone who wants to be able to organize their travel plans. With Roadtrip, users can search for destinations to add to their route, add places to visit within each destination, and share these trips with their friends or whoever they want to travel with.
 
+<img src="https://user-images.githubusercontent.com/31336001/185769340-ddf78514-4acc-4d16-a042-a31a4e7e99a6.PNG " width="300">
+
 
 # Features
 
