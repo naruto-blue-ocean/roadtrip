@@ -17,13 +17,6 @@ const POI_List = (props) => {
   const navigation = useNavigation();
   const [data, setData] = useState(props.POIs);
 
-
-  // console.log('here are the props', props)
-  // const deletePOI = (POI) => {
-  //   console.log('deletePOI was invoked on', POI);
-  //   const path = `http://localhost:3000/trips/${POI.id}`
-  //   axios.delete('http://localhost:3000/trips/')
-  // }
   const { username } = useContext(AuthContext);
   const reorderPOIs = (afterData: Array<Object>) => {
     const beforeData = data;
@@ -32,10 +25,7 @@ const POI_List = (props) => {
       axiosObj[afterData[i].id] = i + 1;
     }
 
-    // console.log('axiosOBJ ----> ', axiosObj);
     const path =`${LOCALTUNNEL}/trips/${props.tripId}/destinations/${props.destinationId}/pois`;
-    // console.log(path);
-
 
     axios.put(path, axiosObj)
     .catch((err) => {
@@ -114,17 +104,12 @@ const POI_List = (props) => {
     <View style = {styles.listWrapper}>
       <Pressable style={styles.addPOI}
         onPress = {() => {
-          console.log(props.lat, props.lng, props.cityName);
-
-          console.log('props', props)
           let maxIndex = 0;
           for (var i = 0; i < props.POIs.length; i++) {
             if (props.POIs[i].order_number > maxIndex) {
               maxIndex = props.POIs[i].order_number;
             }
           }
-          console.log(maxIndex);
-
           navigation.navigate('AddPOI',
           {
             destination_id: props.destinationId,
@@ -163,14 +148,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
-    // fontFamily: 'Inter',
   },
   minusicon: {
     flexDirection: 'row',
     fontSize: 2
   },
   tilewrapper: {
-    // width: '80%',
     backgroundColor: '#DEDBD2',
     flexDirection: 'row',
     alignItems: 'center',
@@ -202,11 +185,8 @@ const styles = StyleSheet.create({
   },
 
   addStopText: {
-    // fontFamily: 'Inter',
   }
 
 });
-
-// jasper -> trip_id
 
 export default POI_List;

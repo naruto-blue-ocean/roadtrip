@@ -7,6 +7,7 @@ import { AntDesign, FontAwesome, Entypo } from '@expo/vector-icons';
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import config from '../../config.js';
 import axios from 'axios';
+import getTrip from './getTrip';
 
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
@@ -16,56 +17,58 @@ export default function DestinationViewer(props) {
   const route = useRoute();
   const navigation = useNavigation();
   const tripId = props.tripId || route.params.tripId;
+  const [cities, setCities] = useState(props.cities || []);
 
-  const getTrip = (tripId) => {
-    const path = `${config.LOCALTUNNEL}/trips/tripinfo/${tripId}`
-    axios.get(path)
-    .then ((response) => {
-      let trip = response.data;
-      let cities = {};
-      trip.forEach((row, index) => {
-        if (cities[row.destination_name] && row.poi_id) {
-          let poiObj = {};
-          poiObj.id = row.poi_id;
-          poiObj.name = row.poi_name;
-          poiObj.order_number = row.poi_order
-          cities[row.destination_name].POIs.push(poiObj)
-        } else {
-          cities[row.destination_name] = {
-            lat: row.lat,
-            lng: row.lng,
-            POIs: [],
-            order_number: row.destination_order,
-            destination_id: row.destination_id
-          };
-          if (row.poi_id) {
-            let poiObj = {};
-            poiObj.id = row.poi_id;
-            poiObj.name = row.poi_name;
-            poiObj.order_number = row.poi_order
-            cities[row.destination_name].POIs.push(poiObj)
-          }
-        }
-      })
-      let destinations = [];
-      Object.keys(cities).forEach((key) => {
-        let destObj = {
-          cityName: key,
-          destination_id: cities[key].destination_id,
-          lat: cities[key].lat,
-          lng: cities[key].lng,
-          order_number: cities[key].order_number,
-          POIs: cities[key].POIs
-        };
-        destinations.push(destObj);
-      })
-      setCities(destinations);
 
-    })
-    .catch((err) => {
-      console.error('errored in getTrip', err)
-    })
-  }
+  // const getTrip = (tripId) => {
+  //   const path = `${config.LOCALTUNNEL}/trips/tripinfo/${tripId}`
+  //   axios.get(path)
+  //   .then ((response) => {
+  //     let trip = response.data;
+  //     let cities = {};
+  //     trip.forEach((row, index) => {
+  //       if (cities[row.destination_name] && row.poi_id) {
+  //         let poiObj = {};
+  //         poiObj.id = row.poi_id;
+  //         poiObj.name = row.poi_name;
+  //         poiObj.order_number = row.poi_order
+  //         cities[row.destination_name].POIs.push(poiObj)
+  //       } else {
+  //         cities[row.destination_name] = {
+  //           lat: row.lat,
+  //           lng: row.lng,
+  //           POIs: [],
+  //           order_number: row.destination_order,
+  //           destination_id: row.destination_id
+  //         };
+  //         if (row.poi_id) {
+  //           let poiObj = {};
+  //           poiObj.id = row.poi_id;
+  //           poiObj.name = row.poi_name;
+  //           poiObj.order_number = row.poi_order
+  //           cities[row.destination_name].POIs.push(poiObj)
+  //         }
+  //       }
+  //     })
+  //     let destinations = [];
+  //     Object.keys(cities).forEach((key) => {
+  //       let destObj = {
+  //         cityName: key,
+  //         destination_id: cities[key].destination_id,
+  //         lat: cities[key].lat,
+  //         lng: cities[key].lng,
+  //         order_number: cities[key].order_number,
+  //         POIs: cities[key].POIs
+  //       };
+  //       destinations.push(destObj);
+  //     })
+  //     setCities(destinations);
+
+  //   })
+  //   .catch((err) => {
+  //     console.error('errored in getTrip', err)
+  //   })
+  // }
 
   const updateDestinationOrder = (afterData:any) => {
     const beforeData = cities;
@@ -86,19 +89,8 @@ export default function DestinationViewer(props) {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    isFocused && getTrip(tripId);
-  }, [isFocused])
-
-  const [cities, setCities] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [shareEmail, setShareEmail] = useState('');
-
-  const handleModal = () => {
-    setIsModalVisible(() => !isModalVisible);
-  };
-  const handleShare = () => {
-
-  }
+    isFocused && getTrip(tripId, setCities);
+  }, [])
 
   const renderCities = ({ item, drag, isActive }) => {
     const [expanded, setExpanded] = useState(false);
@@ -109,10 +101,9 @@ export default function DestinationViewer(props) {
     }
 
     const handleDelete = () => {
-      let copyOfCities;
       let beforeData = cities;
       let afterData = [];
-      cities.forEach((city, index) => {
+      cities.forEach((city) => {
         if (city.cityName !== item.cityName) {
           afterData.push(city);
         }
